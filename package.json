@@ -1,0 +1,48 @@
+{
+  "name": "resurrection",
+  "version": "0.0.5",
+  "description": "State management library that follows redux and redux-thunk architecture but uses React's latest useContext and useReducer hooks.",
+  "main": "build/index.js",
+  "keywords": [
+    "contux",
+    "redux",
+    "state",
+    "management",
+    "recoil",
+    "redux-thunk",
+    "react-redux",
+    "react",
+    "hooks",
+    "context",
+    "useReducer"
+  ],
+  "peerDependencies": {
+    "react": "^15.5.4"
+  },
+  "dependencies": {
+    "react": "^15.6.2",
+    "webpack": "^2.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Nathan Foster",
+    "email": "nateinthegame@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/strap8/resurrection.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1"
+  }
+}
