@@ -19,6 +19,7 @@ module.exports = {
             plugins: [
               'transform-object-rest-spread',
               'babel-plugin-transform-react-jsx',
+              'babel-plugin-transform-class-properties'
             ],
           },
         },
