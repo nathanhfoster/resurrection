@@ -17,10 +17,12 @@
     "useReducer"
   ],
   "peerDependencies": {
-    "react": "^15.5.4"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "dependencies": {
-    "react": "^15.6.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "webpack": "^2.7.0"
   },
   "scripts": {
