@@ -1,6 +1,6 @@
 import React, { createContext, useMemo, useReducer, useEffect } from "react"
 import PropTypes from "prop-types"
-import { storeFactory } from "../"
+import { storeFactory } from ".."
 import { combineReducers, isAFunction } from "../utils"
 
 const StateProvider = createContext({})
