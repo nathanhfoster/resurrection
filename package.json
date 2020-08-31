@@ -2,10 +2,9 @@
   "name": "resurrection",
   "version": "0.0.10",
   "description": "State management library that follows redux and redux-thunk architecture but uses React's latest useContext and useReducer hooks.",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "contux",
@@ -20,9 +19,10 @@
     "context",
     "useReducer"
   ],
-  "files": [
-    "lib/**/*"
-  ],
+  "bugs": {
+    "url": "https://github.com/strap8/resurrection/issues"
+  },
+  "homepage": "https://github.com/strap8/resurrection#readme",
   "license": "MIT",
   "author": {
     "name": "Nathan Foster",
