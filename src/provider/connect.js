@@ -1,6 +1,6 @@
 import * as React from "react"
-import { useContext } from "./"
-import { ContextConsumer } from "./provider"
+import { useContext } from "../hooks"
+import { ContextConsumer } from "./"
 
 const bindActionCreator = (actionCreator, dispatch, state) => {
   const getState = () => state
@@ -14,7 +14,7 @@ const bindActionCreator = (actionCreator, dispatch, state) => {
        * const basicTableSetPage = (payload) => (dispatch, getState) => dispatch({ type: "SOME_ACTION_TYPE", payload })
        */
       return actionCreator.apply(this, arguments)(dispatch, getState)
-    } catch (e) {
+    } catch {
       /**
        * If the action returns an object, wrap it in a dispatch
        *
