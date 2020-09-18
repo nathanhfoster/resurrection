@@ -1,6 +1,7 @@
-import * as React from "react"
-import { useContext } from "../hooks"
-import { ContextConsumer } from "./"
+import * as React from 'react'
+import { usePrevious, useContext } from '../hooks'
+import { ContextConsumer } from './'
+import { shallowEquals } from '../utils'
 
 const bindActionCreator = (actionCreator, dispatch, state) => {
   const getState = () => state
@@ -48,15 +49,15 @@ const bindActionCreator = (actionCreator, dispatch, state) => {
  */
 
 const bindActionCreators = (actionCreators, dispatch, state) => {
-  if (typeof actionCreators === "function") {
+  if (typeof actionCreators === 'function') {
     return bindActionCreator(actionCreators, dispatch, state)
   }
 
-  if (typeof actionCreators !== "object" || actionCreators === null) {
+  if (typeof actionCreators !== 'object' || actionCreators === null) {
     throw new Error(
       `bindActionCreators expected an object or a function, instead received ${
-        actionCreators === null ? "null" : typeof actionCreators
-      }.`
+        actionCreators === null ? 'null' : typeof actionCreators
+      }.`,
     )
   }
 
@@ -64,13 +65,16 @@ const bindActionCreators = (actionCreators, dispatch, state) => {
 
   for (const key in actionCreators) {
     const action = actionCreators[key]
-    if (typeof action === "function") {
+    if (typeof action === 'function') {
       boundActionCreators[key] = bindActionCreator(action, dispatch, state)
     }
   }
 
   return boundActionCreators
 }
+
+const getMapStateToProps = (mapStateToProps, state, ownProps) =>
+  mapStateToProps ? mapStateToProps(state, ownProps) : null
 
 /**
  * function in charge of combining the factories, props and context to a React.Component
@@ -83,7 +87,7 @@ const connect = (mapStateToProps, mapDispatchToProps) =>
   /**
    * @param {React.node} Component
    */
-  (Component) =>
+  Component =>
     /**
      * that returns a function, the 'props' parameter gives use
      * any props that this component may have. If console.log this
@@ -91,7 +95,7 @@ const connect = (mapStateToProps, mapDispatchToProps) =>
      *
      * We will place all combined props here
      */
-    (ownProps) => {
+    ownProps => {
       /**
        * <ContextConsumer.Consumer>
        * {({ state, dispatch }) =>
@@ -105,21 +109,28 @@ const connect = (mapStateToProps, mapDispatchToProps) =>
        */
       const { state, dispatch } = useContext(ContextConsumer)
 
-      // Memoize globalState
-      const stateToProps = mapStateToProps
-        ? React.useMemo(() => mapStateToProps(state, ownProps), [
-            state,
-            ownProps,
-          ])
-        : null
+      // Memoize stateToProps
+      const [stateToProps, setStateProps] = React.useState(
+        getMapStateToProps(mapStateToProps, state, ownProps),
+      )
+
+      const prevStateToProps = usePrevious(stateToProps)
+
+      React.useLayoutEffect(() => {
+        if (prevStateToProps) {
+          const nextStateToProps = getMapStateToProps(mapStateToProps, state, ownProps)
+          if (!shallowEquals(prevStateToProps, nextStateToProps)) {
+            setStateProps(nextStateToProps)
+          }
+        }
+      }, [state])
 
       // Memoize globalDispatch
       const dispatchToProps = React.useMemo(
         () =>
           !mapDispatchToProps
             ? null
-            : mapDispatchToProps instanceof Function ||
-              typeof mapDispatchToProps === "function"
+            : mapDispatchToProps instanceof Function || typeof mapDispatchToProps === 'function'
             ? /**
                * pass dispatch and getState to the mapDispatchToProps function
                *
@@ -142,24 +153,24 @@ const connect = (mapStateToProps, mapDispatchToProps) =>
                *
                */
               bindActionCreators(mapDispatchToProps, dispatch, state),
-        [mapDispatchToProps, ownProps]
+        [stateToProps],
       )
 
       // Memoize the Component's combined props
-      const combinedComponentProps = React.useMemo(
-        () => ({
+      const renderComponent = React.useMemo(() => {
+        const combinedComponentProps = {
           ...ownProps,
           ...stateToProps,
           // not all components need to dispatch actions so its optional
           ...(mapDispatchToProps && {
             ...dispatchToProps,
           }),
-        }),
-        [ownProps, stateToProps, dispatchToProps]
-      )
+        }
+        // Pass all the key value combinedComponentProps to Component
+        return <Component {...combinedComponentProps} />
+      }, [stateToProps])
 
-      // Pass all the key value combinedComponentProps to Component
-      return <Component {...combinedComponentProps} />
+      return renderComponent
     }
 
 export default connect

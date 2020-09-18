@@ -40,10 +40,10 @@ const combineReducers = (reducers, initialState) => {
      * we iterate and pass the action to each reducer and this would return new
      * state if applicable.
      */
-    for (const reducer in reducers) {
-      if (reducers.hasOwnProperty(reducer)) {
-        const currentStateByKey = state[reducer]
-        const currentReducer = reducers[reducer]
+    for (const reducerKey in reducers) {
+      if (reducers.hasOwnProperty(reducerKey)) {
+        const currentStateByKey = state[reducerKey]
+        const currentReducer = reducers[reducerKey]
 
         const returnedStateByReducer = currentReducer(currentStateByKey, action)
 
@@ -51,7 +51,7 @@ const combineReducers = (reducers, initialState) => {
 
         hasStateChanged = hasStateChanged || areStateByKeyEqual
 
-        updatedStateByReducers[reducer] = returnedStateByReducer
+        updatedStateByReducers[reducerKey] = returnedStateByReducer
       }
     }
     return hasStateChanged ? updatedStateByReducers : state

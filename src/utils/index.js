@@ -1,11 +1,11 @@
-import actionTypes from "./actionTypes"
-import { combineReducers } from "./combineReducers"
-import isPlainObject from "./isPlainObject"
+import actionTypes from './actionTypes'
+import { combineReducers } from './combineReducers'
+import isPlainObject from './isPlainObject'
+import shallowEquals from './shallowEquals'
 
-const isAFunction = (object) =>
-  object instanceof Function || typeof object === "function"
+const isAFunction = object => object instanceof Function || typeof object === 'function'
 
-const isQuotaExceeded = (e) => {
+const isQuotaExceeded = e => {
   let quotaExceeded = false
   if (e) {
     if (e.code) {
@@ -15,7 +15,7 @@ const isQuotaExceeded = (e) => {
           break
         case 1014:
           // Firefox
-          if (e.name == "NS_ERROR_DOM_QUOTA_REACHED") {
+          if (e.name == 'NS_ERROR_DOM_QUOTA_REACHED') {
             quotaExceeded = true
           }
           break
@@ -30,10 +30,4 @@ const isQuotaExceeded = (e) => {
   return quotaExceeded
 }
 
-export {
-  actionTypes,
-  combineReducers,
-  isPlainObject,
-  isAFunction,
-  isQuotaExceeded,
-}
+export { actionTypes, combineReducers, isPlainObject, isAFunction, isQuotaExceeded, shallowEquals }
