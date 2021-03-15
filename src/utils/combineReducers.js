@@ -2,9 +2,9 @@ import isFunction from './isFunction'
 /**
  * This function returns one reducer if it is a Function
  * otherwise, it combines an object of reducer functions
- * @param {Function|Object} reducers - first object to compare
- * @param {Object} initialState - the initial state of the reducer
- * @returns {Array.<Object, Function|Object.<String, Function>>} - an array of
+ * @param {Reducer|Object.<string, Reducer>} reducers - reducer(s) to combine
+ * @param {ReducerState} initialState - the initial state of the reducer
+ * @returns {Array.<ReducerState, Reducer|CombinedReducers>} - an array of
  * [globalState, globalReducer]
  * */
 const combineReducers = (reducers, initialState) => {
@@ -15,9 +15,9 @@ const combineReducers = (reducers, initialState) => {
 
   /**
    * Global reducer function; this is passed to the useReducer hook
-   * @param {Object} state - reducer state
-   * @param {Object} action - action
-   * @returns {Object} - combined reducers
+   * @param {ReducerState} state - reducer state
+   * @param {ReducerAction} action - action
+   * @returns {Array.<ReducerState, Reducer|CombinedReducers>} - combined reducers
    */
   const globalReducerFunction = (state, action) => {
     let hasStateChanged = false

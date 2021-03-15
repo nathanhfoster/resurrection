@@ -3,16 +3,21 @@ import usePreviousValue from './usePreviousValue'
 import { isFunction, shallowEquals } from '../utils'
 import { ContextConsumer } from '../provider'
 
+/**
+ * This function allows the state to be controlled by a HOC by overwritting it with props
+ * @param {*} nextSelector - state object
+ * @param {*} previousSelector - props to make the state controlled from a HOC
+ * @returns {Boolean} - whether the two selected states are equal
+ */
 const defaultIsEqual = (nextSelector, previousSelector) =>
   shallowEquals(previousSelector, nextSelector)
 
 /**
  * This hook simulates Redux's useSelector hook
- * @param {Function} mapStateToSelector - similar to mapStateProps.
- * @param {Boolean|Function=} isEqual - a Boolean that determines
- * if the component should be memoized
- * or an equality Function that determines if the selector's returned value should be recomputed
- * @param {Object=} contextConsumer - the context consumer
+ * @param {MapStateToSelector} mapStateToSelector - similar to mapStateProps.
+ * @param {SelectorEqualityFunction=} isEqual - determines
+ * if the selector's returned value should be recomputed
+ * @param {React.ContextConsumer=} contextConsumer - the context consumer
  * @returns {React.FunctionComponent} - a memoized component
  * */
 

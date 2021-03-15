@@ -1,8 +1,9 @@
-import { useEffect } from "react"
-import { connect } from "../../store"
-import { isAFunction } from "../utils"
+import { useEffect } from 'react'
+import { connect } from '../../store'
+import { isAFunction } from '../utils'
+import './types'
 
-const isQuotaExceeded = (e) => {
+const isQuotaExceeded = e => {
   let quotaExceeded = false
   if (e) {
     if (e.code) {
@@ -12,7 +13,7 @@ const isQuotaExceeded = (e) => {
           break
         case 1014:
           // Firefox
-          if (e.name == "NS_ERROR_DOM_QUOTA_REACHED") {
+          if (e.name == 'NS_ERROR_DOM_QUOTA_REACHED') {
             quotaExceeded = true
           }
           break
@@ -27,14 +28,9 @@ const isQuotaExceeded = (e) => {
   return quotaExceeded
 }
 
-const mapStateToProps = (state) => ({ state })
+const mapStateToProps = state => ({ state })
 
-const Persistor = ({
-  persistKey = "ReduxState",
-  debounce = 400,
-  whenQuotaExceeds,
-  state,
-}) => {
+const Persistor = ({ persistKey = 'ReduxState', debounce = 400, whenQuotaExceeds, state }) => {
   // persist storage if persistConfig exists
   useEffect(() => {
     if (persistKey) {
@@ -54,10 +50,7 @@ const Persistor = ({
           localStorage.setItem(persistKey, stringifiedState)
         } catch (e) {
           if (isQuotaExceeded(e) && isAFunction(whenQuotaExceeds)) {
-            localStorage.setItem(
-              persistKey,
-              JSON.stringify(whenQuotaExceeds(state))
-            )
+            localStorage.setItem(persistKey, JSON.stringify(whenQuotaExceeds(state)))
           }
         }
       }, debounce)
