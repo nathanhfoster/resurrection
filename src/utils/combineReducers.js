@@ -1,38 +1,27 @@
-import { isAFunction } from "./"
-
+import isFunction from './isFunction'
+/**
+ * This function returns one reducer if it is a Function
+ * otherwise, it combines an object of reducer functions
+ * @param {Function|Object} reducers - first object to compare
+ * @param {Object} initialState - the initial state of the reducer
+ * @returns {Array.<Object, Function|Object.<String, Function>>} - an array of
+ * [globalState, globalReducer]
+ * */
 const combineReducers = (reducers, initialState) => {
-  // If a single reducer
-  if (isAFunction(reducers)) {
-    const reducerFunction = (state, action) => {
-      let hasStateChanged = false
-      let updatedStateByReducers = {}
-
-      const currentStateByKey = state
-      const currentReducer = reducers
-
-      const returnedStateByReducer = currentReducer(currentStateByKey, action)
-
-      const areStateByKeyEqual = returnedStateByReducer !== currentStateByKey
-
-      hasStateChanged = hasStateChanged || areStateByKeyEqual
-
-      updatedStateByReducers = returnedStateByReducer
-
-      return hasStateChanged ? updatedStateByReducers : state
-    }
-
-    return [initialState || {}, reducerFunction]
+  // If a single reducer return
+  if (isFunction(reducers)) {
+    return [initialState || {}, reducers]
   }
 
   /**
    * Global reducer function; this is passed to the useReducer hook
-   *
-   * @param {object} state
-   * @param {object} action
+   * @param {Object} state - reducer state
+   * @param {Object} action - action
+   * @returns {Object} - combined reducers
    */
-  const reducerFunction = (state, action) => {
+  const globalReducerFunction = (state, action) => {
     let hasStateChanged = false
-    let updatedStateByReducers = {}
+    const updatedStateByReducers = {}
 
     /**
      * this is where dispatching happens;
@@ -40,8 +29,9 @@ const combineReducers = (reducers, initialState) => {
      * we iterate and pass the action to each reducer and this would return new
      * state if applicable.
      */
-    for (const reducerKey in reducers) {
-      if (reducers.hasOwnProperty(reducerKey)) {
+    for (let i = 0; i < reducers.length; i++) {
+      const reducerKey = reducers[i]
+      if (Object.prototype.hasOwnProperty.call(reducers, reducerKey)) {
         const currentStateByKey = state[reducerKey]
         const currentReducer = reducers[reducerKey]
 
@@ -59,26 +49,23 @@ const combineReducers = (reducers, initialState) => {
   let combinedStateAndReducers
 
   if (initialState) {
-    combinedStateAndReducers = [initialState, reducerFunction]
+    combinedStateAndReducers = [initialState, globalReducerFunction]
   } else {
     // set default state returned by reducer and its reducer
-    let globalState = {}
-
-    for (const [key, reducer] of Object.entries(reducers)) {
-      if (isAFunction(reducer)) {
-        globalState[key] = reducer(undefined, {
-          type: "__@@PLACEHOLDER_ACTION__",
+    const globalState = Object.entries(reducers).reduce((acc, [key, reducer]) => {
+      if (isFunction(reducer)) {
+        acc[key] = reducer(undefined, {
+          type: '__@@PLACEHOLDER_ACTION__',
         })
       } else {
-        console.error(`${reducer} is not a function`)
+        throw new Error(`${reducer} is not a function`)
       }
-    }
-
-    // return the initial state and the global reducer
-    combinedStateAndReducers = [globalState, reducerFunction]
+      return acc
+    }, {})
+    combinedStateAndReducers = [globalState, globalReducerFunction]
   }
 
   return combinedStateAndReducers
 }
 
-export { combineReducers }
+export default combineReducers
