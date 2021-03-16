@@ -1,5 +1,5 @@
 {
-  "name": "react-npm-package-boilerplate",
+  "name": "resurrection",
   "version": "1.0.5",
   "description": "State management library that follows redux and redux-thunk architecture but uses React's latest useContext and useReducer hooks.",
   "main": "./dist/index.js",

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { connect } from '../../store'
-import { isAFunction } from '../utils'
-import './types'
+import isAFunction from '../utils/isFunction'
 
 const isQuotaExceeded = e => {
   let quotaExceeded = false
@@ -30,7 +30,7 @@ const isQuotaExceeded = e => {
 
 const mapStateToProps = state => ({ state })
 
-const Persistor = ({ persistKey = 'ReduxState', debounce = 400, whenQuotaExceeds, state }) => {
+const Persistor = ({ persistKey, debounce, whenQuotaExceeds, state }) => {
   // persist storage if persistConfig exists
   useEffect(() => {
     if (persistKey) {
@@ -63,5 +63,14 @@ const Persistor = ({ persistKey = 'ReduxState', debounce = 400, whenQuotaExceeds
 
   return null
 }
+
+Persistor.propTypes = {
+  persistKey: PropTypes.string.isRequired,
+  debounce: PropTypes.number.isRequired,
+  whenQuotaExceeds: PropTypes.func,
+  state: PropTypes.objectOf(PropTypes.object),
+}
+
+Persistor.defaultProps = { persistKey: 'ReduxState', debounce: 400 }
 
 export default connect(mapStateToProps)(Persistor)

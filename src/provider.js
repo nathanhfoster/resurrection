@@ -1,6 +1,6 @@
-import React, { createContext, useLayoutEffect, useMemo } from 'react'
+import React, { createContext, useRef, useLayoutEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { combineReducers, shallowEquals, defaultInitializer } from './utils'
+import { combineReducers, shallowEquals, defaultInitializer, getRandomInt } from './utils'
 import useLazyMemo from './hooks/useLazyMemo'
 import useReducerWithThunk from './hooks/useReducerWithThunk'
 import './types'
@@ -25,6 +25,7 @@ const StateProvider = createContext(null)
  * @returns {React.ContextProvider} - a React Context with the store as it's value
  */
 const ContextStore = ({
+  name,
   context: Context,
   reducers,
   initialState,
@@ -37,6 +38,8 @@ const ContextStore = ({
 
   // setup useReducer with the returned values of the combineReducers
   const [state, dispatch] = useReducerWithThunk(mainReducer, mainState, initializer, props)
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
 
   // Update store object to potentially access it outside of a component
   useLayoutEffect(() => {
@@ -60,10 +63,28 @@ const ContextStore = ({
     [state, dispatch],
   )
 
+  const warnedAboutMissingDevToolRef = useRef(false)
+
+  useLayoutEffect(() => {
+    // eslint-disable-next-line
+    if (typeof window !== 'undefined' && window._REACT_CONTEXT_DEVTOOL) {
+      // eslint-disable-next-line
+      window._REACT_CONTEXT_DEVTOOL({ id: name, displayName: name, values: contextStore })
+    } else if (!warnedAboutMissingDevToolRef.current) {
+      warnedAboutMissingDevToolRef.current = true
+      // eslint-disable-next-line
+      console.info(
+        '%cConsider installing "React Context DevTool" in order to inspect the Wisteria state',
+        'color:#1dbf73',
+      )
+    }
+  }, [contextStore])
+
   return <Context.Provider value={contextStore}>{children}</Context.Provider>
 }
 
 ContextStore.propTypes = {
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   context: PropTypes.shape({}),
   reducers: PropTypes.oneOfType([PropTypes.func, PropTypes.objectOf(PropTypes.func)]).isRequired,
   initialState: PropTypes.shape({}),
@@ -88,6 +109,7 @@ ContextStore.propTypes = {
 }
 
 ContextStore.defaultProps = {
+  name: getRandomInt(0, 1000),
   context: StateProvider,
   initializer: defaultInitializer,
   initialState: undefined,

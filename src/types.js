@@ -4,7 +4,8 @@
 
 /**
  * @typedef {Object} ContexStoreProps
- * @property {Object} context - The last reference key to the form stored in a Redux reducer
+ * @property {String|Number=} name - the name of the ContextStore
+ * @property {Object} context - the last reference key to the form stored in a Redux reducer
  * @property {Function|Object} reducers - first object to compare
  * @property {Object=} initialState - the initial state of the reducer
  * @property {Object=} props - passed from an HOC that controlls the state of the store
