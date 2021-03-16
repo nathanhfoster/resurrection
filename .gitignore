@@ -1,22 +1,14 @@
-# Logs
-logs
-*.log
-npm-debug.log*
+node_modules
+dist/*.js
+examples/dist/*.js
+coverage
 
-# Dependency directories
-node_modules/
-jspm_packages/
+.idea
 
-# Typescript v1 declaration files
-typings/
+# lock files
+package-lock.json
+yarn.lock
 
-# Optional npm cache directory
-.npm
-
-# Optional eslint cache
-.eslintcache
-
-# Output of 'npm pack'
-*.tgz
-
+# others
 .DS_Store
+yarn-error.log
