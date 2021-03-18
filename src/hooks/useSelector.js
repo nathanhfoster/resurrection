@@ -1,7 +1,7 @@
-import { useContext, useMemo } from 'react';
-import usePreviousValue from './usePreviousValue';
-import { isFunction, shallowEquals } from '../utils';
-import { ContextConsumer } from '../provider';
+import { useContext, useMemo } from 'react'
+import usePreviousValue from './usePreviousValue'
+import { isFunction, shallowEquals } from '../utils'
+import { ContextConsumer } from '../provider'
 
 /**
  * This function allows the state to be controlled by a HOC by overwritting it with props
@@ -9,8 +9,8 @@ import { ContextConsumer } from '../provider';
  * @param {*} previousSelector - props to make the state controlled from a HOC
  * @returns {Boolean} - whether the two selected states are equal
  */
-const defaultIsEqual = (nextSelector,
-  previousSelector) => shallowEquals(previousSelector, nextSelector);
+const defaultIsEqual = (nextSelector, previousSelector) =>
+  shallowEquals(previousSelector, nextSelector)
 
 /**
  * This hook simulates Redux's useSelector hook
@@ -26,24 +26,24 @@ const useSelector = (
   isEqual = defaultIsEqual,
   contextConsumer = ContextConsumer,
 ) => {
-  const { state } = useContext(contextConsumer);
+  const { state } = useContext(contextConsumer)
 
   const previousSelector = usePreviousValue(
     isFunction(mapStateToSelector) ? mapStateToSelector(state) : null,
-  );
+  )
 
   const selector = useMemo(() => {
     if (isEqual && previousSelector) {
-      const nextSelector = mapStateToSelector(state);
-      const shouldUpdate = !isEqual(nextSelector, previousSelector);
+      const nextSelector = mapStateToSelector(state)
+      const shouldUpdate = !isEqual(nextSelector, previousSelector)
       if (shouldUpdate) {
-        return nextSelector;
+        return nextSelector
       }
     }
-    return previousSelector;
-  }, [state, isEqual]);
+    return previousSelector
+  }, [state, isEqual])
 
-  return selector;
-};
+  return selector
+}
 
-export default useSelector;
+export default useSelector

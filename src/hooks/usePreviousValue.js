@@ -1,22 +1,22 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react'
 
 /**
  * On each render returns the previous value of the given variable/constant
  * @param {*} value - any value
  * @returns {*} any previous value
  */
-const usePreviousValue = (value) => {
-  const prevValue = useRef(value);
+const usePreviousValue = value => {
+  const prevValue = useRef(value)
 
   useEffect(() => {
-    prevValue.current = value;
+    prevValue.current = value
 
     return () => {
-      prevValue.current = undefined;
-    };
-  });
+      prevValue.current = undefined
+    }
+  })
 
-  return prevValue.current;
-};
+  return prevValue.current
+}
 
-export default usePreviousValue;
+export default usePreviousValue
