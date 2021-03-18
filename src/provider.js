@@ -1,6 +1,12 @@
 import React, { createContext, useRef, useLayoutEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { combineReducers, shallowEquals, defaultInitializer, getRandomInt } from './utils'
+import {
+  combineReducers,
+  shallowEquals,
+  defaultInitializer,
+  defaultReducer,
+  getRandomInt,
+} from './utils'
 import useLazyMemo from './hooks/useLazyMemo'
 import useReducerWithThunk from './hooks/useReducerWithThunk'
 import './types'
@@ -92,7 +98,7 @@ const ContextStore = ({
 ContextStore.propTypes = {
   name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   context: PropTypes.shape({}),
-  reducers: PropTypes.oneOfType([PropTypes.func, PropTypes.objectOf(PropTypes.func)]).isRequired,
+  reducers: PropTypes.oneOfType([PropTypes.func, PropTypes.objectOf(PropTypes.func)]),
   initialState: PropTypes.shape({}),
   props: PropTypes.shape({}),
   initializer: PropTypes.func,
@@ -117,6 +123,7 @@ ContextStore.propTypes = {
 ContextStore.defaultProps = {
   name: getRandomInt(0, 1000),
   context: StateProvider,
+  reducers: defaultReducer,
   initializer: defaultInitializer,
   initialState: undefined,
   props: undefined,
