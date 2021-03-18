@@ -5,6 +5,8 @@ import useLazyMemo from './hooks/useLazyMemo'
 import useReducerWithThunk from './hooks/useReducerWithThunk'
 import './types'
 
+const inDevelopmentMode = process.env.NODE_ENV === 'development'
+
 const storeFactory = () => ({
   isReady: false,
   dispatch: () => {
@@ -66,11 +68,15 @@ const ContextStore = ({
   const warnedAboutMissingDevToolRef = useRef(false)
 
   useLayoutEffect(() => {
-    // eslint-disable-next-line
-    if (typeof window !== 'undefined' && window._REACT_CONTEXT_DEVTOOL) {
+    if (
+      typeof window !== 'undefined' &&
+      // eslint-disable-next-line
+      window._REACT_CONTEXT_DEVTOOL &&
+      inDevelopmentMode
+    ) {
       // eslint-disable-next-line
       window._REACT_CONTEXT_DEVTOOL({ id: name, displayName: name, values: contextStore })
-    } else if (!warnedAboutMissingDevToolRef.current) {
+    } else if (!warnedAboutMissingDevToolRef.current && inDevelopmentMode) {
       warnedAboutMissingDevToolRef.current = true
       // eslint-disable-next-line
       console.info(

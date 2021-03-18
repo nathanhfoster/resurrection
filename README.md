@@ -35,9 +35,9 @@ const someReducer = (state = DEFAULT_STATE, action) => {
 }
 
 const SomeProvider = () => (
-  /* rootReducer can be a single reducer function or an object of reducers */
-  /* object of reducers example: const rootReducer = { someReducer, someOtherReducer} */
-  <ContextProvider rootReducer={someReducer}>
+  /* reducers can be a single reducer function or an object of reducers */
+  /* object of reducers example: const reducers = { someReducer, someOtherReducer} */
+  <ContextProvider reducers={someReducer}>
     <SomeProviderChild />
   </ContextProvider>
 )
