@@ -1,4 +1,4 @@
-import React, { createContext, useRef, useLayoutEffect, useMemo } from 'react'
+import React, { createContext, useCallback, useRef, useLayoutEffect, useMemo } from 'react'
 import PropTypes from 'prop-types'
 import {
   combineReducers,
@@ -42,7 +42,8 @@ const ContextStore = ({
   children,
 }) => {
   // call the function once to get initial state and global reducer
-  const [mainState, mainReducer] = useLazyMemo(() => combineReducers(reducers, initialState))
+  const getInitialMainState = useCallback(() => combineReducers(reducers, initialState), [])
+  const [mainState, mainReducer] = useLazyMemo(getInitialMainState)
 
   // setup useReducer with the returned values of the combineReducers
   const [state, dispatch] = useReducerWithThunk(mainReducer, mainState, initializer, props)
