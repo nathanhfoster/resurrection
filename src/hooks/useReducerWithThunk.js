@@ -1,5 +1,6 @@
-import { useMemo, useReducer, useRef, useCallback, useEffect } from 'react'
+import { useReducer, useRef, useCallback, useEffect } from 'react'
 import { isFunction, getDerivedStateFromProps, defaultReducer, defaultInitializer } from '../utils'
+import useLazyMemo from './useLazyMemo'
 
 /**
  * Mimics React.Component this.setState
@@ -18,7 +19,9 @@ const setStateHookReducer = defaultReducer
  * @returns {Array.<ReducerState, Thunk>} - the new useReducer hook
  */
 const useReducerWithThunk = (reducer, initialState, initializer = defaultInitializer, props) => {
-  const initialHookState = useMemo(() => getDerivedStateFromProps(initialState, props), [])
+  // Get initial hook state once
+  const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, props), [])
+  const initialHookState = useLazyMemo(getInitialHookState)
 
   const [hookState, setHookState] = useReducer(setStateHookReducer, initialHookState, initializer)
 
