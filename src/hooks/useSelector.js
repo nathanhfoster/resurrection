@@ -5,7 +5,7 @@ import { ContextConsumer } from '../provider'
 
 /**
  * This function allows the state to be controlled by a HOC by overwritting it with props
- * @param {*} nextSelector - state object
+ * @param {ReduxState} nextSelector - state object
  * @param {*} previousSelector - props to make the state controlled from a HOC
  * @returns {Boolean} - whether the two selected states are equal
  */
