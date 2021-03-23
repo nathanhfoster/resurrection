@@ -13,20 +13,33 @@ npm install --save resurrection
 ## Usage
 
 ```jsx
-// Higher Order Component (HOC)
-import React from "react"
-import { ContextProvider } from "resurrection"
-import SomeProviderChild from "./SomeProviderChild"
+// Child Component
+import React from 'react'
+import { connect } from 'resurrection'
+
+const SomeProviderChild = ({ someKeyFromMyStore }) => (
+  <div>{someKeyFromMyStore}</div>
+)
+
+const mapStateToProps = ({ someKeyFromMyStore }) => ({ someKeyFromMyStore })
+
+export default connect(mapStateToProps)(SomeProviderChild)
+
+
+// Higher Order Component (HoC)
+import React from 'react'
+import { ContextProvider } from 'resurrection'
+import SomeProviderChild from './SomeProviderChild'
 
 const DEFAULT_STATE = {
-  someKeyFromMyStore: "Hello World",
+  someKeyFromMyStore: 'Hello World'
 }
 
 const someReducer = (state = DEFAULT_STATE, action) => {
   const { type, payload } = action
 
   switch (type) {
-    case "SOME_ACTION_TYPE":
+    case 'SOME_ACTION_TYPE':
       return { ...state, someKeyFromMyStore: payload }
 
     default:
@@ -43,24 +56,6 @@ const SomeProvider = () => (
 )
 
 export default SomeProvider
-```
-
-```jsx
-// Child Component
-import React, { Component } from "react"
-import { connect } from "resurrection"
-
-const mapStateToProps = ({ someKeyFromMyStore }) => ({
-  somePropKey: someKeyFromMyStore,
-})
-
-const SomeProviderChild = ({ somePropKey }) => {
-  return (
-    <div>{`I recieved ${somePropKey} prop from my store through the connect API`}</div>
-  )
-}
-
-export default connect(mapStateToProps)(SomeProviderChild)
 ```
 
 ## License
