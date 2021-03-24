@@ -6,4 +6,4 @@
 
 const isFunction = object =>  object instanceof Function || typeof object === 'function'
 
-export default isFunction
+export default isFunction;

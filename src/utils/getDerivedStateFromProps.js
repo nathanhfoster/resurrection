@@ -1,7 +1,7 @@
 /**
  * This function allows the state to be controlled by an HOC by overwritting it with props
  * @param {ReducerState} state - state object
- * @param {ComponentProps|Object=} props - props to make the state controlled from a HOC
+ * @param {ComponentProps|Object=} props - props to make the state controlled from an HOC
  * @returns {ReducerState} - the new merged state
  */
 
@@ -12,6 +12,6 @@ const getDerivedStateFromProps = (state, props) => ({
   ...(props && {
     ...props,
   }),
-})
+});
 
-export default getDerivedStateFromProps
+export default getDerivedStateFromProps;
