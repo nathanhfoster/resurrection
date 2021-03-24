@@ -53,5 +53,22 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "keywords": [
+    "resurrection",
+    "redux",
+    "state",
+    "management",
+    "recoil",
+    "redux-thunk",
+    "react-redux",
+    "react",
+    "hooks",
+    "context",
+    "useReducer"
+  ],
+  "bugs": {
+    "url": "https://github.com/strap8/resurrection/issues"
+  },
+  "homepage": "https://github.com/strap8/resurrection#readme"
 }
