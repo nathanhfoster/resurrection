@@ -1,4 +1,4 @@
-import getDerivedStateFromProps from './getDerivedStateFromProps';
+import getDerivedStateFromProps from './getDerivedStateFromProps'
 /**
  * Mimics React.Component this.setState
  * @param {ReducerState} state - current reducer state
@@ -8,4 +8,4 @@ import getDerivedStateFromProps from './getDerivedStateFromProps';
 const defaultReducer = (prevState, action) =>
   getDerivedStateFromProps(prevState, action)
 
-export default defaultReducer;
+export default defaultReducer

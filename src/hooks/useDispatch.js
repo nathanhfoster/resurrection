@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import { ContextConsumer } from '../provider';
+import { useContext } from 'react'
+import { ContextConsumer } from '../provider'
 
 /**
  * This hook simulates Redux's useDispatch hook
@@ -9,4 +9,4 @@ import { ContextConsumer } from '../provider';
 const useDispatch = (contextConsumer = ContextConsumer) =>
   useContext(contextConsumer).dispatch
 
-export default useDispatch;
+export default useDispatch

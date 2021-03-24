@@ -14,4 +14,4 @@ const getDerivedStateFromProps = (state, props) => ({
   })
 })
 
-export default getDerivedStateFromProps;
+export default getDerivedStateFromProps
