@@ -65,7 +65,17 @@
     "react",
     "hooks",
     "context",
-    "useReducer"
+    "reducer",
+    "useReducer",
+    "useContext",
+    "useSelector",
+    "useDispatch",
+    "dispatch",
+    "flux",
+    "predictable",
+    "functional",
+    "immutable",
+    "elm"
   ],
   "bugs": {
     "url": "https://github.com/strap8/resurrection/issues"
