@@ -1,6 +1,6 @@
 # resurrection
 
-> State management library that follows redux and redux-thunk architecture but uses React&#x27;s latest useContext and useReducer hooks.
+> State management library that follows Flux / Redux / Thunk architecture but uses React&#x27;s latest useContext and useReducer hooks.
 
 [![NPM](https://img.shields.io/npm/v/resurrection.svg)](https://www.npmjs.com/package/resurrection) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
