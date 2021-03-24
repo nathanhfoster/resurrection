@@ -13,7 +13,7 @@ import useLazyMemo from './useLazyMemo'
  * @param {ReducerState} nextState - the state to overwrite
  * @returns {ReducerState} - the next state for the reducer
  */
-const setStateHookReducer = defaultReducer
+const setStateHookReducer = defaultReducer;
 
 /**
  * Augments React's useReducer() hook so that the action dispatcher supports thunks.
@@ -43,9 +43,9 @@ const useReducerWithThunk = (
   )
 
   // State management
-  const state = useRef(hookState)
+  const state = useRef(hookState);
 
-  const getState = useCallback(() => state.current, [state])
+  const getState = useCallback(() => state.current, [state]);
 
   const setState = useCallback(
     (newState) => {
@@ -69,21 +69,21 @@ const useReducerWithThunk = (
   const dispatch = useCallback(
     (action) => {
       if (isFunction(action)) {
-        return action(dispatch, getState)
+        return action(dispatch, getState);
       }
-      return setState(reduce(action))
+      return setState(reduce(action));
     },
     [getState, setState, reduce]
   )
 
   useEffect(() => {
     if (state.current) {
-      state.current = getDerivedStateFromProps(state.current, props)
-      setHookState(props)
+      state.current = getDerivedStateFromProps(state.current, props);
+      setHookState(props);
     }
-  }, [props])
+  }, [props]);
 
-  return [hookState, dispatch]
-}
+  return [hookState, dispatch];
+};
 
-export default useReducerWithThunk
+export default useReducerWithThunk;

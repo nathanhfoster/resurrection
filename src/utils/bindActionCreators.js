@@ -24,6 +24,7 @@
 const bindActionCreator = (dispatch) => (actionCreator) => (...args) =>
   dispatch(actionCreator?.apply?.(this, args) || actionCreator)
 
+
 /**
  * This augments actions to dispatch other actions and passes (dispatch, getState)
  * @param {Object} mapDispatchToProps - actions to be passed as props
@@ -47,7 +48,7 @@ const BindActionCreators = (mapDispatchToProps, dispatch) => {
     {}
   )
 
-  return boundActionCreators
-}
+  return boundActionCreators;
+};
 
-export default BindActionCreators
+export default BindActionCreators;
