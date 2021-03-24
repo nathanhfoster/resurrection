@@ -17,5 +17,5 @@ export {
   getDerivedStateFromProps,
   getRandomInt,
   isFunction,
-  shallowEquals,
+  shallowEquals
 }

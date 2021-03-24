@@ -13,7 +13,9 @@ import './types'
  * @returns {React.memo|React.FunctionComponent} - a connected component
  * */
 
-const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => Component => {
+const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
+  Component
+) => {
   const {
     context = ContextConsumer,
     pure = true,
@@ -21,12 +23,13 @@ const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => Co
     // areStatesEqual = shallowEquals,
     // areOwnPropsEqual = shallowEquals,
     areStatePropsEqual = shallowEquals,
-    areMergedPropsEqual = shallowEquals,
+    areMergedPropsEqual = shallowEquals
     // forwardRef = false,
   } = options || {}
   // Conditionally memoize Component
-  const MemoizedComponent = pure === true ? memo(Component, areStatePropsEqual) : Component
-  return ownProps => {
+  const MemoizedComponent =
+    pure === true ? memo(Component, areStatePropsEqual) : Component
+  return (ownProps) => {
     const { state, dispatch } = useContext(context)
 
     const stateToProps = useMemo(() => {
@@ -50,28 +53,30 @@ const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => Co
 
     const handleMergeProps = useCallback(
       (stateProps, dispatchProps, props) => {
-        const getMergedProps = merge =>
+        const getMergedProps = (merge) =>
           isFunction(merge)
             ? merge(stateProps, dispatchProps, props)
             : { ...props, ...stateProps, ...dispatchProps }
 
         const nextMergedProps = getMergedProps(mergeProps)
 
-        if (!pure || (prevMergeProps && !areMergedPropsEqual(nextMergedProps, prevMergeProps))) {
+        if (
+          !pure ||
+          (prevMergeProps &&
+            !areMergedPropsEqual(nextMergedProps, prevMergeProps))
+        ) {
           return nextMergedProps
         }
 
         return getMergedProps(prevMergeProps)
       },
-      [prevMergeProps],
+      [prevMergeProps]
     )
 
-    const mergedProps = useMemo(() => handleMergeProps(stateToProps, dispatchToProps, ownProps), [
-      ownProps,
-      handleMergeProps,
-      stateToProps,
-      dispatchToProps,
-    ])
+    const mergedProps = useMemo(
+      () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
+      [ownProps, handleMergeProps, stateToProps, dispatchToProps]
+    )
 
     return <MemoizedComponent {...mergedProps} dispatch={dispatch} />
   }

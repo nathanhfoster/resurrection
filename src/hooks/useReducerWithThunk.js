@@ -1,5 +1,10 @@
 import { useReducer, useRef, useCallback, useEffect } from 'react'
-import { isFunction, getDerivedStateFromProps, defaultReducer, defaultInitializer } from '../utils'
+import {
+  isFunction,
+  getDerivedStateFromProps,
+  defaultReducer,
+  defaultInitializer
+} from '../utils'
 import useLazyMemo from './useLazyMemo'
 
 /**
@@ -18,12 +23,24 @@ const setStateHookReducer = defaultReducer
  * @param {ComponentProps=} props - props to make the state controlled from a HOC
  * @returns {Array.<ReducerState, Thunk>} - the new useReducer hook
  */
-const useReducerWithThunk = (reducer, initialState, initializer = defaultInitializer, props) => {
+const useReducerWithThunk = (
+  reducer,
+  initialState,
+  initializer = defaultInitializer,
+  props
+) => {
   // Get initial hook state once
-  const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, props), [])
+  const getInitialHookState = useCallback(
+    () => getDerivedStateFromProps(initialState, props),
+    []
+  )
   const initialHookState = useLazyMemo(getInitialHookState)
 
-  const [hookState, setHookState] = useReducer(setStateHookReducer, initialHookState, initializer)
+  const [hookState, setHookState] = useReducer(
+    setStateHookReducer,
+    initialHookState,
+    initializer
+  )
 
   // State management
   const state = useRef(hookState)
@@ -31,29 +48,32 @@ const useReducerWithThunk = (reducer, initialState, initializer = defaultInitial
   const getState = useCallback(() => state.current, [state])
 
   const setState = useCallback(
-    newState => {
+    (newState) => {
       const nextState = getDerivedStateFromProps(newState, props)
       state.current = nextState
       setHookState(nextState)
     },
-    [props, setHookState],
+    [props, setHookState]
   )
 
   // Reducer
-  const reduce = useCallback(action => reducer(getState(), action), [reducer, getState])
+  const reduce = useCallback((action) => reducer(getState(), action), [
+    reducer,
+    getState
+  ])
 
   /** Augmented dispatcher
    * @param {Action|ThunkActionDispatch} action - action
    * @returns {Thunk} - the new dispatch API
    */
   const dispatch = useCallback(
-    action => {
+    (action) => {
       if (isFunction(action)) {
         return action(dispatch, getState)
       }
       return setState(reduce(action))
     },
-    [getState, setState, reduce],
+    [getState, setState, reduce]
   )
 
   useEffect(() => {

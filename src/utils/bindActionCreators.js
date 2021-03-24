@@ -21,7 +21,7 @@
  * function as actionCreators, the return value will also be a single
  * function.
  */
-const bindActionCreator = dispatch => actionCreator => (...args) =>
+const bindActionCreator = (dispatch) => (actionCreator) => (...args) =>
   dispatch(actionCreator?.apply?.(this, args) || actionCreator)
 
 /**
@@ -36,13 +36,16 @@ const BindActionCreators = (mapDispatchToProps, dispatch) => {
     throw new Error(
       `bindActionCreators expected an object or a function, instead received ${
         mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
-      }.`,
+      }.`
     )
   }
-  const boundActionCreators = Object.entries(mapDispatchToProps).reduce((acc, [key, action]) => {
-    acc[key] = bindActionCreator(dispatch)(action)
-    return acc
-  }, {})
+  const boundActionCreators = Object.entries(mapDispatchToProps).reduce(
+    (acc, [key, action]) => {
+      acc[key] = bindActionCreator(dispatch)(action)
+      return acc
+    },
+    {}
+  )
 
   return boundActionCreators
 }

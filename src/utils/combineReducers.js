@@ -52,16 +52,19 @@ const combineReducers = (reducers, initialState) => {
     combinedStateAndReducers = [initialState, globalReducerFunction]
   } else {
     // set default state returned by reducer and its reducer
-    const globalState = Object.entries(reducers).reduce((acc, [key, reducer]) => {
-      if (isFunction(reducer)) {
-        acc[key] = reducer(undefined, {
-          type: '__@@PLACEHOLDER_ACTION__',
-        })
-      } else {
-        throw new Error(`${reducer} is not a function`)
-      }
-      return acc
-    }, {})
+    const globalState = Object.entries(reducers).reduce(
+      (acc, [key, reducer]) => {
+        if (isFunction(reducer)) {
+          acc[key] = reducer(undefined, {
+            type: '__@@PLACEHOLDER_ACTION__'
+          })
+        } else {
+          throw new Error(`${reducer} is not a function`)
+        }
+        return acc
+      },
+      {}
+    )
     combinedStateAndReducers = [globalState, globalReducerFunction]
   }
 

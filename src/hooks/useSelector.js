@@ -24,12 +24,12 @@ const defaultIsEqual = (nextSelector, previousSelector) =>
 const useSelector = (
   mapStateToSelector,
   isEqual = defaultIsEqual,
-  contextConsumer = ContextConsumer,
+  contextConsumer = ContextConsumer
 ) => {
   const { state } = useContext(contextConsumer)
 
   const previousSelector = usePreviousValue(
-    isFunction(mapStateToSelector) ? mapStateToSelector(state) : null,
+    isFunction(mapStateToSelector) ? mapStateToSelector(state) : null
   )
 
   const selector = useMemo(() => {

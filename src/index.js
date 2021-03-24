@@ -1,4 +1,9 @@
-import { ContextConsumer, ContextProvider, MemoizedContextProvider, store } from './provider'
+import {
+  ContextConsumer,
+  ContextProvider,
+  MemoizedContextProvider,
+  store
+} from './provider'
 import connect from './connect'
 import useDispatch from './hooks/useDispatch'
 import useLazyMemo from './hooks/useLazyMemo'
@@ -17,5 +22,5 @@ export {
   usePreviousValue,
   useReducerWithThunk,
   useSelector,
-  store,
+  store
 }

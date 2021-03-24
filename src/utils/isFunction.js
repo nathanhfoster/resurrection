@@ -4,6 +4,7 @@
  * @returns {Boolean} - if the obejct is a boolean
  * */
 
-const isFunction = object =>  object instanceof Function || typeof object === 'function'
+const isFunction = (object) =>
+  object instanceof Function || typeof object === 'function'
 
 export default isFunction

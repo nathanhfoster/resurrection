@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react'
  * @param {*} value - any value
  * @returns {*} any previous value
  */
-const usePreviousValue = value => {
+const usePreviousValue = (value) => {
   const prevValue = useRef(value)
 
   useEffect(() => {

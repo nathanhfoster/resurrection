@@ -13,7 +13,7 @@ const DEFAULT_VALUE = null
  * @param {function(): *} initializer - the callback function that will only be ran once
  * @returns {*} - a lazily loaded value
  * */
-export const useLazyMemo = initializer => {
+export const useLazyMemo = (initializer) => {
   const ref = useRef(DEFAULT_VALUE)
 
   const getObservable = () => {
