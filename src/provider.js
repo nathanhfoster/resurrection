@@ -87,10 +87,21 @@ const ContextStore = ({
 
   useLayoutEffect(() => {
     if (
+      // eslint-disable-next-line
       window?._REACT_CONTEXT_DEVTOOL &&
-      !warnedAboutMissingDevToolRef.current &&
       inDevelopmentMode
     ) {
+      try {
+        // eslint-disable-next-line
+        window._REACT_CONTEXT_DEVTOOL({
+          id: name,
+          displayName: name,
+          values: contextStore
+        })
+      } catch (e) {
+        console.error(e)
+      }
+    } else if (!warnedAboutMissingDevToolRef.current && inDevelopmentMode) {
       warnedAboutMissingDevToolRef.current = true
       // eslint-disable-next-line
       console.info(
