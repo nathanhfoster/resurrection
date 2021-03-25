@@ -5,16 +5,16 @@ import { ContextConsumer } from '../provider'
 
 /**
  * This function allows the state to be controlled by a HOC by overwritting it with props
- * @param {*} nextSelector - state object
- * @param {*} previousSelector - props to make the state controlled from a HOC
+ * @param {*} currentSelector - the current selected state
+ * @param {*} previousSelector - the previous selected state
  * @returns {Boolean} - whether the two selected states are equal
  */
-const defaultIsEqual = (nextSelector, previousSelector) =>
-  shallowEquals(previousSelector, nextSelector)
+const defaultIsEqual = (currentSelector, previousSelector) =>
+  shallowEquals(previousSelector, currentSelector)
 
 /**
  * This hook simulates Redux's useSelector hook
- * @param {MapStateToSelector} mapStateToSelector - similar to mapStateProps.
+ * @param {MapStateToSelector} mapStateToSelector - similar to mapStateProps
  * @param {SelectorEqualityFunction=} isEqual - determines
  * if the selector's returned value should be recomputed
  * @param {React.ContextConsumer=} contextConsumer - the context consumer
@@ -26,24 +26,24 @@ const useSelector = (
   isEqual = defaultIsEqual,
   contextConsumer = ContextConsumer
 ) => {
+  if (!isFunction(mapStateToSelector)) {
+    throw new Error('The first argument mapStateToSelector must be a function')
+  }
+
   const { state } = useContext(contextConsumer)
 
-  const previousSelector = usePreviousValue(
-    isFunction(mapStateToSelector) ? mapStateToSelector(state) : null
-  )
+  const currentSelector = useMemo(() => mapStateToSelector(state), [state])
 
-  const selector = useMemo(() => {
-    if (isEqual && previousSelector) {
-      const nextSelector = mapStateToSelector(state)
-      const shouldUpdate = !isEqual(nextSelector, previousSelector)
-      if (shouldUpdate) {
-        return nextSelector
-      }
+  const previousSelector = usePreviousValue(currentSelector)
+
+  if (previousSelector) {
+    const shouldUpdate = !isEqual(currentSelector, previousSelector)
+    if (shouldUpdate) {
+      return currentSelector
     }
-    return previousSelector
-  }, [state, isEqual])
+  }
 
-  return selector
+  return previousSelector
 }
 
 export default useSelector

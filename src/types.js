@@ -5,7 +5,9 @@
 /**
  * @typedef {Object} ContexStoreProps
  * @property {String|Number=} name - the name of the ContextStore
- * @property {Object} context - allows you to supply a custom context instance to be used by resurrection. You need to pass the instance of your context to both <ContextProvider /> and your connected component. You may pass the context to your connected component either by passing it here as a field of option, or as a prop to your connected component in rendering.
+ * @property {Object} context - allows you to supply a custom context instance to be used by resurrection.
+ * You need to pass the instance of your context to both <ContextProvider /> and your connected component.
+ * You may pass the context to your connected component either by passing it here as a field of option, or as a prop to your connected component in rendering.
  * @property {Function|Object.<String, Function>=} reducers - first object to compare
  * @property {Objec.<String, *>=} initialState - the initial state of the reducer
  * @property {Object.<String, *>=} props - passed from an HOC that controlls the state of the store use this if you want prop changes to overwrite the state
@@ -123,6 +125,7 @@
  */
 
 /**
+ * Determines if the selector's returned value should be recomputed
  * @callback SelectorEqualityFunction
  * @property {*} nextSelector - the next selected state
  * @property {*} previousSelector - the prev selected state
@@ -130,6 +133,7 @@
  */
 
 /**
+ * Similar to mapStateToProps but allows an equality function as the second argument
  * @callback MapStateToSelector
  * @property {function(state: ReducerState): ComponentProps} mapStateToSelector - callback
  * @property {SelectorEqualityFunction} isEqual - callback

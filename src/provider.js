@@ -1,10 +1,16 @@
-import React, { createContext, useCallback, useRef, useLayoutEffect, useMemo } from 'react'
+import React, {
+  createContext,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+  useMemo
+} from 'react'
 import {
   combineReducers,
   shallowEquals,
   defaultInitializer,
   defaultReducer,
-  getRandomInt,
+  getRandomInt
 } from './utils'
 import useLazyMemo from './hooks/useLazyMemo'
 import useReducerWithThunk from './hooks/useReducerWithThunk'
@@ -19,7 +25,7 @@ const storeFactory = () => ({
   },
   getState: () => {
     throw Error('Store is NOT ready!')
-  },
+  }
 })
 // Use this only if you want to use a global reducer for your whole app
 const store = storeFactory()
@@ -38,14 +44,22 @@ const ContextStore = ({
   initialState,
   props,
   initializer,
-  children,
+  children
 }) => {
   // call the function once to get initial state and global reducer
-  const getInitialMainState = useCallback(() => combineReducers(reducers, initialState), [])
+  const getInitialMainState = useCallback(
+    () => combineReducers(reducers, initialState),
+    []
+  )
   const [mainState, mainReducer] = useLazyMemo(getInitialMainState)
 
   // setup useReducer with the returned values of the combineReducers
-  const [state, dispatch] = useReducerWithThunk(mainReducer, mainState, initializer, props)
+  const [state, dispatch] = useReducerWithThunk(
+    mainReducer,
+    mainState,
+    initializer,
+    props
+  )
 
   // Update store object to potentially access it outside of a component
   useLayoutEffect(() => {
@@ -64,9 +78,9 @@ const ContextStore = ({
   const contextStore = useMemo(
     () => ({
       state,
-      dispatch,
+      dispatch
     }),
-    [state, dispatch],
+    [state, dispatch]
   )
 
   // TODO: Handle a way to add the window._REACT_CONTEXT_DEVTOOL
@@ -106,7 +120,7 @@ ContextStore.defaultProps = {
   reducers: defaultReducer,
   initializer: defaultInitializer,
   initialState: undefined,
-  props: undefined,
+  props: undefined
 }
 
 const MemoizedContextProvider = React.memo(ContextStore, shallowEquals)
@@ -115,5 +129,5 @@ export {
   StateProvider as ContextConsumer,
   ContextStore as ContextProvider,
   MemoizedContextProvider,
-  store,
+  store
 }

@@ -65,10 +65,14 @@ ContextProvider props you may want to specify include:
 /**
  * @typedef {Object} ContexStoreProps
  * @property {String|Number=} name - the name of the ContextStore
- * @property {Object} context - allows you to supply a custom context instance to be used by resurrection. You need to pass the instance of your context to both <ContextProvider /> and your connected component. You may pass the context to your connected component either by passing it here as a field of option, or as a prop to your connected component in rendering.
+ * @property {Object} context - allows you to supply a custom context instance to be used by resurrection.
+ * You need to pass the instance of your context to both <ContextProvider /> and your connected component.
+ * You may pass the context to your connected component either by passing it here as a field of option, or as a prop to your connected component
+ * in rendering.
  * @property {Function|Object.<String, Function>=} reducers - first object to compare
  * @property {Objec.<String, *>=} initialState - the initial state of the reducer
- * @property {Object.<String, *>=} props - passed from an HOC that controlls the state of the store use this if you want prop changes to overwrite the state
+ * @property {Object.<String, *>=} props - passed from an HOC that controlls the state of the store use this if you want prop changes to
+ * overwrite the state
  * @property {Function=} initializer - sets the initial state of the reducer
  * @property {React.ReactElement} children - the child components that will consume the store
  */
@@ -115,6 +119,7 @@ const rootReducer = {
 </ContextProvider>
 ```
 connect arguments you may want to specify include:
+see also react-redux's [connect](https://react-redux.js.org/api/connect#connect)
 ```js
 /**
  * Connects a Component to the ContextStore
@@ -165,6 +170,9 @@ connect arguments you may want to specify include:
 
 export default (mapStateToProps, mapDispatchToProps, mergeProps, options)(SomeChildComponent)
 ```
+Hooks
+[useDispatch](https://react-redux.js.org/api/hooks#usedispatch)
+[useSelector](https://react-redux.js.org/api/hooks#useselector)
 ## License
 
 MIT © [strap8](https://github.com/strap8)
