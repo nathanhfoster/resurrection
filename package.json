@@ -1,6 +1,6 @@
 {
   "name": "resurrection",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "State management library that follows redux and redux-thunk architecture but uses React's latest useContext and useReducer hooks.",
   "author": "strap8",
   "license": "MIT",
