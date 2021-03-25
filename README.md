@@ -58,6 +58,61 @@ const SomeProvider = () => (
 export default SomeProvider
 ```
 
+## Props
+
+ContextProvider props you may want to specify include:
+```js
+/**
+ * @typedef {Object} ContexStoreProps
+ * @property {String|Number=} name - the name of the ContextStore
+ * @property {Object} context - the last reference key to the form stored in a Redux reducer
+ * @property {Function|Object=} reducers - first object to compare
+ * @property {Object=} initialState - the initial state of the reducer
+ * @property {Object=} props - passed from an HOC that controlls the state of the store use this if you want prop changes to overwrite the state
+ * @property {Function=} initializer - sets the initial state of the reducer
+ * @property {React.ReactElement} children - the child components that will consume the store
+ */
+```
+connect arguments you may want to specify include:
+```js
+/**
+ * Connects a Component to the ContextStore
+ * @typedef {Object} ConnectOptions
+ * @property {Object} context - a context consumer.
+ * You need to pass the instance of your context to both
+ * <ContextProvider /> and your connected component.
+ * You may pass the context to your connected component either
+ * by passing it here as a field of option,
+ * or as a prop to your connected component in rendering.
+ * @property {Boolean} pure - when options.pure is true,
+ * connect performs several equality checks that are used to avoid unnecessary calls to
+ * mapStateToProps,
+ * mapDispatchToProps,
+ * mergeProps,
+ * and ultimately to render.
+ * These include areStatesEqual,
+ * areOwnPropsEqual,
+ * areStatePropsEqual,
+ * and areMergedPropsEqual.
+ * While the defaults are probably appropriate 99% of the time,
+ * you may wish to override them with custom implementations for performance or other reasons.
+ * @property {Function=} areStatesEqual - when pure, compares incoming store state
+ * to its previous value.
+ * areStatesEqual: (next: Object, prev: Object) => boolean
+ * @property {Function=} areOwnPropsEqual - when pure, compares the result of ownProps
+ * to its previous value.
+ * areOwnPropsEqual: (next: Object, prev: Object) => boolean
+ * @property {Function=} areStatePropsEqual - when pure, compares the result of mapStateToProps
+ * to its previous value.
+ * areStatePropsEqual: (next: Object, prev: Object) => boolean
+ * @property {Function=} areMergedPropsEqual - when pure, compares the result of mergeProps
+ * to its previous value.
+ * areMergedPropsEqual: (next: Object, prev: Object) => boolean
+ * @property {Function=} forwardRef - If {forwardRef : true} has been passed to connect,
+ * adding a ref to the connected wrapper component will actually
+ * return the instance of the wrapped component.
+ * */
+```
 ## License
 
 MIT © [strap8](https://github.com/strap8)

@@ -8,14 +8,13 @@
  * @property {Object} context - the last reference key to the form stored in a Redux reducer
  * @property {Function|Object=} reducers - first object to compare
  * @property {Object=} initialState - the initial state of the reducer
- * @property {Object=} props - passed from an HOC that controlls the state of the store
- * @property {Function=} initializer - utility function that sets the initial state of the reducer
- * @property {React.ReactElement} children - the child components of the store
+ * @property {Object=} props - passed from an HOC that controlls the state of the store use this if you want prop changes to overwrite the state
+ * @property {Function=} initializer - sets the initial state of the reducer
+ * @property {React.ReactElement} children - the child components that will consume the store
  */
 
 /**
- * Determines if the component should be memoized
- * or an equality Function that determines if the Component should rerender
+ * Connects a Component to the ContextStore
  * @typedef {Object} ConnectOptions
  * @property {Object} context - a context consumer.
  * You need to pass the instance of your context to both
