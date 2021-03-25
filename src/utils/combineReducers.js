@@ -29,8 +29,9 @@ const combineReducers = (reducers, initialState) => {
      * we iterate and pass the action to each reducer and this would return new
      * state if applicable.
      */
-    for (let i = 0; i < reducers.length; i++) {
-      const reducerKey = reducers[i]
+    const reducerKeys = Object.keys(reducers)
+    for (let i = 0; i < reducerKeys.length; i++) {
+      const reducerKey = reducerKeys[i]
       if (Object.prototype.hasOwnProperty.call(reducers, reducerKey)) {
         const currentStateByKey = state[reducerKey]
         const currentReducer = reducers[reducerKey]
@@ -46,6 +47,7 @@ const combineReducers = (reducers, initialState) => {
     }
     return hasStateChanged ? updatedStateByReducers : state
   }
+
   let combinedStateAndReducers
 
   if (initialState) {
