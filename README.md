@@ -65,13 +65,54 @@ ContextProvider props you may want to specify include:
 /**
  * @typedef {Object} ContexStoreProps
  * @property {String|Number=} name - the name of the ContextStore
- * @property {Object} allows you to supply a custom context instance to be used by resurrection. You need to pass the instance of your context to both <ContextProvider /> and your connected component. You may pass the context to your connected component either by passing it here as a field of option, or as a prop to your connected component in rendering.
+ * @property {Object} context - allows you to supply a custom context instance to be used by resurrection. You need to pass the instance of your context to both <ContextProvider /> and your connected component. You may pass the context to your connected component either by passing it here as a field of option, or as a prop to your connected component in rendering.
  * @property {Function|Object.<String, Function>=} reducers - first object to compare
  * @property {Objec.<String, *>=} initialState - the initial state of the reducer
  * @property {Object.<String, *>=} props - passed from an HOC that controlls the state of the store use this if you want prop changes to overwrite the state
  * @property {Function=} initializer - sets the initial state of the reducer
  * @property {React.ReactElement} children - the child components that will consume the store
  */
+```
+Example:
+```jsx
+const someContext = React.createContext()
+
+const DEFAULT_STATE = {
+  someKeyFromMyStore: 'Hello World'
+}
+
+const someReducer = (state = DEFAULT_STATE, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case 'SOME_ACTION_TYPE':
+      return { ...state, someKeyFromMyStore: payload }
+
+    default:
+      return state
+  }
+}
+
+const someOtherReducer = (state = DEFAULT_STATE, action) => {
+  const { type, payload } = action
+
+  switch (type) {
+    case 'SOME_OTHER_ACTION_TYPE':
+      return { ...state, someKeyFromMyStore: payload }
+
+    default:
+      return state
+  }
+}
+
+const rootReducer = {
+  someReducer,
+  someOtherReducer
+}
+
+<ContextProvider name="Some name" context={someContext} reducers={rootReducer} >
+  <SomeChildComponent>
+</ContextProvider>
 ```
 connect arguments you may want to specify include:
 ```js
@@ -112,6 +153,17 @@ connect arguments you may want to specify include:
  * adding a ref to the connected wrapper component will actually
  * return the instance of the wrapped component.
  * */
+
+/**
+ * This function simulates Redux's connect API
+ * @param {MapStateToProps} mapStateToProps - reducer dispatch API
+ * @param {MapDispatchToProps} mapDispatchToProps - reducer state
+ * @param {Function=} mergeProps - function to merge props
+ * @param {ConnectOptions=} options - options
+ * @returns {React.memo|React.FunctionComponent} - a connected component
+ * */
+
+export default (mapStateToProps, mapDispatchToProps, mergeProps, options)(SomeChildComponent)
 ```
 ## License
 
