@@ -29,7 +29,7 @@ const useSelector = (
   if (!isFunction(mapStateToSelector)) {
     throw new Error('The first argument mapStateToSelector must be a function')
   }
-
+  // Currently, the useContext always causes a rerender and we can't use React.memo from here.
   const { state } = useContext(contextConsumer)
 
   const currentSelector = useMemo(() => mapStateToSelector(state), [state])
