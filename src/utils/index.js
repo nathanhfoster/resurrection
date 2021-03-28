@@ -1,21 +1,9 @@
-import actionTypes from './actionTypes'
-import bindActionCreators from './bindActionCreators'
-import combineReducers from './combineReducers'
-import defaultInitializer from './defaultInitializer'
-import defaultReducer from './defaultReducer'
-import getDerivedStateFromProps from './getDerivedStateFromProps'
-import getRandomInt from './getRandomInt'
-import isFunction from './isFunction'
-import shallowEquals from './shallowEquals'
-
-export {
-  actionTypes,
-  bindActionCreators,
-  combineReducers,
-  defaultInitializer,
-  defaultReducer,
-  getDerivedStateFromProps,
-  getRandomInt,
-  isFunction,
-  shallowEquals
-}
+export { default as actionTypes } from './actionTypes'
+export { default as bindActionCreators } from './bindActionCreators'
+export { default as combineReducers } from './combineReducers'
+export { default as defaultInitializer } from './defaultInitializer'
+export { default as defaultReducer } from './defaultReducer'
+export { default as getDerivedStateFromProps } from './getDerivedStateFromProps'
+export { default as getRandomInt } from './getRandomInt'
+export { default as isFunction } from './isFunction'
+export { default as shallowEquals } from './shallowEquals'
