@@ -1,6 +1,5 @@
-import React, { memo, useCallback, useContext, useMemo } from 'react'
+import React, { memo, useContext, useMemo } from 'react'
 import { isFunction, bindActionCreators, shallowEquals } from './utils'
-import { usePreviousValue } from './hooks'
 import { ContextConsumer } from './provider'
 import './types'
 
@@ -8,14 +7,21 @@ import './types'
  * This function simulates Redux's connect API
  * @param {MapStateToProps} mapStateToProps - reducer dispatch API
  * @param {MapDispatchToProps} mapDispatchToProps - reducer state
- * @param {Function=} mergeProps - function to merge props
+ * @param {MergeProps=} mergeProps - function to merge props
  * @param {ConnectOptions=} options - options
  * @returns {React.memo|React.FunctionComponent} - a connected component
  * */
 
-const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
-  Component
-) => {
+const connect = (
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeProps = (stateProps, dispatchProps, props) => ({
+    ...props,
+    ...stateProps,
+    ...dispatchProps
+  }),
+  options
+) => (Component) => {
   const {
     context = ContextConsumer,
     pure = true,
@@ -49,32 +55,9 @@ const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
       return bindActionCreators(mapDispatchToProps, dispatch)
     }, [dispatch])
 
-    const prevMergeProps = usePreviousValue(mergeProps)
-
-    const handleMergeProps = useCallback(
-      (stateProps, dispatchProps, props) => {
-        const getMergedProps = (merge) =>
-          isFunction(merge)
-            ? merge(stateProps, dispatchProps, props)
-            : { ...props, ...stateProps, ...dispatchProps }
-
-        const nextMergedProps = getMergedProps(mergeProps)
-
-        if (
-          !pure ||
-          (prevMergeProps &&
-            !areMergedPropsEqual(nextMergedProps, prevMergeProps))
-        ) {
-          return nextMergedProps
-        }
-
-        return getMergedProps(prevMergeProps)
-      },
-      [prevMergeProps]
-    )
 
     const mergedProps = useMemo(
-      () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
+      () => mergeProps(stateToProps, dispatchToProps, ownProps),
       [ownProps, handleMergeProps, stateToProps, dispatchToProps]
     )
 

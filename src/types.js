@@ -125,6 +125,13 @@
  */
 
 /**
+ * @callback MergeProps
+ * @property {ComponentProps} stateToProps - returned value of mapStateToProps
+ * @property {Action|ThunkActionDispatch} - returned value of  mapDispatchToProps
+ * @property {ComponentProps} ownProps - components own props
+ */
+
+/**
  * Determines if the selector's returned value should be recomputed
  * @callback SelectorEqualityFunction
  * @property {*} nextSelector - the next selected state
