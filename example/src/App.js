@@ -21,7 +21,7 @@ const someReducer = (state = DEFAULT_STATE, action) => {
 const SomeProvider = () => (
   /* reducers can be a single reducer function or an object of reducers */
   /* object of reducers example: const reducers = { someReducer, someOtherReducer} */
-  <ContextProvider reducers={someReducer}>
+  <ContextProvider name='App' reducers={someReducer}>
     <SomeProviderChild />
   </ContextProvider>
 )

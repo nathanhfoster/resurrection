@@ -21,7 +21,7 @@ import './types'
 
 /**
  * @typedef {Class} Store
- * @property {Object} name - unique name of the store
+ * @property {String|Number} id - unique id of the store
  * @property {React.Context} - store context
  * @property {Boolean} isReady - is the store ready
  * @property {function(store: Store): Thunk} dispatch - store thunk
@@ -30,13 +30,12 @@ import './types'
  */
 
 class Store {
-  constructor(name, context, dispatch, state) {
-
-    this.name = name || getRandomInt(0, 1000)
+  constructor(id, context, dispatch, state) {
+    this.id = id || getRandomInt(0, 1000)
 
     this.context = context
 
-    this.isReady = !!(name && dispatch && state)
+    this.isReady = !!(id && dispatch && state)
 
     this.dispatch = isFunction(dispatch)
       ? dispatch
@@ -53,13 +52,12 @@ class Store {
     this.setIsReady = (ready) => {
       this.isReady = ready
     }
-
   }
 }
 
 /**
  * @typedef {Class} StoreFactory
- * @property {Object} stores - holds all the context stores
+ * @property {Object.<String|Number, Store>} stores - holds all the context stores
  * @property {function(nameOrContext: String|React.Context): Store} getStore - a store
  * @property {function(store: Store): void} setStore - sets a store
  * @property {function(nameOrContext: String|React.Context): Boolean} isStoreReady - is the specific store ready
@@ -75,16 +73,20 @@ class StoreFactory {
     this.getStore = (nameOrContext) => {
       const storeFoundByName = this.stores[nameOrContext]
 
+      if (storeFoundByName) {
+        return storeFoundByName
+      }
+
       const storeFoundByContext = Object.values(this.stores).find(
         (store) => store.context === nameOrContext
       )
 
-      return storeFoundByName || storeFoundByContext
+      return storeFoundByContext
     }
 
     this.setStore = (store) => {
       if (store instanceof Store) {
-        this.stores[store.name] = store
+        this.stores[store.id] = store
       }
     }
 
@@ -93,7 +95,6 @@ class StoreFactory {
     this.setStoreReady = (nameOrContext, ready) => {
       this.getStore(nameOrContext)?.setIsReady(ready)
     }
-
   }
 }
 
