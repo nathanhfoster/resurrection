@@ -1,12 +1,44 @@
 import './types'
-import * as providerExports from './provider'
-import * as utilExports from './utils'
-import * as hookExports from './hooks'
+import {
+  ContextConsumer,
+  ContextProvider,
+  MemoizedContextProvider,
+  store
+} from './provider'
+import {
+  actionTypes,
+  bindActionCreators,
+  combineReducers,
+  defaultInitializer,
+  defaultReducer,
+  getDerivedStateFromProps,
+  getRandomInt,
+  isFunction,
+  shallowEquals
+} from './utils'
+import {
+  useDispatch,
+  useLazyMemo,
+  usePreviousValue,
+  useSelector
+} from './hooks'
 
-const libraryExports = {
-  ...utilExports,
-  ...hookExports,
-  ...providerExports
+export {
+  ContextConsumer,
+  ContextProvider,
+  MemoizedContextProvider,
+  store,
+  actionTypes,
+  bindActionCreators,
+  combineReducers,
+  defaultInitializer,
+  defaultReducer,
+  getDerivedStateFromProps,
+  getRandomInt,
+  isFunction,
+  shallowEquals,
+  useDispatch,
+  useLazyMemo,
+  usePreviousValue,
+  useSelector
 }
-
-export default libraryExports
