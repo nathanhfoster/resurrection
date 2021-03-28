@@ -35,7 +35,7 @@ class Store {
 
     this.context = context
 
-    this.isReady = !!(name && dispatch && getState)
+    this.isReady = !!(name && dispatch && state)
 
     this.dispatch = isFunction(dispatch)
       ? dispatch
