@@ -18,17 +18,85 @@ import './types'
 
 // const inDevelopmentMode = process.env.NODE_ENV === 'development'
 
-const storeFactory = () => ({
-  isReady: false,
-  dispatch: () => {
-    throw Error('Store is NOT ready!')
-  },
-  getState: () => {
-    throw Error('Store is NOT ready!')
+/**
+ * @typedef {Class} Store
+ * @property {Object} name - unique name of the store
+ * @property {React.Context} - store context
+ * @property {Boolean} isReady - is the store ready
+ * @property {function(store: Store): Thunk} dispatch - store thunk
+ * @property {function(): ReducerState} getState - returns store state
+ * @property {function(ready: Boolean): void} setIsReady - sets the store isReady
+ */
+
+class Store {
+  constructor(name, context, dispatch, state) {
+
+    this.name = name || getRandomInt(0, 1000)
+
+    this.context = context
+
+    this.isReady = !!(name && dispatch && getState)
+
+    this.dispatch = isFunction(dispatch)
+      ? dispatch
+      : () => {
+          throw Error('Store is NOT ready!')
+        }
+
+    this.getState = state
+      ? () => state
+      : () => {
+          throw Error('Store is NOT ready!')
+        }
+
+    this.setIsReady = (ready) => {
+      this.isReady = ready
+    }
+
   }
-})
-// Use this only if you want to use a global reducer for your whole app
-const store = storeFactory()
+}
+
+/**
+ * @typedef {Class} StoreFactory
+ * @property {Object} stores - holds all the context stores
+ * @property {function(nameOrContext: String|React.Context): Store} getStore - a store
+ * @property {function(store: Store): void} setStore - sets a store
+ * @property {function(nameOrContext: String|React.Context): Boolean} isStoreReady - is the specific store ready
+ * @property {function(name: String|React.Context, ready: Boolean): void} setStoreReady - sets specific store isReady
+ */
+
+class StoreFactory {
+  constructor() {
+    this.stores = {}
+
+    this.getStores = () => this.stores
+
+    this.getStore = (nameOrContext) => {
+      const storeFoundByName = this.stores[nameOrContext]
+
+      const storeFoundByContext = Object.values(this.stores).find(
+        (store) => store.context === nameOrContext
+      )
+
+      return storeFoundByName || storeFoundByContext
+    }
+
+    this.setStore = (store) => {
+      if (store instanceof Store) {
+        this.stores[store.name] = store
+      }
+    }
+
+    this.isStoreReady = (nameOrContext) => this.getStore(nameOrContext)?.isReady
+
+    this.setStoreReady = (nameOrContext, ready) => {
+      this.getStore(nameOrContext)?.setIsReady(ready)
+    }
+
+  }
+}
+
+const storeFactory = new StoreFactory()
 
 const StateProvider = createContext(null)
 
@@ -61,16 +129,14 @@ const ContextStore = ({
     props
   )
 
-  // Update store object to potentially access it outside of a component
+  // Update storeFactory object to access it outside of a component
   useLayoutEffect(() => {
-    if (!store.isReady) {
-      store.isReady = true
-      store.dispatch = dispatch
-      store.getState = () => state
-      // Object.freeze(store) // don't freeze the object, or store.isReady can't be re-assigned
+    if (!storeFactory.isStoreReady(name)) {
+      const newStore = new Store(name, Context, dispatch, state)
+      storeFactory.setStore(newStore)
     }
     return () => {
-      store.isReady = false
+      storeFactory.setStoreReady(name, false)
     }
   }, [state, dispatch])
 
@@ -129,5 +195,5 @@ export {
   StateProvider as ContextConsumer,
   ContextStore as ContextProvider,
   MemoizedContextProvider,
-  store
+  storeFactory
 }

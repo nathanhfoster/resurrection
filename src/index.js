@@ -3,7 +3,7 @@ import {
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
-  store
+  storeFactory,
 } from './provider'
 import connect from './connect'
 import {
@@ -28,7 +28,7 @@ export {
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
-  store,
+  storeFactory,
   connect,
   actionTypes,
   bindActionCreators,

@@ -4,8 +4,8 @@
 
 /**
  * @typedef {Object} ContexStoreProps
- * @property {String|Number=} name - the name of the ContextStore
- * @property {Object} context - allows you to supply a custom context instance to be used by resurrection.
+ * @property {String|Number=} name - the unique name of the ContextStore
+ * @property {React.Context} context - allows you to supply a custom context instance to be used by resurrection.
  * You need to pass the instance of your context to both <ContextProvider /> and your connected component.
  * You may pass the context to your connected component either by passing it here as a field of option, or as a prop to your connected component in rendering.
  * @property {Function|Object.<String, Function>=} reducers - first object to compare
