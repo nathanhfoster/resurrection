@@ -4,7 +4,7 @@ import { isFunction, shallowEquals } from '../utils'
 import { ContextConsumer } from '../provider'
 
 /**
- * This function allows the state to be controlled by a HOC by overwritting it with props
+ * Shallow equality function
  * @param {*} currentSelector - the current selected state
  * @param {*} previousSelector - the previous selected state
  * @returns {Boolean} - whether the two selected states are equal
