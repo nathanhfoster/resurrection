@@ -52,7 +52,7 @@ describe('provider', () => {
       expect(wrapper).toBeDefined()
       expect(stores).toBeDefined()
       expect(appStore).toBeDefined()
-      expect(appStore.id).toBe(providerName)
+      expect(appStore.getId()).toBe(providerName)
       expect(appStore.getContext()).toBe(providerContext)
     })
 
@@ -66,7 +66,7 @@ describe('provider', () => {
       expect(stores).toBeDefined()
       expect(stores['TEST1']).toBeDefined()
       expect(appStore).toBeDefined()
-      expect(appStore.id).toBe(providerName)
+      expect(appStore.getId()).toBe(providerName)
     })
   })
 })

@@ -31,7 +31,7 @@ import './types'
 
 class Store {
   constructor(id, context, dispatch, state) {
-    this.id = id || getRandomInt(0, 1000)
+    this.#id = id || getRandomInt(0, 1000)
 
     this.#context = context
 
@@ -44,6 +44,8 @@ class Store {
     this.#isReady = !!(id && dispatch && state)
   }
 
+  #id = null
+
   #context = null
 
   #state = {}
@@ -53,6 +55,8 @@ class Store {
   dispatch = () => {
     throw Error('Store is NOT ready!')
   }
+
+  getId = () => this.#id
 
   getContext = () => this.#context
 
@@ -90,7 +94,7 @@ class StoreFactory {
   getStore = (nameOrContext) => {
     const storeFoundByName = this.#stores[nameOrContext]
 
-    if (storeFoundByName) {
+    if (storeFoundByName?.getId() === nameOrContext) {
       return storeFoundByName
     }
 
@@ -103,7 +107,7 @@ class StoreFactory {
 
   setStore = (store) => {
     if (store instanceof Store) {
-      this.#stores[store.id] = store
+      this.#stores[store.getId()] = store
     }
   }
 
