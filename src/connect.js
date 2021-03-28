@@ -58,7 +58,7 @@ const connect = (
 
     const mergedProps = useMemo(
       () => mergeProps(stateToProps, dispatchToProps, ownProps),
-      [ownProps, handleMergeProps, stateToProps, dispatchToProps]
+      [ownProps, stateToProps, dispatchToProps]
     )
 
     return <MemoizedComponent {...mergedProps} dispatch={dispatch} />
