@@ -53,7 +53,7 @@ describe('provider', () => {
       expect(stores).toBeDefined()
       expect(appStore).toBeDefined()
       expect(appStore.id).toBe(providerName)
-      expect(appStore.context).toBe(providerContext)
+      expect(appStore.getContext()).toBe(providerContext)
     })
 
     it(`should have get a store from a context`, () => {

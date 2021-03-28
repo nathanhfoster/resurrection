@@ -33,25 +33,41 @@ class Store {
   constructor(id, context, dispatch, state) {
     this.id = id || getRandomInt(0, 1000)
 
-    this.context = context
+    this.#context = context
 
-    this.isReady = !!(id && dispatch && state)
-
-    this.dispatch = isFunction(dispatch)
-      ? dispatch
-      : () => {
-          throw Error('Store is NOT ready!')
-        }
-
-    this.getState = state
-      ? () => state
-      : () => {
-          throw Error('Store is NOT ready!')
-        }
-
-    this.setIsReady = (ready) => {
-      this.isReady = ready
+    if (isFunction(dispatch)) {
+      this.dispatch = dispatch
     }
+
+    this.#state = state
+
+    this.#isReady = !!(id && dispatch && state)
+  }
+
+  #context = null
+
+  #state = {}
+
+  #isReady = false
+
+  dispatch = () => {
+    throw Error('Store is NOT ready!')
+  }
+
+  getContext = () => this.#context
+
+  getState = () => {
+    if (!this.#isReady) {
+      throw Error('Store is NOT ready!')
+    }
+
+    return this.#state
+  }
+
+  getIsReady = () => this.#isReady
+
+  setIsReady = (ready) => {
+    this.#isReady = ready
   }
 }
 
@@ -65,36 +81,36 @@ class Store {
  */
 
 class StoreFactory {
-  constructor() {
-    this.stores = {}
+  constructor() {}
 
-    this.getStores = () => this.stores
+  #stores = {}
 
-    this.getStore = (nameOrContext) => {
-      const storeFoundByName = this.stores[nameOrContext]
+  getStores = () => this.#stores
 
-      if (storeFoundByName) {
-        return storeFoundByName
-      }
+  getStore = (nameOrContext) => {
+    const storeFoundByName = this.#stores[nameOrContext]
 
-      const storeFoundByContext = Object.values(this.stores).find(
-        (store) => store.context === nameOrContext
-      )
-
-      return storeFoundByContext
+    if (storeFoundByName) {
+      return storeFoundByName
     }
 
-    this.setStore = (store) => {
-      if (store instanceof Store) {
-        this.stores[store.id] = store
-      }
-    }
+    const storeFoundByContext = Object.values(this.#stores).find(
+      (store) => store.getContext() === nameOrContext
+    )
 
-    this.isStoreReady = (nameOrContext) => this.getStore(nameOrContext)?.isReady
+    return storeFoundByContext
+  }
 
-    this.setStoreReady = (nameOrContext, ready) => {
-      this.getStore(nameOrContext)?.setIsReady(ready)
+  setStore = (store) => {
+    if (store instanceof Store) {
+      this.#stores[store.id] = store
     }
+  }
+
+  isStoreReady = (nameOrContext) => this.getStore(nameOrContext)?.getIsReady()
+
+  setStoreReady = (nameOrContext, ready) => {
+    this.getStore(nameOrContext)?.setIsReady(ready)
   }
 }
 
