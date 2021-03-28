@@ -1,5 +1,10 @@
 import React, { memo, useContext, useMemo } from 'react'
-import { isFunction, bindActionCreators, shallowEquals } from './utils'
+import {
+  isFunction,
+  defaultMergeProps,
+  bindActionCreators,
+  shallowEquals
+} from './utils'
 import { ContextConsumer } from './provider'
 import './types'
 
@@ -12,16 +17,9 @@ import './types'
  * @returns {React.memo|React.FunctionComponent} - a connected component
  * */
 
-const connect = (
-  mapStateToProps,
-  mapDispatchToProps,
-  mergeProps = (stateProps, dispatchProps, props) => ({
-    ...props,
-    ...stateProps,
-    ...dispatchProps
-  }),
-  options
-) => (Component) => {
+const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
+  Component
+) => {
   const {
     context = ContextConsumer,
     pure = true,
@@ -32,8 +30,12 @@ const connect = (
     areMergedPropsEqual = shallowEquals
     // forwardRef = false,
   } = options || {}
+  const handleMergeProps = isFunction(mergeProps)
+    ? mergeProps
+    : defaultMergeProps
   // Conditionally memoize Component
-  const PureComponent = pure === true ? memo(Component, areStatePropsEqual) : Component
+  const PureComponent =
+    pure === true ? memo(Component, areStatePropsEqual) : Component
   return (ownProps) => {
     const { state, dispatch } = useContext(context)
 
@@ -54,9 +56,8 @@ const connect = (
       return bindActionCreators(mapDispatchToProps, dispatch)
     }, [dispatch])
 
-
     const mergedProps = useMemo(
-      () => mergeProps(stateToProps, dispatchToProps, ownProps),
+      () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
       [ownProps, stateToProps, dispatchToProps]
     )
 
