@@ -6,6 +6,7 @@ import React, {
   useMemo
 } from 'react'
 import {
+  isFunction,
   combineReducers,
   shallowEquals,
   defaultInitializer,
