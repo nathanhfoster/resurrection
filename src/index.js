@@ -5,6 +5,7 @@ import {
   MemoizedContextProvider,
   store
 } from './provider'
+import connect from './connect'
 import {
   actionTypes,
   bindActionCreators,
@@ -28,6 +29,7 @@ export {
   ContextProvider,
   MemoizedContextProvider,
   store,
+  connect,
   actionTypes,
   bindActionCreators,
   combineReducers,
