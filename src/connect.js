@@ -26,16 +26,19 @@ const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
     // TODO:
     // areStatesEqual = shallowEquals,
     // areOwnPropsEqual = shallowEquals,
-    areStatePropsEqual = shallowEquals,
+    // areStatePropsEqual = shallowEquals,
     areMergedPropsEqual = shallowEquals
     // forwardRef = false,
   } = options || {}
+  
   const handleMergeProps = isFunction(mergeProps)
     ? mergeProps
     : defaultMergeProps
+
   // Conditionally memoize Component
   const PureComponent =
-    pure === true ? memo(Component, areStatePropsEqual) : Component
+    pure === true ? memo(Component, areMergedPropsEqual) : Component
+
   return (ownProps) => {
     const { state, dispatch } = useContext(context)
 
