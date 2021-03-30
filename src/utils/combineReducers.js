@@ -1,4 +1,6 @@
 import isFunction from './isFunction'
+import getReducerDefaultState from './getReducerDefaultState'
+
 /**
  * This function returns one reducer if it is a Function
  * otherwise, it combines an object of reducer functions
@@ -10,7 +12,8 @@ import isFunction from './isFunction'
 const combineReducers = (reducers, initialState) => {
   // If a single reducer return
   if (isFunction(reducers)) {
-    return [initialState || {}, reducers]
+    const state = initialState || getReducerDefaultState(reducers)
+    return [state, reducers]
   }
 
   /**
@@ -19,7 +22,7 @@ const combineReducers = (reducers, initialState) => {
    * @param {ReducerAction} action - action
    * @returns {Array.<ReducerState, Reducer|CombinedReducers>} - combined reducers
    */
-  const globalReducerFunction = (state, action) => {
+  const globalReducerFunction = (state = {}, action) => {
     let hasStateChanged = false
     const updatedStateByReducers = {}
 
@@ -35,6 +38,7 @@ const combineReducers = (reducers, initialState) => {
       if (Object.prototype.hasOwnProperty.call(reducers, reducerKey)) {
         const currentStateByKey = state[reducerKey]
         const currentReducer = reducers[reducerKey]
+        
 
         const returnedStateByReducer = currentReducer(currentStateByKey, action)
 
@@ -57,9 +61,7 @@ const combineReducers = (reducers, initialState) => {
     const globalState = Object.entries(reducers).reduce(
       (acc, [key, reducer]) => {
         if (isFunction(reducer)) {
-          acc[key] = reducer(undefined, {
-            type: '__@@PLACEHOLDER_ACTION__'
-          })
+          acc[key] = getReducerDefaultState(reducer)
         } else {
           throw new Error(`${reducer} is not a function`)
         }

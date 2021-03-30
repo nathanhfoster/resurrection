@@ -1,36 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 import { ContextProvider, storeFactory } from '../'
-
-const DEFAULT_STATE = {
-  someKeyFromMyStore: 'Hello World'
-}
-
-const testReducer1 = (state = DEFAULT_STATE, action) => {
-  const { type, payload } = action
-
-  switch (type) {
-    case 'SOME_ACTION_TYPE_1':
-      return { ...state, someKeyFromMyStore: payload }
-
-    default:
-      return state
-  }
-}
-
-const testReducer2 = (state = DEFAULT_STATE, action) => {
-  const { type, payload } = action
-
-  switch (type) {
-    case 'SOME_ACTION_TYPE_2':
-      return { ...state, someKeyFromMyStore: payload }
-
-    default:
-      return state
-  }
-}
-
-const reducers = { testReducer1, testReducer2 }
+import { reducers } from './utils'
 
 const getWrapper = (name, context) =>
   render(
