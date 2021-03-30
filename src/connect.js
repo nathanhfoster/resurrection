@@ -10,8 +10,8 @@ import './types'
 
 /**
  * This function simulates Redux's connect API
- * @param {MapStateToProps} mapStateToProps - reducer dispatch API
- * @param {MapDispatchToProps} mapDispatchToProps - reducer state
+ * @param {MapStateToProps=} mapStateToProps - reducer dispatch API
+ * @param {MapDispatchToProps=} mapDispatchToProps - reducer state
  * @param {MergeProps=} mergeProps - function to merge props
  * @param {ConnectOptions=} options - options
  * @returns {React.memo|React.FunctionComponent} - a connected component
@@ -30,7 +30,7 @@ const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
     areMergedPropsEqual = shallowEquals
     // forwardRef = false,
   } = options || {}
-  
+
   const handleMergeProps = isFunction(mergeProps)
     ? mergeProps
     : defaultMergeProps

@@ -161,8 +161,8 @@ see also react-redux's [connect](https://react-redux.js.org/api/connect#connect)
 
 /**
  * This function simulates Redux's connect API
- * @param {MapStateToProps} mapStateToProps - reducer dispatch API
- * @param {MapDispatchToProps} mapDispatchToProps - reducer state
+ * @param {MapStateToProps=} mapStateToProps - reducer dispatch API
+ * @param {MapDispatchToProps=} mapDispatchToProps - reducer state
  * @param {Function=} mergeProps - function to merge props
  * @param {ConnectOptions=} options - options
  * @returns {React.memo|React.FunctionComponent} - a connected component
