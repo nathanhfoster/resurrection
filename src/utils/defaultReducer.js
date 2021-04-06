@@ -5,7 +5,7 @@ import getDerivedStateFromProps from './getDerivedStateFromProps'
  * @param {ReducerState} action - the state keys to overwrite
  * @returns {ReducerState} - the next state for the reducer
  */
-const defaultReducer = (prevState, action) =>
-  getDerivedStateFromProps(prevState, action)
+const defaultReducer = (state, action) =>
+  getDerivedStateFromProps(state, action)
 
 export default defaultReducer
