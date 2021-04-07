@@ -3,7 +3,7 @@ import {
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
-  storeFactory,
+  storeFactory
 } from './provider'
 import connect from './connect'
 import {

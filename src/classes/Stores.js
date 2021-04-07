@@ -1,4 +1,4 @@
-import Store from './Store';
+import Store from './Store'
 
 /**
  * Holds multiple store objects
@@ -6,40 +6,80 @@ import Store from './Store';
  * @property {Object.<String|Number, Store>} stores - holds all the context stores
  * @property {function(nameOrContext: String|React.Context): Store} getStore - a store
  * @property {function(store: Store): void} setStore - sets a store
- * @property {function(nameOrContext: String|React.Context): Boolean} isStoreReady - is the specific store ready
- * @property {function(name: String|React.Context, ready: Boolean): void} setStoreReady - sets specific store isReady
+ * @property {function(nameOrContext: String|React.Context): Boolean} isStoreReady - is
+ * the specific store ready
+ * @property {function(name: String|React.Context, ready: Boolean): void} setStoreReady - sets
+ * a specific store isReady
  */
 
+/**
+ * Holds multiple store objects
+ */
 class Stores {
   #stores = {}
 
+  /**
+   * Gets all the stores object
+   * @return {Object} #stores
+   */
   getStores = () => this.#stores
 
+  /**
+   * Gets a store object
+   * @param {String|Object} nameOrContext - The name or context of a store
+   * @return {Object} store
+   */
   getStore = (nameOrContext) => {
-    const storeFoundByName = this.#stores[nameOrContext];
+    const storeFoundByName = this.#stores[nameOrContext]
 
     if (storeFoundByName?.getId() === nameOrContext) {
-      return storeFoundByName;
+      return storeFoundByName
     }
 
     const storeFoundByContext = Object.values(this.#stores).find(
-      store => store.getContext() === nameOrContext,
-    );
+      (store) => store.getContext() === nameOrContext
+    )
 
-    return storeFoundByContext;
+    return storeFoundByContext
   }
 
+  /**
+   * Sets a store object
+   * @param {String|Object} store - The store to be added to the #stores object
+   * @return {void}
+   */
   setStore = (store) => {
     if (store instanceof Store) {
-      this.#stores[store.getId()] = store;
+      this.#stores[store.getId()] = store
     }
   }
 
-  isStoreReady = nameOrContext => this.getStore(nameOrContext)?.getIsReady()
+  /**
+   * Gets a store's isReady
+   * @param {String|Object} nameOrContext - The name or context of a store
+   * @return {Boolean} - Is the store ready
+   */
+  isStoreReady = (nameOrContext) => {
+    const store = this.getStore(nameOrContext)
+    if (store) {
+      return store.getIsReady()
+    }
 
+    return false
+  }
+
+  /**
+   * Sets a store object
+   * @param {String|Object} nameOrContext - The name or context of a store
+   * @param {Boolean} ready - Is the store ready
+   * @return {void}
+   */
   setStoreReady = (nameOrContext, ready) => {
-    this.getStore(nameOrContext)?.setIsReady(ready);
+    const store = this.getStore(nameOrContext)
+    if (store) {
+      store.setIsReady(ready)
+    }
   }
 }
 
-export default Stores;
+export default Stores

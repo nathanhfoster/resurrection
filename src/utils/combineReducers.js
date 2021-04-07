@@ -38,7 +38,6 @@ const combineReducers = (reducers, initialState) => {
       if (Object.prototype.hasOwnProperty.call(reducers, reducerKey)) {
         const currentStateByKey = state[reducerKey]
         const currentReducer = reducers[reducerKey]
-        
 
         const returnedStateByReducer = currentReducer(currentStateByKey, action)
 
