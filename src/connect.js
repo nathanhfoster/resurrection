@@ -41,7 +41,6 @@ const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
 
   return (ownProps) => {
     const { state, dispatch } = useContext(context)
-
     const stateToProps = useMemo(() => {
       if (isFunction(mapStateToProps)) {
         return mapStateToProps(state, ownProps)

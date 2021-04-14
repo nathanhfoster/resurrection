@@ -16,6 +16,22 @@ import Store from './Store'
  * Holds multiple store objects
  */
 class Stores {
+  /**
+   * Holds multiple store objects
+   * @param {Object<String|Number, Stores>=} stores - initial stores to set
+   * @returns {void} - nothing
+   */
+  constructor(stores) {
+    if (
+      typeof stores === 'object' &&
+      Object.entries(stores)?.every(
+        ([key, store]) => store instanceof Store && key === store.getId()
+      )
+    ) {
+      this.#stores = stores
+    }
+  }
+
   #stores = {}
 
   /**
@@ -69,7 +85,7 @@ class Stores {
   }
 
   /**
-   * Sets a store object
+   * Sets a store's isReady
    * @param {String|Object} nameOrContext - The name or context of a store
    * @param {Boolean} ready - Is the store ready
    * @return {void}
@@ -78,6 +94,32 @@ class Stores {
     const store = this.getStore(nameOrContext)
     if (store) {
       store.setIsReady(ready)
+    }
+  }
+
+  /**
+   * Sets a store's state
+   * @param {String|Object} nameOrContext - The name or context of a store
+   * @param {Object} state - The next state of the store
+   * @return {void}
+   */
+  setStoreState = (nameOrContext, state) => {
+    const store = this.getStore(nameOrContext)
+    if (store) {
+      store.setState(state)
+    }
+  }
+
+  /**
+   * Sets a store's state
+   * @param {String|Object} nameOrContext - The name or context of a store
+   * @param {Object} dispatch - The next dispatch of the store
+   * @return {void}
+   */
+  setStoreDispatch = (nameOrContext, dispatch) => {
+    const store = this.getStore(nameOrContext)
+    if (store) {
+      store.setDispatch(dispatch)
     }
   }
 }

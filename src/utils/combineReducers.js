@@ -62,7 +62,7 @@ const combineReducers = (reducers, initialState) => {
         if (isFunction(reducer)) {
           acc[key] = getReducerDefaultState(reducer)
         } else {
-          throw new Error(`${reducer} is not a function`)
+          throw new Error(`${reducer} is not a function!`)
         }
         return acc
       },

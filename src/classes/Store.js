@@ -88,10 +88,28 @@ class Store {
   /**
    * Sets store's isReady
    * @param {Boolean} ready - Is the store ready
-   * @returns {Object} #state - The store's state
+   * @returns {void}
    */
   setIsReady = (ready) => {
     this.#isReady = ready
+  }
+
+  /**
+   * Sets store's state
+   * @param {Object} state - Next state for the store
+   * @returns {void}
+   */
+  setState = (state) => {
+    this.#state = state
+  }
+
+  /**
+   * Sets store's dispatch
+   * @param {Object} dispatch - Next dispatch for the store
+   * @returns {void}
+   */
+  setDispatch = (dispatch) => {
+    this.dispatch = dispatch
   }
 }
 

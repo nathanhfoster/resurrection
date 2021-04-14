@@ -1,7 +1,6 @@
 import React, {
   createContext,
   useCallback,
-  useRef,
   useLayoutEffect,
   useMemo
 } from 'react'
@@ -57,6 +56,9 @@ const ContextStore = ({
     if (!storeFactory.isStoreReady(name)) {
       const newStore = new Store(name, Context, dispatch, state)
       storeFactory.setStore(newStore)
+    } else {
+      storeFactory.setStoreState(state)
+      storeFactory.setStoreDispatch(dispatch)
     }
     return () => {
       storeFactory.setStoreReady(name, false)

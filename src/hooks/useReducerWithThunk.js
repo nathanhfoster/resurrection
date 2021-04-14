@@ -49,12 +49,20 @@ const useReducerWithThunk = (
 
   const setState = useCallback(
     (newState) => {
-      const nextState = getDerivedStateFromProps(newState, props)
+      const derivedState = getDerivedStateFromProps(newState, props)
+      const nextState = initializer(derivedState)
       state.current = nextState
       setHookState(nextState)
     },
     [props, setHookState]
   )
+
+  // make the state controlled from a HOC
+  useEffect(() => {
+    if (state.current) {
+      setState(state.current)
+    }
+  }, [props])
 
   // Reducer
   const reduce = useCallback((action) => reducer(getState(), action), [
@@ -75,13 +83,6 @@ const useReducerWithThunk = (
     },
     [getState, setState, reduce]
   )
-
-  useEffect(() => {
-    if (state.current) {
-      state.current = getDerivedStateFromProps(state.current, props)
-      setHookState(props)
-    }
-  }, [props])
 
   return [hookState, dispatch]
 }
