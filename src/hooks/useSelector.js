@@ -1,7 +1,7 @@
-import { useContext, useMemo } from 'react'
-import usePreviousValue from './usePreviousValue'
-import { isFunction, shallowEquals } from '../utils'
-import { ContextConsumer } from '../provider'
+import { useContext, useMemo } from 'react';
+import usePreviousValue from './usePreviousValue';
+import { isFunction, shallowEquals } from '../utils';
+import { ContextConsumer } from '../provider';
 
 /**
  * Shallow equality function
@@ -9,8 +9,10 @@ import { ContextConsumer } from '../provider'
  * @param {*} previousSelector - the previous selected state
  * @returns {Boolean} - whether the two selected states are equal
  */
-const defaultIsEqual = (currentSelector, previousSelector) =>
-  shallowEquals(previousSelector, currentSelector)
+const defaultIsEqual = (currentSelector, previousSelector) => shallowEquals(
+  previousSelector,
+  currentSelector,
+);
 
 /**
  * This hook simulates Redux's useSelector hook
@@ -26,26 +28,26 @@ const defaultIsEqual = (currentSelector, previousSelector) =>
 const useSelector = (
   mapStateToSelector,
   isEqual = defaultIsEqual,
-  contextConsumer = ContextConsumer
+  contextConsumer = ContextConsumer,
 ) => {
   if (!isFunction(mapStateToSelector)) {
-    throw new Error('The first argument mapStateToSelector must be a function')
+    throw new Error('The first argument mapStateToSelector must be a function');
   }
 
-  const { state } = useContext(contextConsumer)
+  const { state } = useContext(contextConsumer);
 
-  const currentSelector = useMemo(() => mapStateToSelector(state), [state])
+  const currentSelector = useMemo(() => mapStateToSelector(state), [state]);
 
-  const previousSelector = usePreviousValue(currentSelector)
+  const previousSelector = usePreviousValue(currentSelector);
 
   if (previousSelector) {
-    const shouldUpdate = !isEqual(currentSelector, previousSelector)
+    const shouldUpdate = !isEqual(currentSelector, previousSelector);
     if (shouldUpdate) {
-      return currentSelector
+      return currentSelector;
     }
   }
 
-  return previousSelector
-}
+  return previousSelector;
+};
 
-export default useSelector
+export default useSelector;

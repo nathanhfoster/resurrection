@@ -1,66 +1,16 @@
-# resurrection
+## ContextStore
 
-> State management library that follows Flux / Redux / Thunk architecture but uses React&#x27;s latest useContext and useReducer hooks.
+[State management library](https://github.com/strap8/resurrection) that follows Flux / Redux / Thunk architecture but uses React's latest useContext and useReducer hooks.
 
-[![NPM](https://img.shields.io/npm/v/resurrection.svg)](https://www.npmjs.com/package/resurrection) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
-
-## Install
-
-```bash
-npm install --save resurrection
-```
-
-## Usage
-
-```jsx
-// Child Component
-import React from 'react'
-import { connect } from 'resurrection'
-
-const SomeProviderChild = ({ someKeyFromMyStore }) => (
-  <div>{someKeyFromMyStore}</div>
-)
-
-const mapStateToProps = ({ someKeyFromMyStore }) => ({ someKeyFromMyStore })
-
-export default connect(mapStateToProps)(SomeProviderChild)
-
-
-// Higher Order Component (HoC)
-import React from 'react'
-import { ContextProvider } from 'resurrection'
-import SomeProviderChild from './SomeProviderChild'
-
-const DEFAULT_STATE = {
-  someKeyFromMyStore: 'Hello World'
-}
-
-const someReducer = (state = DEFAULT_STATE, action) => {
-  const { type, payload } = action
-
-  switch (type) {
-    case 'SOME_ACTION_TYPE':
-      return { ...state, someKeyFromMyStore: payload }
-
-    default:
-      return state
-  }
-}
-
-const SomeProvider = () => (
-  /* reducers can be a single reducer function or an object of reducers */
-  /* object of reducers example: const reducers = { someReducer, someOtherReducer} */
-  <ContextProvider reducers={someReducer}>
-    <SomeProviderChild />
-  </ContextProvider>
-)
-
-export default SomeProvider
-```
-
-## Props
-
+### Props
 ContextProvider props you may want to specify include:
+  - name: string
+  - context: object
+  - reducers: function | Object
+  - initialState: object
+  - props: object
+  - initializer: function
+  - children: node
 ```js
 /**
  * @typedef {Object} ContexStoreProps
@@ -77,49 +27,15 @@ ContextProvider props you may want to specify include:
  * @property {React.ReactElement} children - the child components that will consume the store
  */
 ```
-Example:
-```jsx
-const someContext = React.createContext()
 
-const DEFAULT_STATE = {
-  someKeyFromMyStore: 'Hello World'
-}
-
-const someReducer = (state = DEFAULT_STATE, action) => {
-  const { type, payload } = action
-
-  switch (type) {
-    case 'SOME_ACTION_TYPE':
-      return { ...state, someKeyFromMyStore: payload }
-
-    default:
-      return state
-  }
-}
-
-const someOtherReducer = (state = DEFAULT_STATE, action) => {
-  const { type, payload } = action
-
-  switch (type) {
-    case 'SOME_OTHER_ACTION_TYPE':
-      return { ...state, someKeyFromMyStore: payload }
-
-    default:
-      return state
-  }
-}
-
-const rootReducer = {
-  someReducer,
-  someOtherReducer
-}
-
-<ContextProvider name="Some name" context={someContext} reducers={rootReducer} >
-  <SomeChildComponent>
-</ContextProvider>
-```
 connect arguments you may want to specify include:
-see also react-redux's [connect](https://react-redux.js.org/api/connect#connect)
+  - context: object
+  - pure: boolean
+  - areStatesEqual: function
+  - areOwnPropsEqual: function
+  - areStatePropsEqual: function
+  - areMergedPropsEqual: function
+  - forwardRef: function
 ```js
 /**
  * Connects a Component to the ContextStore
@@ -166,13 +82,16 @@ see also react-redux's [connect](https://react-redux.js.org/api/connect#connect)
  * @param {Function=} mergeProps - function to merge props
  * @param {ConnectOptions=} options - options
  * @returns {React.memo|React.FunctionComponent} - a connected component
- * */
+ **/
 
 export default (mapStateToProps, mapDispatchToProps, mergeProps, options)(SomeChildComponent)
 ```
+See also react-redux's [connect](https://react-redux.js.org/api/connect#connect)
+
 Hooks
 [useDispatch](https://react-redux.js.org/api/hooks#usedispatch)
 [useSelector](https://react-redux.js.org/api/hooks#useselector)
+
 ## License
 
 MIT © [strap8](https://github.com/strap8)

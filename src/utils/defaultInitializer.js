@@ -3,4 +3,4 @@
  * @returns {ReducerState} - reducer state
  */
 
-export default (stateOrProps) => stateOrProps
+export default stateOrProps => stateOrProps;

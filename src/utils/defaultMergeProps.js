@@ -1,7 +1,7 @@
 const defaultMergeProps = (stateProps, dispatchProps, props) => ({
   ...props,
   ...stateProps,
-  ...dispatchProps
-})
+  ...dispatchProps,
+});
 
-export default defaultMergeProps
+export default defaultMergeProps;

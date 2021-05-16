@@ -1,4 +1,4 @@
-import Store from './Store'
+import Store from './Store';
 
 /**
  * Holds multiple store objects
@@ -23,22 +23,22 @@ class Stores {
    */
   constructor(stores) {
     if (
-      typeof stores === 'object' &&
-      Object.entries(stores)?.every(
-        ([key, store]) => store instanceof Store && key === store.getId()
+      typeof stores === 'object'
+      && Object.entries(stores)?.every(
+        ([key, store]) => store instanceof Store && key === store.getId(),
       )
     ) {
-      this.#stores = stores
+      this.stores = stores;
     }
   }
 
-  #stores = {}
+  stores = {}
 
   /**
    * Gets all the stores object
-   * @return {Object} #stores
+   * @return {Object} stores
    */
-  getStores = () => this.#stores
+  getStores = () => this.stores
 
   /**
    * Gets a store object
@@ -46,27 +46,27 @@ class Stores {
    * @return {Object} store
    */
   getStore = (nameOrContext) => {
-    const storeFoundByName = this.#stores[nameOrContext]
+    const storeFoundByName = this.stores[nameOrContext];
 
     if (storeFoundByName?.getId() === nameOrContext) {
-      return storeFoundByName
+      return storeFoundByName;
     }
 
-    const storeFoundByContext = Object.values(this.#stores).find(
-      (store) => store.getContext() === nameOrContext
-    )
+    const storeFoundByContext = Object.values(this.stores).find(
+      store => store.getContext() === nameOrContext,
+    );
 
-    return storeFoundByContext
+    return storeFoundByContext;
   }
 
   /**
    * Sets a store object
-   * @param {String|Object} store - The store to be added to the #stores object
+   * @param {String|Object} store - The store to be added to the stores object
    * @return {void}
    */
   setStore = (store) => {
     if (store instanceof Store) {
-      this.#stores[store.getId()] = store
+      this.stores[store.getId()] = store;
     }
   }
 
@@ -76,12 +76,12 @@ class Stores {
    * @return {Boolean} - Is the store ready
    */
   isStoreReady = (nameOrContext) => {
-    const store = this.getStore(nameOrContext)
+    const store = this.getStore(nameOrContext);
     if (store) {
-      return store.getIsReady()
+      return store.getIsReady();
     }
 
-    return false
+    return false;
   }
 
   /**
@@ -91,9 +91,9 @@ class Stores {
    * @return {void}
    */
   setStoreReady = (nameOrContext, ready) => {
-    const store = this.getStore(nameOrContext)
+    const store = this.getStore(nameOrContext);
     if (store) {
-      store.setIsReady(ready)
+      store.setIsReady(ready);
     }
   }
 
@@ -103,25 +103,26 @@ class Stores {
    * @param {Object} state - The next state of the store
    * @return {void}
    */
-  setStoreState = (nameOrContext, state) => {
-    const store = this.getStore(nameOrContext)
-    if (store) {
-      store.setState(state)
+    setStoreState = (nameOrContext, state) => {
+      const store = this.getStore(nameOrContext);
+      if (store) {
+        store.setState(state);
+      }
     }
-  }
 
-  /**
+
+    /**
    * Sets a store's state
    * @param {String|Object} nameOrContext - The name or context of a store
    * @param {Object} dispatch - The next dispatch of the store
    * @return {void}
    */
-  setStoreDispatch = (nameOrContext, dispatch) => {
-    const store = this.getStore(nameOrContext)
-    if (store) {
-      store.setDispatch(dispatch)
-    }
-  }
+     setStoreDispatch = (nameOrContext, dispatch) => {
+       const store = this.getStore(nameOrContext);
+       if (store) {
+         store.setDispatch(dispatch);
+       }
+     }
 }
 
-export default Stores
+export default Stores;

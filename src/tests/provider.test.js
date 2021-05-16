@@ -1,6 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { ContextProvider, storeFactory } from '..';
+import ContextStore from '..';
+
+const { ContextProvider, storeFactory } = ContextStore;
 
 export const DEFAULT_STATE = {
   someKeyFromMyStore: 'Hello World',

@@ -1,5 +1,5 @@
-import isFunction from '../utils/isFunction'
-import { getRandomInt } from '../utils'
+import isFunction from '../utils/isFunction';
+import { getRandomInt } from '../utils';
 
 /**
  * Holds the properties of a store object
@@ -26,64 +26,64 @@ class Store {
    * @returns {void} - nothing
    */
   constructor(id, context, dispatch, state) {
-    this.#id = id || getRandomInt(0, 1000)
+    this.id = id || getRandomInt(0, 1000);
 
-    this.#context = context
+    this.context = context;
 
     if (isFunction(dispatch)) {
-      this.dispatch = dispatch
+      this.dispatch = dispatch;
     }
 
-    this.#state = state
+    this.state = state;
 
-    this.#isReady = !!(id && dispatch && state)
+    this.isReady = !!(id && dispatch && state);
   }
 
-  #id = null
+  id = null
 
-  #context = null
+  context = null
 
-  #state = {}
+  state = {}
 
-  #isReady = false
+  isReady = false
 
   /**
    * Store's dispatch API
    * @returns {void}
    */
   dispatch = () => {
-    throw Error('Store is NOT ready!')
+    throw Error('Store is NOT ready!');
   }
 
   /**
    * Get store's id
-   * @returns {String|Number} #id - unique id of the store
+   * @returns {String|Number} id - unique id of the store
    */
-  getId = () => this.#id
+  getId = () => this.id
 
   /**
    * Get store's context
-   * @returns {Object} #context - The store's context
+   * @returns {Object} context - The store's context
    */
-  getContext = () => this.#context
+  getContext = () => this.context
 
   /**
    * Get store's context
-   * @returns {Object} #state - The store's state
+   * @returns {Object} state - The store's state
    */
   getState = () => {
-    if (!this.#isReady) {
-      throw Error('Store is NOT ready!')
+    if (!this.isReady) {
+      throw Error('Store is NOT ready!');
     }
 
-    return this.#state
+    return this.state;
   }
 
   /**
    * Get store's isReady
-   * @returns {Boolean} #isReady - The store's isReady
+   * @returns {Boolean} isReady - The store's isReady
    */
-  getIsReady = () => this.#isReady
+  getIsReady = () => this.isReady
 
   /**
    * Sets store's isReady
@@ -91,7 +91,7 @@ class Store {
    * @returns {void}
    */
   setIsReady = (ready) => {
-    this.#isReady = ready
+    this.isReady = ready;
   }
 
   /**
@@ -99,18 +99,18 @@ class Store {
    * @param {Object} state - Next state for the store
    * @returns {void}
    */
-  setState = (state) => {
-    this.#state = state
-  }
+   setState = (state) => {
+     this.state = state;
+   }
 
-  /**
+   /**
    * Sets store's dispatch
    * @param {Object} dispatch - Next dispatch for the store
    * @returns {void}
    */
-  setDispatch = (dispatch) => {
-    this.dispatch = dispatch
-  }
+   setDispatch = (dispatch) => {
+     this.dispatch = dispatch;
+   }
 }
 
-export default Store
+export default Store;

@@ -1,11 +1,14 @@
-import './types'
+import './types';
+
 import {
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
-  storeFactory
-} from './provider'
-import connect from './connect'
+  storeFactory,
+} from './provider';
+
+import connect from './connect';
+
 import {
   actionTypes,
   bindActionCreators,
@@ -15,16 +18,17 @@ import {
   getDerivedStateFromProps,
   getRandomInt,
   isFunction,
-  shallowEquals
-} from './utils'
+  shallowEquals,
+} from './utils';
+
 import {
   useDispatch,
   useLazyMemo,
   usePreviousValue,
-  useSelector
-} from './hooks'
+  useSelector,
+} from './hooks';
 
-export {
+const component = {
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
@@ -42,5 +46,7 @@ export {
   useDispatch,
   useLazyMemo,
   usePreviousValue,
-  useSelector
-}
+  useSelector,
+};
+
+export default component;

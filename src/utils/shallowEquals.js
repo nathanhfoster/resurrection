@@ -6,19 +6,19 @@
  * */
 const is = (x, y) => {
   if (x === y) {
-    return x !== 0 || y !== 0 || 1 / x === 1 / y
+    return x !== 0 || y !== 0 || 1 / x === 1 / y;
   }
   // Check if they are both NaN
   // eslint-disable-next-line
-  return x !== x && y !== y
-}
+  return x !== x && y !== y;
+};
 
 /**
  * This function checks if a value is a comparable object
  * @param {*} obj - first object to compare
  * @returns {Boolean} - whether the value is a comparable object or not
  * */
-const isNotAComparableObject = (obj) => typeof obj !== 'object' || obj === null
+const isNotAComparableObject = obj => typeof obj !== 'object' || obj === null;
 
 /**
  * This function does a shallow comparison on two objects
@@ -27,27 +27,28 @@ const isNotAComparableObject = (obj) => typeof obj !== 'object' || obj === null
  * @returns {Boolean} - whether the two objects are equal or not
  * */
 const shallowEqual = (objA, objB) => {
-  if (is(objA, objB)) return true
+  if (is(objA, objB)) return true;
 
   if (isNotAComparableObject(objA) || isNotAComparableObject(objB)) {
-    return false
+    return false;
   }
 
-  const keysA = Object.keys(objA)
-  const keysB = Object.keys(objB)
+  const keysA = Object.keys(objA);
+  const keysB = Object.keys(objB);
 
-  if (keysA.length !== keysB.length) return false
+  if (keysA.length !== keysB.length) return false;
+
 
   for (let i = 0; i < keysA.length; i++) {
     if (
-      !Object.prototype.hasOwnProperty.call(objB, keysA[i]) ||
-      !is(objA[keysA[i]], objB[keysA[i]])
+      !Object.prototype.hasOwnProperty.call(objB, keysA[i])
+      || !is(objA[keysA[i]], objB[keysA[i]])
     ) {
-      return false
+      return false;
     }
   }
 
-  return true
-}
+  return true;
+};
 
-export default shallowEqual
+export default shallowEqual;

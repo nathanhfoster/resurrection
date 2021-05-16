@@ -1,4 +1,4 @@
-import getRandomString from './getRandomString'
+import getRandomString from './getRandomString';
 
 /**
  * These are private action types reserved by Redux.
@@ -10,7 +10,7 @@ import getRandomString from './getRandomString'
 const ActionTypes = {
   INIT: `@@redux/INIT${getRandomString()}`,
   REPLACE: `@@redux/REPLACE${getRandomString()}`,
-  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${getRandomString()}`
-}
+  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${getRandomString()}`,
+};
 
-export default ActionTypes
+export default ActionTypes;

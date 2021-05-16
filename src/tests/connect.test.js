@@ -1,7 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { ContextProvider } from '..';
+import ContextStore from '..';
 import connect from '../connect';
+
+const { ContextProvider } = ContextStore;
 
 const propMapper = (prop) => {
   switch (typeof prop) {

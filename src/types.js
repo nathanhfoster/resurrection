@@ -12,7 +12,7 @@
  * You may pass the context to your connected component either
  * by passing it here as a field of option, or as a prop to your connected component in rendering.
  * @property {Function|Object.<String, Function>=} reducers - first object to compare
- * @property {Object.<String, *>=} initialState - the initial state of the reducer
+ * @property {Objec.<String, *>=} initialState - the initial state of the reducer
  * @property {Object.<String, *>=} props - passed from an HOC that controls
  * the state of the store use this if you want prop changes to overwrite the state
  * @property {Function=} initializer - sets the initial state of the reducer
@@ -131,7 +131,7 @@
 /**
  * @callback MergeProps
  * @property {ComponentProps} stateToProps - returned value of mapStateToProps
- * @property {Action|ThunkActionDispatch} - returned value of  mapDispatchToProps
+ * @property {Action|ThunkActionDispatch} - returned value of mapDispatchToProps
  * @property {ComponentProps} ownProps - components own props
  */
 

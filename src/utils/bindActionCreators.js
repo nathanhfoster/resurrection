@@ -21,8 +21,9 @@
  * function as actionCreators, the return value will also be a single
  * function.
  */
-const bindActionCreator = (dispatch) => (actionCreator) => (...args) =>
-  dispatch(actionCreator?.apply?.(this, args) || actionCreator)
+const bindActionCreator = dispatch => actionCreator => (...args) => dispatch(
+  actionCreator?.apply?.(this, args) || actionCreator,
+);
 
 /**
  * This augments actions to dispatch other actions and passes (dispatch, getState)
@@ -36,18 +37,18 @@ const BindActionCreators = (mapDispatchToProps, dispatch) => {
     throw new Error(
       `bindActionCreators expected an object or a function, instead received ${
         mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
-      }.`
-    )
+      }.`,
+    );
   }
   const boundActionCreators = Object.entries(mapDispatchToProps).reduce(
     (acc, [key, action]) => {
-      acc[key] = bindActionCreator(dispatch)(action)
-      return acc
+      acc[key] = bindActionCreator(dispatch)(action);
+      return acc;
     },
-    {}
-  )
+    {},
+  );
 
-  return boundActionCreators
-}
+  return boundActionCreators;
+};
 
-export default BindActionCreators
+export default BindActionCreators;

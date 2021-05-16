@@ -1,4 +1,4 @@
-import ActionTypes from './actionTypes'
+import ActionTypes from './actionTypes';
 
 /**
  * Initializes a reducers state
@@ -6,9 +6,8 @@ import ActionTypes from './actionTypes'
  * @returns {ReducerState} - the returns default state
  */
 
-const getReducerDefaultState = (reducer) =>
-  reducer(undefined, {
-    type: ActionTypes.INIT
-  })
+const getReducerDefaultState = reducer => reducer(undefined, {
+  type: ActionTypes.INIT,
+});
 
-export default getReducerDefaultState
+export default getReducerDefaultState;

@@ -7,11 +7,11 @@
 
 const getDerivedStateFromProps = (state, props) => ({
   ...(state && {
-    ...state
+    ...state,
   }),
   ...(props && {
-    ...props
-  })
-})
+    ...props,
+  }),
+});
 
-export default getDerivedStateFromProps
+export default getDerivedStateFromProps;
