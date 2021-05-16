@@ -28,7 +28,7 @@ import {
   useSelector,
 } from './hooks';
 
-const component = {
+export {
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
@@ -48,5 +48,3 @@ const component = {
   usePreviousValue,
   useSelector,
 };
-
-export default component;
