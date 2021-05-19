@@ -6,7 +6,7 @@
 ContextProvider props you may want to specify include:
   - name: string
   - context: object
-  - reducers: function | Object
+  - reducers: function | object
   - initialState: object
   - props: object
   - initializer: function
