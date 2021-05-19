@@ -4,13 +4,13 @@
 
 ### Props
 ContextProvider props you may want to specify include:
-  - name: string
-  - context: object
-  - reducers: function | object
-  - initialState: object
-  - props: object
-  - initializer: function
-  - children: node
+  - name: String
+  - context: Object
+  - reducers: Function | Object
+  - initialState: Object
+  - props: Object
+  - initializer: Function
+  - children: Node
 ```js
 /**
  * @typedef {Object} ContexStoreProps
