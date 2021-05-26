@@ -3,4 +3,6 @@
  * @returns {ReducerState} - reducer state
  */
 
-export default stateOrProps => stateOrProps;
+const defaultInitializer = stateOrProps => stateOrProps;
+
+export default defaultInitializer;

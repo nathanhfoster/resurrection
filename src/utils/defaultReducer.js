@@ -8,8 +8,8 @@ import isFunction from './isFunction';
  */
 
 const defaultReducer = (state, action) => {
-   const nextState = isFunction(action) ? action(state) : action;
-   return getDerivedStateFromProps(state, nextState)
+  const nextState = isFunction(action) ? action(state) : action;
+  return getDerivedStateFromProps(state, nextState);
 };
 
 export default defaultReducer;
