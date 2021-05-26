@@ -10,7 +10,7 @@ import isFunction from './isFunction';
 
 const defaultReducer = (state, action, callback) => {
   const nextStateToOverwrite = isFunction(action) ? action(state) : action;
-  const nextState = getDerivedStateFromProps(state, nextState);
+  const nextState = getDerivedStateFromProps(state, nextStateToOverwrite);
 
   if (isFunction(callback)) {
     callback(nextState);
