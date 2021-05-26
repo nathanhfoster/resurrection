@@ -11,12 +11,12 @@ import isFunction from './isFunction';
 const defaultReducer = (state, action, callback) => {
   const nextStateToOverwrite = isFunction(action) ? action(state) : action;
   const nextState = getDerivedStateFromProps(state, nextState);
- 
-  if(isFunction(callback)) {
+
+  if (isFunction(callback)) {
     callback(nextState);
   };
 
-   return nextState;
+  return nextState;
 };
 
 export default defaultReducer;
