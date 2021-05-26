@@ -1,10 +1,8 @@
+import { useRef, useCallback, useEffect, } from 'react';
 import {
-  useReducer, useRef, useCallback, useEffect,
-} from 'react';
-import {
-  isFunction, getDerivedStateFromProps, defaultReducer, defaultInitializer,
+  isFunction, getDerivedStateFromProps, defaultInitializer,
 } from '../utils';
-import useLazyMemo from './useLazyMemo';
+import { useSetStateReducer, useLazyMemo, } from '.';
 
 /**
  * Mimics React.Component this.setState
@@ -12,7 +10,6 @@ import useLazyMemo from './useLazyMemo';
  * @param {ReducerState} nextState - the state to overwrite
  * @returns {ReducerState} - the next state for the reducer
  */
-const setStateHookReducer = defaultReducer;
 
 /**
  * Augments React's useReducer() hook so that the action dispatcher supports thunks.
@@ -27,7 +24,7 @@ const useReducerWithThunk = (reducer, initialState, initializer = defaultInitial
   const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, props), []);
   const initialHookState = useLazyMemo(getInitialHookState);
 
-  const [hookState, setHookState] = useReducer(setStateHookReducer, initialHookState, initializer);
+  const [hookState, setHookState] = useSetStateReducer(initialHookState, initializer);
 
   // State management
   const state = useRef(hookState);
