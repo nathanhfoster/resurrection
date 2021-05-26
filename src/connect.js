@@ -36,7 +36,8 @@ const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
     : defaultMergeProps;
 
   // Conditionally memoize Component
-  const PureComponent = pure === true ? memo(Component, areMergedPropsEqual) : Component;
+  const PureComponent =
+    pure === true ? memo(Component, areMergedPropsEqual) : Component;
 
   return (ownProps) => {
     const { state, dispatch } = useContext(context);

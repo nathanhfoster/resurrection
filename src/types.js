@@ -131,7 +131,7 @@
 /**
  * @callback MergeProps
  * @property {ComponentProps} stateToProps - returned value of mapStateToProps
- * @property {Action|ThunkActionDispatch} - returned value of mapDispatchToProps
+ * @property {Action|ThunkActionDispatch} dispatchToProps - returned value of mapDispatchToProps
  * @property {ComponentProps} ownProps - components own props
  */
 
