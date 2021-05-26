@@ -25,7 +25,9 @@ import {
   useDispatch,
   useLazyMemo,
   usePreviousValue,
+  useReducerWithThunk,
   useSelector,
+  useSetStateReducer,
 } from './hooks';
 
 export {
@@ -46,5 +48,7 @@ export {
   useDispatch,
   useLazyMemo,
   usePreviousValue,
+  useReducerWithThunk,
   useSelector,
+  useSetStateReducer,
 };
