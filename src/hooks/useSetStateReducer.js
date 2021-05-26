@@ -1,5 +1,5 @@
 import { useReducer } from 'react';
-import { defaultReducer, defaultInitializer } from '../utils';
+import { defaultReducer } from '../utils';
 
 /**
  * Mimics React.Component this.state and this.setState
@@ -7,7 +7,7 @@ import { defaultReducer, defaultInitializer } from '../utils';
  * @param {ReducerStateInitializer=} initializer - initilizes the reducer's state
  * @returns {Array.<ReducerState, function(): ReducerState>} - the new useReducer hook
  */
-const useSetStateReducer = (initializerArg = {}, initializer = defaultInitializer) => useReducer(
+const useSetStateReducer = (initializerArg, initializer) => useReducer(
     defaultReducer,
     initializerArg,
     initializer
