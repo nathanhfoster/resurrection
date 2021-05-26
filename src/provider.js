@@ -9,7 +9,7 @@ import {
   combineReducers,
   shallowEquals,
   defaultInitializer,
-  defaultReducer,
+  setStateReducer,
   getRandomInt,
 } from './utils';
 import { Stores, Store } from './classes';
@@ -109,7 +109,10 @@ const ContextStore = ({
 ContextStore.propTypes = {
   name: PropTypes.string,
   context: PropTypes.shape({}),
-  reducers: PropTypes.oneOfType([PropTypes.func, PropTypes.objectOf(PropTypes.func)]),
+  reducers: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.objectOf(PropTypes.func)
+  ]),
   initialState: PropTypes.shape({}),
   props: PropTypes.shape({}),
   initializer: PropTypes.func,
@@ -126,14 +129,14 @@ ContextStore.propTypes = {
     PropTypes.arrayOf(PropTypes.func),
     PropTypes.arrayOf(PropTypes.symbol),
     PropTypes.arrayOf(PropTypes.object),
-    PropTypes.arrayOf(PropTypes.elementType),
-  ]).isRequired,
+    PropTypes.arrayOf(PropTypes.elementType)
+  ]).isRequired
 };
 
 ContextStore.defaultProps = {
   name: getRandomInt(0, 1000),
   context: StateProvider,
-  reducers: defaultReducer,
+  reducers: setStateReducer,
   initializer: defaultInitializer,
   initialState: undefined,
   props: undefined,
@@ -145,5 +148,5 @@ export {
   StateProvider as ContextConsumer,
   ContextStore as ContextProvider,
   MemoizedContextProvider,
-  storeFactory,
+  storeFactory
 };

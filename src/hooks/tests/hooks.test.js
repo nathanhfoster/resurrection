@@ -1,13 +1,15 @@
 import React, { createContext } from 'react';
 import { render } from '@testing-library/react';
 import ContextStore from '../..';
-import useDispatch from '../useDispatch';
-import useLazyMemo from '../useLazyMemo';
-import usePreviousValue from '../usePreviousValue';
-import useReducerWithThunk from '../useReducerWithThunk';
-import useSelector from '../useSelector';
+import {
+  useDispatch,
+  useLazyMemo,
+  usePreviousValue,
+  useReducerWithThunk,
+  useSelector
+} from '..';
 
-const { ContextProvider, defaultReducer } = ContextStore;
+const { ContextProvider, setStateReducer } = ContextStore;
 
 const mockContext = createContext();
 
@@ -20,11 +22,15 @@ const setup = (hook, contextConsumer, ...args) => {
     return <div />;
   };
   const wrapper = render(
-    <ContextProvider name="ContextStore" context={contextConsumer} initialState={initialState}>
+    <ContextProvider
+      name='ContextStore'
+      context={contextConsumer}
+      initialState={initialState}
+    >
       <TestComponent />
-    </ContextProvider>,
+    </ContextProvider>
   );
-  return [returnVal, wrapper];
+  return [returnVal, wrapper]
 };
 
 describe('hooks', () => {
@@ -59,21 +65,26 @@ describe('hooks', () => {
 
   describe('useReducerWithThunk', () => {
     it('Should return a reducer with thunk with no initializer', () => {
-      const [reducer] = setup(useReducerWithThunk, undefined, defaultReducer, initialState);
+      const [reducer] = setup(
+        useReducerWithThunk,
+        undefined,
+        setStateReducer,
+        initialState,
+      );
       const [state, dispatch] = reducer;
       expect(state).toMatchObject(initialState);
       expect(dispatch).toBeDefined();
     });
 
     it('Should return a reducer with thunk with an initializer', () => {
-      const initializer = stateOrProps => ({
+      const initializer = (stateOrProps) => ({
         ...stateOrProps,
-        key2: 'Test',
+        key2: 'Test'
       });
       const [reducer] = setup(
         useReducerWithThunk,
         undefined,
-        defaultReducer,
+        setStateReducer,
         initialState,
         initializer,
       );
@@ -87,22 +98,33 @@ describe('hooks', () => {
   });
 
   describe('useSelector', () => {
-    const mapStateToSelector = ({ key1 }) => ({ key2: key1 });
+    const mapStateToSelector = ({ key1 }) => ({ key2: key1 })
     it('Should throw an error when a selector is not passed', () => {
-      expect(() => setup(useSelector, undefined)[0]).toThrowError();
+      expect(() => setup(useSelector, undefined)[0]).toThrowError()
     });
     it('Should return a selected state without a equality function and contextConsumer', () => {
-      const [selector] = setup(useSelector, undefined, mapStateToSelector);
-      expect(selector).toMatchObject({ key2: initialState.key1 });
+      const [selector] = setup(useSelector, undefined, mapStateToSelector)
+      expect(selector).toMatchObject({ key2: initialState.key1 })
     });
     it('Should return a selected state without a contextConsumer', () => {
       const isEqual = () => true;
-      const [selector] = setup(useSelector, undefined, mapStateToSelector, isEqual);
+      const [selector] = setup(
+        useSelector,
+        undefined,
+        mapStateToSelector,
+        isEqual,
+      );
       expect(selector).toMatchObject({ key2: initialState.key1 });
     });
     it('Should return a selected state', () => {
       const isEqual = () => false;
-      const [selector] = setup(useSelector, mockContext, mapStateToSelector, isEqual, mockContext);
+      const [selector] = setup(
+        useSelector,
+        mockContext,
+        mapStateToSelector,
+        isEqual,
+        mockContext,
+      );
       expect(selector).toMatchObject({ key2: initialState.key1 });
     });
   });

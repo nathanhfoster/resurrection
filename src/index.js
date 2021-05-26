@@ -5,7 +5,7 @@ import {
   ContextProvider,
   MemoizedContextProvider,
   storeFactory,
-} from './provider';
+} from './provider'
 
 import connect from './connect';
 
@@ -14,10 +14,10 @@ import {
   bindActionCreators,
   combineReducers,
   defaultInitializer,
-  defaultReducer,
   getDerivedStateFromProps,
   getRandomInt,
   isFunction,
+  setStateReducer,
   shallowEquals,
 } from './utils';
 
@@ -40,10 +40,10 @@ export {
   bindActionCreators,
   combineReducers,
   defaultInitializer,
-  defaultReducer,
   getDerivedStateFromProps,
   getRandomInt,
   isFunction,
+  setStateReducer,
   shallowEquals,
   useDispatch,
   useLazyMemo,

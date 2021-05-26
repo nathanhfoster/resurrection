@@ -1,5 +1,5 @@
 import { useRef, useReducer, useCallback, useEffect } from 'react';
-import { isFunction, defaultReducer } from '../utils';
+import { isFunction, setStateReducer } from '../utils';
 
 /**
  * Mimics React.Component this.state and this.setState
@@ -10,28 +10,31 @@ import { isFunction, defaultReducer } from '../utils';
 const useSetStateReducer = (initializerArg = {}, initializer) => {
   // Temporarily holds the reference to a callback
   const callbackRef = useRef(null);
-  const [state, setState] = useReducer(defaultReducer, initializerArg, initializer);
+  const [state, dispatch] = useReducer(
+    setStateReducer,
+    initializerArg,
+    initializer,
+  );
 
-   /**
+  /**
+   * Augments the dispatch to accept a callback as a second parameter
    * @param {ReducerState|function(): ReducerState} updater - the state keys to overwrite
    * @param {Function} callback - mimics the second parameter of this.setState
    * */
-  const setStateWithCallback = useCallback((updater, callback) => {
-    setState(updater);
+  const setState = useCallback((updater, callback) => {
+    dispatch(updater);
     callbackRef.current = callback;
   }, []);
 
   // Call the callback after every state change
   useEffect(() => {
     if (isFunction(callbackRef.current)) {
-      callbackRef.current(state);
-      callbackRef.current = null;
+      callbackRef.current(state)
+      callbackRef.current = null
     }
   }, [state]);
 
-  return [state, setStateWithCallback];
-
- 
-};
+  return [state, setState];
+}
 
 export default useSetStateReducer;
