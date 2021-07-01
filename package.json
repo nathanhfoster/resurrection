@@ -1,10 +1,10 @@
 {
   "name": "resurrection",
   "version": "1.0.49",
-  "description": "State management library that follows redux and redux-thunk architecture but uses React's latest useContext and useReducer hooks.",
-  "author": "strap8",
+  "description": "State management library that follows Flux / Redux / Thunk architecture but uses React&#x27;s latest useContext and useReducer hooks.",
+  "author": "nathanhfoster",
   "license": "MIT",
-  "repository": "strap8/resurrection",
+  "repository": "nathanhfoster/resurrection",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
@@ -21,10 +21,11 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && npm install && npm run build",
+    "lint": "eslint 'src/**'",
     "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
-    "react": "^16.3.0"
+    "react": "^16.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.10",
@@ -32,7 +33,7 @@
     "@testing-library/user-event": "^13.0.10",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^7.23.0",
+    "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-config-standard": "^16.0.2",
     "eslint-config-standard-react": "^11.0.1",
@@ -43,42 +44,15 @@
     "eslint-plugin-react": "^7.23.1",
     "eslint-plugin-standard": "^5.0.0",
     "faker": "^5.5.1",
-    "gh-pages": "^3.1.0",
+    "gh-pages": "^2.2.0",
     "microbundle-crl": "^0.13.11",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-scripts": "^4.0.3"
   },
   "files": [
     "dist"
-  ],
-  "keywords": [
-    "resurrection",
-    "redux",
-    "state",
-    "management",
-    "recoil",
-    "redux-thunk",
-    "react-redux",
-    "react",
-    "hooks",
-    "context",
-    "reducer",
-    "useReducer",
-    "useContext",
-    "useSelector",
-    "useDispatch",
-    "dispatch",
-    "flux",
-    "predictable",
-    "functional",
-    "immutable",
-    "elm"
-  ],
-  "bugs": {
-    "url": "https://github.com/strap8/resurrection/issues"
-  },
-  "homepage": "https://github.com/strap8/resurrection#readme"
+  ]
 }

@@ -1,8 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import ContextStore from '..';
-
-const { ContextProvider, storeFactory } = ContextStore;
+import { ContextProvider, storeFactory } from '..';
 
 export const DEFAULT_STATE = {
   someKeyFromMyStore: 'Hello World',
@@ -41,7 +39,7 @@ const getWrapper = (name, context) => render(
 );
 
 describe('provider', () => {
-  beforeEach(() => {});
+  beforeEach(() => { });
 
   describe('storeFactory', () => {
     it('Should get a store from a unique name', () => {

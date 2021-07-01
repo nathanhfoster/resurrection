@@ -1,15 +1,14 @@
 import React, { createContext } from 'react';
 import { render } from '@testing-library/react';
-import ContextStore from '../..';
 import {
   useDispatch,
   useLazyMemo,
   usePreviousValue,
   useReducerWithThunk,
-  useSelector
+  useSelector,
+  ContextProvider,
+  setStateReducer
 } from '..';
-
-const { ContextProvider, setStateReducer } = ContextStore;
 
 const mockContext = createContext();
 
@@ -30,7 +29,7 @@ const setup = (hook, contextConsumer, ...args) => {
       <TestComponent />
     </ContextProvider>
   );
-  return [returnVal, wrapper]
+  return [returnVal, wrapper];
 };
 
 describe('hooks', () => {
@@ -98,13 +97,13 @@ describe('hooks', () => {
   });
 
   describe('useSelector', () => {
-    const mapStateToSelector = ({ key1 }) => ({ key2: key1 })
+    const mapStateToSelector = ({ key1 }) => ({ key2: key1 });
     it('Should throw an error when a selector is not passed', () => {
-      expect(() => setup(useSelector, undefined)[0]).toThrowError()
+      expect(() => setup(useSelector, undefined)[0]).toThrowError();
     });
     it('Should return a selected state without a equality function and contextConsumer', () => {
-      const [selector] = setup(useSelector, undefined, mapStateToSelector)
-      expect(selector).toMatchObject({ key2: initialState.key1 })
+      const [selector] = setup(useSelector, undefined, mapStateToSelector);
+      expect(selector).toMatchObject({ key2: initialState.key1 });
     });
     it('Should return a selected state without a contextConsumer', () => {
       const isEqual = () => true;

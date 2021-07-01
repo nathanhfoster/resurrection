@@ -1,29 +1,32 @@
-import React from 'react'
-import { ContextProvider } from 'resurrection'
-import SomeProviderChild from './SomeProviderChild'
+import React from 'react';
+import { ContextProvider } from 'resurrection';
+import ChildComponent from './components';
+import 'resurrection/dist/index.css';
 
 export const DEFAULT_STATE = {
-  someKeyFromMyStore: 'Hello World'
-}
+  someKeyFromMyStore: 'Hello World!'
+};
 
 const someReducer = (state = DEFAULT_STATE, action) => {
-  const { type, payload } = action
+  const { type, payload } = action;
 
   switch (type) {
     case 'SOME_ACTION_TYPE':
-      return { ...state, someKeyFromMyStore: payload }
+      return { ...state, someKeyFromMyStore: payload };
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-const SomeProvider = () => (
+const App = () => {
   /* reducers can be a single reducer function or an object of reducers */
   /* object of reducers example: const reducers = { someReducer, someOtherReducer} */
-  <ContextProvider name='App' reducers={someReducer} initialState={DEFAULT_STATE}>
-    <SomeProviderChild />
-  </ContextProvider>
-)
+  return (
+    <ContextProvider name='App' reducers={someReducer} initialState={DEFAULT_STATE}>
+      <ChildComponent />
+    </ContextProvider>
+  );
+};
 
-export default SomeProvider
+export default App;

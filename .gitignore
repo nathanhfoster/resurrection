@@ -3,7 +3,6 @@
 
 # dependencies
 node_modules
-example/node_modules
 
 # builds
 build
