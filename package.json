@@ -6,6 +6,7 @@
   "license": "MIT",
   "repository": "nathanhfoster/resurrection",
   "main": "dist/index.js",
+  "types": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
   "engines": {
@@ -25,12 +26,20 @@
     "lint": "eslint 'src/**'"
   },
   "peerDependencies": {
-    "react": "^17.0.2"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^13.0.10",
+    "@types/events": "^3.0.0",
+    "@types/fontfaceobserver": "^0.0.6",
+    "@types/json-form-data": "^1.7.0",
+    "@types/react": "^17.0.2",
+    "@types/react-countup": "^4.3.0",
+    "@types/react-dom": "^17.0.2",
+    "@types/styled-components": "^5.1.0",
     "babel-eslint": "^10.1.0",
     "cross-env": "^7.0.3",
     "eslint": "^7.29.0",
@@ -50,7 +59,9 @@
     "prettier": "^2.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "^4.0.3"
+    "react-scripts": "^4.0.3",
+    "typescript": "^4.3.5",
+    "typescript-plugin-css-modules": "^3.4.0"
   },
   "files": [
     "dist"
