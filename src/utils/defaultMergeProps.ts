@@ -1,7 +1,13 @@
-const defaultMergeProps = (stateProps, dispatchProps, props) => ({
+import { MergePropsType } from '@types';
+
+const defaultMergeProps: MergePropsType = (
+  stateProps,
+  dispatchProps,
+  props
+) => ({
   ...props,
   ...stateProps,
-  ...dispatchProps,
+  ...dispatchProps
 });
 
 export default defaultMergeProps;

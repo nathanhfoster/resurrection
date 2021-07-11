@@ -1,8 +1,19 @@
-import { useRef, useCallback, useEffect, } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import {
-  isFunction, getDerivedStateFromProps, defaultInitializer,
+  isFunction,
+  getDerivedStateFromProps,
+  defaultInitializer
 } from '../utils';
-import { useSetStateReducer, useLazyMemo, } from '.';
+import { useSetStateReducer, useLazyMemo } from '.';
+import {
+  ActionType,
+  GetReducerStateType,
+  ReducerStateType,
+  ThunkActionDispatchType,
+  ThunkActionType,
+  ThunkType,
+  useReducerWithThunkType
+} from '@types';
 
 /**
  * Mimics React.Component this.setState
@@ -12,33 +23,43 @@ import { useSetStateReducer, useLazyMemo, } from '.';
  */
 
 /**
- * Augments React's useReducer() hook so that the action dispatcher supports thunks.
- * @param {Reducer} reducer - reducer
- * @param {ReducerState=} initialState - initialState
- * @param {ReducerStateInitializer=} initializer - initilizes the reducer's state
- * @param {ComponentProps=} props - props to make the state controlled from a HOC
- * @returns {Array.<ReducerState, Thunk>} - the new useReducer hook
+ * Augments React's useReducer() hook
+ * so that the action dispatcher supports thunks.
  */
-const useReducerWithThunk = (reducer, initialState, initializer = defaultInitializer, props) => {
+const useReducerWithThunk: useReducerWithThunkType = (
+  reducer,
+  initialState,
+  initializer = defaultInitializer,
+  props
+) => {
   // Get initial hook state once
-  const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, props), []);
+  const getInitialHookState = useCallback(
+    () => getDerivedStateFromProps(initialState, props),
+    []
+  );
   const initialHookState = useLazyMemo(getInitialHookState);
 
-  const [hookState, setHookState] = useSetStateReducer(initialHookState, initializer);
+  const [hookState, setHookState] = useSetStateReducer(
+    initialHookState,
+    initializer
+  );
 
   // State management
-  const state = useRef(hookState);
+  const state = useRef<ReducerStateType>(hookState);
 
-  const getState = useCallback(() => state.current, [state]);
+  const getState: GetReducerStateType = useCallback(
+    () => state.current,
+    [state]
+  );
 
   const setState = useCallback(
-    (newState) => {
+    newState => {
       const derivedState = getDerivedStateFromProps(newState, props);
       const nextState = initializer(derivedState);
       state.current = nextState;
       setHookState(nextState);
     },
-    [props, setHookState],
+    [props, setHookState]
   );
 
   // make the state controlled from a HOC
@@ -49,20 +70,24 @@ const useReducerWithThunk = (reducer, initialState, initializer = defaultInitial
   }, [props]);
 
   // Reducer
-  const reduce = useCallback(action => reducer(getState(), action), [reducer, getState]);
+  const reduce = useCallback(
+    action => reducer(getState(), action),
+    [reducer, getState]
+  );
 
   /** Augmented dispatcher
    * @param {Action|ThunkActionDispatch} action - action
    * @returns {Thunk} - the new dispatch API
    */
-  const dispatch = useCallback(
-    (action) => {
+  const dispatch: ThunkType = useCallback(
+    (action: ActionType | ThunkActionType | ThunkActionDispatchType) => {
       if (isFunction(action)) {
+        //@ts-ignore
         return action(dispatch, getState);
       }
       return setState(reduce(action));
     },
-    [getState, setState, reduce],
+    [getState, setState, reduce]
   );
 
   return [hookState, dispatch];

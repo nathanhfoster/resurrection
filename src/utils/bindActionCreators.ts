@@ -1,3 +1,6 @@
+/* eslint-disable max-len */
+import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } from '@types';
+
 /**
  * Turns an object whose values are action creators, into an object with the
  * same keys, but with every function wrapped into a `dispatch` call so they
@@ -21,7 +24,7 @@
  * function as actionCreators, the return value will also be a single
  * function.
  */
-const bindActionCreator = dispatch => actionCreator => (...args) => dispatch(
+const bindActionCreator: bindActionCreatorsType = dispatch => actionCreator => (...args) => dispatch(
   actionCreator?.apply?.(this, args) || actionCreator,
 );
 
@@ -32,16 +35,15 @@ const bindActionCreator = dispatch => actionCreator => (...args) => dispatch(
  * @returns {Object.<String, Thunk>} object of augmented actions
  * */
 
-const BindActionCreators = (mapDispatchToProps, dispatch) => {
+const BindActionCreators: BindActionCreatorsType = (mapDispatchToProps, dispatch) => {
   if (typeof mapDispatchToProps !== 'object' || mapDispatchToProps === null) {
     throw new Error(
-      `bindActionCreators expected an object or a function, instead received ${
-        mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
+      `bindActionCreators expected an object or a function, instead received ${mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
       }.`,
     );
   }
-  const boundActionCreators = Object.entries(mapDispatchToProps).reduce(
-    (acc, [key, action]) => {
+  const boundActionCreators: ThunkMap = Object.entries(mapDispatchToProps).reduce(
+    (acc: StringMap, [key, action]) => {
       acc[key] = bindActionCreator(dispatch)(action);
       return acc;
     },

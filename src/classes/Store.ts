@@ -1,17 +1,25 @@
 import isFunction from '../utils/isFunction';
 import { getRandomInt } from '../utils';
-import { StoreInterface, Context, Dispatch, ReducerState } from '../types';
+import {
+  StoreInterface,
+  ContextType,
+  DispatchType,
+  ReducerStateType,
+  ThunkType,
+  ContextStoreNameType
+} from '@types';
 
 /**
  * Holds the properties of a store object
  */
 class Store implements StoreInterface {
   constructor(
-    id?: number | string,
+    id?: ContextStoreNameType,
     //@ts-ignore
-    context: Context,
-    dispatch: Dispatch,
-    state: ReducerState) {
+    context: ContextType,
+    dispatch: DispatchType | ThunkType,
+    state: ReducerStateType) {
+    //@ts-ignore
     this.id = id || getRandomInt(0, 1000);
 
     //@ts-ignore
@@ -35,7 +43,6 @@ class Store implements StoreInterface {
 
   isReady = false;
 
-
   getId = () => this.id;
 
   getContext = () => this.context;
@@ -53,11 +60,11 @@ class Store implements StoreInterface {
   setIsReady = (ready: boolean) => {
     this.isReady = ready;
   };
-  setState = (state: ReducerState) => {
+  setState = (state: ReducerStateType) => {
     this.state = state;
   };
 
-  setDispatch = (dispatch: Dispatch) => {
+  setDispatch = (dispatch: DispatchType) => {
     //@ts-ignore
     this.dispatch = dispatch;
   };

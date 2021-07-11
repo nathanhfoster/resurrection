@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export { default as actionTypes } from './actionTypes';
 export { default as bindActionCreators } from './bindActionCreators';
 export { default as combineReducers } from './combineReducers';

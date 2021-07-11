@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+import { ContextType, MapStateToSelectorType, ReducerStateInitializerType, ReducerStateType, ReducerType } from '@types';
 import React, { createContext } from 'react';
 import { render } from '@testing-library/react';
 import {
@@ -8,13 +10,19 @@ import {
   useSelector,
   ContextProvider,
   setStateReducer
-} from '..';
+} from '../..';
 
-const mockContext = createContext();
+const initialState: ReducerStateType = { key1: 'Test' };
 
-const initialState = { key1: 'Test' };
+const mockContext = createContext<ReducerStateType>(initialState);
 
-const setup = (hook, contextConsumer, ...args) => {
+const mockReducer: ReducerType = (state, action) => initialState;
+
+const setup = (
+  hook: Function,
+  contextConsumer: ContextType,
+  ...args: any[]
+): [any, any] => {
   let returnVal;
   const TestComponent = () => {
     returnVal = hook(...args);
@@ -25,6 +33,7 @@ const setup = (hook, contextConsumer, ...args) => {
       name='ContextStore'
       context={contextConsumer}
       initialState={initialState}
+      reducers={mockReducer}
     >
       <TestComponent />
     </ContextProvider>
@@ -39,6 +48,7 @@ describe('hooks', () => {
       expect(dispatch).toBeDefined();
     });
     it('Should return the dispatch without a context as a parameter', () => {
+      //@ts-ignore
       const [dispatch] = setup(useDispatch);
       expect(dispatch).toBeDefined();
     });
@@ -76,7 +86,7 @@ describe('hooks', () => {
     });
 
     it('Should return a reducer with thunk with an initializer', () => {
-      const initializer = (stateOrProps) => ({
+      const initializer: ReducerStateInitializerType = stateOrProps => ({
         ...stateOrProps,
         key2: 'Test'
       });
@@ -90,14 +100,14 @@ describe('hooks', () => {
       const [state, dispatch] = reducer;
       expect(state).toMatchObject({
         ...initialState,
-        key2: 'Test',
+        key2: 'Test'
       });
       expect(dispatch).toBeDefined();
     });
   });
 
   describe('useSelector', () => {
-    const mapStateToSelector = ({ key1 }) => ({ key2: key1 });
+    const mapStateToSelector: MapStateToSelectorType = ({ key1 }: ReducerStateType) => ({ key2: key1 });
     it('Should throw an error when a selector is not passed', () => {
       expect(() => setup(useSelector, undefined)[0]).toThrowError();
     });

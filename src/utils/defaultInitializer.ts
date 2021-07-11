@@ -1,8 +1,6 @@
-/**
- * @param {ReducerState|ComponentProps} stateOrProps - reducer state
- * @returns {ReducerState} - reducer state
- */
+import { ReducerStateInitializerType } from '@types';
 
-const defaultInitializer = stateOrProps => stateOrProps;
+const defaultInitializer: ReducerStateInitializerType =
+    stateOrProps => stateOrProps;
 
 export default defaultInitializer;

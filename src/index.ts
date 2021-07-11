@@ -2,8 +2,8 @@ import {
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
-  storeFactory,
-} from './provider'
+  storeFactory
+} from './provider';
 
 import connect from './connect';
 
@@ -16,7 +16,7 @@ import {
   getRandomInt,
   isFunction,
   setStateReducer,
-  shallowEquals,
+  shallowEquals
 } from './utils';
 
 import {
@@ -25,7 +25,7 @@ import {
   usePreviousValue,
   useReducerWithThunk,
   useSelector,
-  useSetStateReducer,
+  useSetStateReducer
 } from './hooks';
 
 export {
@@ -48,5 +48,5 @@ export {
   usePreviousValue,
   useReducerWithThunk,
   useSelector,
-  useSetStateReducer,
+  useSetStateReducer
 };

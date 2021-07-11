@@ -2,6 +2,7 @@ import { useContext, useMemo } from 'react';
 import usePreviousValue from './usePreviousValue';
 import { isFunction, shallowEquals } from '../utils';
 import { ContextConsumer } from '../provider';
+import { SelectorEqualityFunctionType, useSelectorType } from '@types';
 
 /**
  * Shallow equality function
@@ -9,7 +10,10 @@ import { ContextConsumer } from '../provider';
  * @param {*} previousSelector - the previous selected state
  * @returns {Boolean} - whether the two selected states are equal
  */
-const defaultIsEqual = (currentSelector, previousSelector) => shallowEquals(
+const defaultIsEqual: SelectorEqualityFunctionType = (
+  currentSelector,
+  previousSelector
+) => shallowEquals(
   previousSelector,
   currentSelector,
 );
@@ -25,7 +29,7 @@ const defaultIsEqual = (currentSelector, previousSelector) => shallowEquals(
  * @returns {React.FunctionComponent} - a memoized component
  * */
 
-const useSelector = (
+const useSelector: useSelectorType = (
   mapStateToSelector,
   isEqual = defaultIsEqual,
   contextConsumer = ContextConsumer,

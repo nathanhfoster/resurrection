@@ -1,16 +1,15 @@
-import { isFunction, getDerivedStateFromProps } from '.'
+import { ReducerType } from '@types';
+import { isFunction, getDerivedStateFromProps } from '.';
 
 /**
  * Mimics React.Component this.setState
- * @param {ReducerState} state - current reducer state
- * @param {ReducerState|function(): ReducerState} action - the state keys to overwrite
- * @returns {ReducerState} - the next state for the reducer
  */
-const setStateReducer = (state, action) => {
-  const nextStateToOverwrite = isFunction(action) ? action(state) : action
-  const nextState = getDerivedStateFromProps(state, nextStateToOverwrite)
+const setStateReducer: ReducerType = (state, action) => {
+  //@ts-ignore
+  const nextStateToOverwrite = isFunction(action) ? action(state) : action;
+  const nextState = getDerivedStateFromProps(state, nextStateToOverwrite);
 
-  return nextState
-}
+  return nextState;
+};
 
-export default setStateReducer
+export default setStateReducer;

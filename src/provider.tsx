@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 import React, {
   createContext,
   useCallback,
   useLayoutEffect,
-  useMemo,
+  useMemo
 } from 'react';
 import PropTypes from 'prop-types';
 import {
@@ -10,12 +11,12 @@ import {
   shallowEquals,
   defaultInitializer,
   setStateReducer,
-  getRandomInt,
+  getRandomInt
 } from './utils';
 import { Stores, Store } from './classes';
 import useLazyMemo from './hooks/useLazyMemo';
 import useReducerWithThunk from './hooks/useReducerWithThunk';
-import './types';
+import { ContextStoreProps } from '@types';
 
 // const inDevelopmentMode = process.env.NODE_ENV === 'development'
 
@@ -25,22 +26,20 @@ const StateProvider = createContext(null);
 
 /**
  * Context Store Factory that simulates Redux's createStore API
- * @param {ContexStoreProps} props - ContextStore props
- * @returns {React.ContextProvider} - a React Context with the store as it's value
  */
-const ContextStore = ({
+const ContextStore: React.FC<ContextStoreProps> = ({
   name,
   context: Context,
   reducers,
   initialState,
   props,
   initializer,
-  children,
+  children
 }) => {
   // call the function once to get initial state and global reducer
   const getInitialMainState = useCallback(
     () => combineReducers(reducers, initialState),
-    [],
+    []
   );
   const [mainState, mainReducer] = useLazyMemo(getInitialMainState);
 
@@ -49,7 +48,7 @@ const ContextStore = ({
     mainReducer,
     mainState,
     initializer,
-    props,
+    props
   );
 
   // Update storeFactory object to access it outside of a component
@@ -58,8 +57,8 @@ const ContextStore = ({
       const newStore = new Store(name, Context, dispatch, state);
       storeFactory.setStore(newStore);
     } else {
-      storeFactory.setStoreState(state);
-      storeFactory.setStoreDispatch(dispatch);
+      storeFactory.setStoreState(name, state);
+      storeFactory.setStoreDispatch(name, dispatch);
     }
     return () => {
       storeFactory.setStoreReady(name, false);
@@ -70,9 +69,9 @@ const ContextStore = ({
   const contextStore = useMemo(
     () => ({
       state,
-      dispatch,
+      dispatch
     }),
-    [state, dispatch],
+    [state, dispatch]
   );
 
   // TODO: Handle a way to add the window._REACT_CONTEXT_DEVTOOL
@@ -109,6 +108,7 @@ const ContextStore = ({
 ContextStore.propTypes = {
   name: PropTypes.string,
   context: PropTypes.shape({}),
+  //@ts-ignore
   reducers: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.objectOf(PropTypes.func)
@@ -139,7 +139,7 @@ ContextStore.defaultProps = {
   reducers: setStateReducer,
   initializer: defaultInitializer,
   initialState: undefined,
-  props: undefined,
+  props: undefined
 };
 
 const MemoizedContextProvider = React.memo(ContextStore, shallowEquals);

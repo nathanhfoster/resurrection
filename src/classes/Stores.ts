@@ -1,15 +1,21 @@
 import Store from './Store';
-import { Dispatch, ReducerState, StoreNameOrContext, StoresInterface } from '../types';
+import {
+  DispatchType,
+  ReducerStateType,
+  StoreNameOrContextType,
+  StoresInterface,
+  ThunkType
+} from '@types';
 
 /**
  * Holds multiple store objects
  */
 class Stores implements StoresInterface {
-  constructor(stores: Store[]) {
+  constructor(stores?: Store[]) {
     if (
-      typeof stores === 'object'
-      && Object.entries(stores)?.every(
-        ([key, store]) => store instanceof Store && key === store.getId(),
+      typeof stores === 'object' &&
+      Object.entries(stores)?.every(
+        ([key, store]) => store instanceof Store && key === store.getId()
       )
     ) {
       this.stores = stores;
@@ -17,12 +23,12 @@ class Stores implements StoresInterface {
   }
 
   //@ts-ignore
-  stores = {};
+  stores = {}
 
   //@ts-ignore
-  getStores = () => this.stores;
+  getStores = () => this.stores
 
-  getStore = (nameOrContext: StoreNameOrContext) => {
+  getStore = (nameOrContext: StoreNameOrContextType) => {
     //@ts-ignore
     const storeFoundByName = this.stores[nameOrContext];
 
@@ -32,12 +38,12 @@ class Stores implements StoresInterface {
 
     const storeFoundByContext = Object.values(this.stores).find(
       //@ts-ignore
-      store => store.getContext() === nameOrContext,
+      store => store.getContext() === nameOrContext
     );
 
     //@ts-ignore
     return storeFoundByContext;
-  };
+  }
 
   //@ts-ignore
   setStore = (store: Store) => {
@@ -45,38 +51,43 @@ class Stores implements StoresInterface {
       //@ts-ignore
       this.stores[store.getId()] = store;
     }
-  };
+  }
 
-  isStoreReady = (nameOrContext: StoreNameOrContext) => {
+  isStoreReady = (nameOrContext: StoreNameOrContextType) => {
     const store = this.getStore(nameOrContext);
     if (store) {
       return store.getIsReady();
     }
 
     return false;
-  };
+  }
 
-  setStoreReady = (nameOrContext: StoreNameOrContext, ready: boolean) => {
+  setStoreReady = (nameOrContext: StoreNameOrContextType, ready: boolean) => {
     const store = this.getStore(nameOrContext);
     if (store) {
       store.setIsReady(ready);
     }
-  };
+  }
 
-  setStoreState = (nameOrContext: StoreNameOrContext, state: ReducerState) => {
+  setStoreState = (
+    nameOrContext: StoreNameOrContextType,
+    state: ReducerStateType
+  ) => {
     const store = this.getStore(nameOrContext);
     if (store) {
       store.setState(state);
     }
-  };
+  }
 
-
-  setStoreDispatch = (nameOrContext: StoreNameOrContext, dispatch: Dispatch) => {
+  setStoreDispatch = (
+    nameOrContext: StoreNameOrContextType,
+    dispatch: DispatchType | ThunkType
+  ) => {
     const store = this.getStore(nameOrContext);
     if (store) {
       store.setDispatch(dispatch);
     }
-  };
+  }
 }
 
 export default Stores;

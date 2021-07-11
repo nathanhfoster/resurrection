@@ -1,3 +1,4 @@
+import { StringMap } from '@types';
 import getRandomString from './getRandomString';
 
 /**
@@ -7,10 +8,10 @@ import getRandomString from './getRandomString';
  * Do not reference these action types directly in your code.
  */
 
-const ActionTypes = {
+const ActionTypes: StringMap = {
   INIT: `@@redux/INIT${getRandomString()}`,
   REPLACE: `@@redux/REPLACE${getRandomString()}`,
-  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${getRandomString()}`,
+  PROBE_UNKNOWN_ACTION: () => `@@redux/PROBE_UNKNOWN_ACTION${getRandomString()}`
 };
 
 export default ActionTypes;

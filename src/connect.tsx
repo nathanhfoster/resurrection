@@ -3,68 +3,67 @@ import {
   isFunction,
   defaultMergeProps,
   bindActionCreators,
-  shallowEquals,
+  shallowEquals
 } from './utils';
 import { ContextConsumer } from './provider';
-import './types';
+import {
+  ConnectType,
+  ContextStore,
+  ComponentPropsType,
+  MergePropsType
+} from '@types';
 
 /**
  * This function simulates Redux's connect API
- * @param {MapStateToProps=} mapStateToProps - reducer dispatch API
- * @param {MapDispatchToProps=} mapDispatchToProps - reducer state
- * @param {MergeProps=} mergeProps - function to merge props
- * @param {ConnectOptions=} options - options
- * @returns {React.memo|React.FunctionComponent} - a connected component
- * */
+ **/
+const connect: ConnectType =
+  (mapStateToProps, mapDispatchToProps, mergeProps, options) => Component => {
+    const {
+      context = ContextConsumer,
+      pure = true,
+      // TODO:
+      // areStatesEqual = shallowEquals,
+      // areOwnPropsEqual = shallowEquals,
+      // areStatePropsEqual = shallowEquals,
+      areMergedPropsEqual = shallowEquals
+      // forwardRef = false,
+    } = options || {};
 
-const connect = (mapStateToProps, mapDispatchToProps, mergeProps, options) => (
-  Component,
-) => {
-  const {
-    context = ContextConsumer,
-    pure = true,
-    // TODO:
-    // areStatesEqual = shallowEquals,
-    // areOwnPropsEqual = shallowEquals,
-    // areStatePropsEqual = shallowEquals,
-    areMergedPropsEqual = shallowEquals,
-    // forwardRef = false,
-  } = options || {};
+    const handleMergeProps: MergePropsType = isFunction(mergeProps)
+      ? mergeProps
+      : defaultMergeProps;
 
-  const handleMergeProps = isFunction(mergeProps)
-    ? mergeProps
-    : defaultMergeProps;
+    // Conditionally memoize Component
+    const PureComponent =
+      pure === true ? memo(Component, areMergedPropsEqual) : Component;
 
-  // Conditionally memoize Component
-  const PureComponent =
-    pure === true ? memo(Component, areMergedPropsEqual) : Component;
-
-  return (ownProps) => {
-    const { state, dispatch } = useContext(context);
-    const stateToProps = useMemo(() => {
-      if (isFunction(mapStateToProps)) {
-        return mapStateToProps(state, ownProps);
-      }
-      return {};
-    }, [state, ownProps]);
-
-    const dispatchToProps = useMemo(() => {
-      if (!mapDispatchToProps) {
+    return ownProps => {
+      const { state, dispatch } = useContext<ContextStore>(context);
+      const stateToProps: ComponentPropsType = useMemo(() => {
+        if (isFunction(mapStateToProps)) {
+          return mapStateToProps(state, ownProps);
+        }
         return {};
-      }
-      if (isFunction(mapDispatchToProps)) {
-        return mapDispatchToProps(dispatch);
-      }
-      return bindActionCreators(mapDispatchToProps, dispatch);
-    }, [dispatch]);
+      }, [state, ownProps]);
 
-    const mergedProps = useMemo(
-      () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
-      [ownProps, stateToProps, dispatchToProps],
-    );
+      const dispatchToProps: ComponentPropsType = useMemo(() => {
+        if (!mapDispatchToProps) {
+          return {};
+        }
+        if (isFunction(mapDispatchToProps)) {
+          //@ts-ignore
+          return mapDispatchToProps(dispatch);
+        }
+        return bindActionCreators(mapDispatchToProps, dispatch);
+      }, [dispatch]);
 
-    return <PureComponent {...mergedProps} dispatch={dispatch} />;
+      const mergedProps: ComponentPropsType = useMemo(
+        () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
+        [ownProps, stateToProps, dispatchToProps]
+      );
+
+      return <PureComponent {...mergedProps} dispatch={dispatch} />;
+    };
   };
-};
 
 export default connect;

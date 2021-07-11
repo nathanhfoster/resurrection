@@ -1,9 +1,21 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ContextProvider, connect } from '..';
+import {
+  ComponentPropsType,
+  ContextType,
+  EqualityFunctionType,
+  MapDispatchToPropsType,
+  MapStateToPropsType,
+  MergePropsType,
+  ReducerType
+} from '@types';
+
+const defaultReducer: ReducerType = (state, action) => ({});
 
 
-const propMapper = (prop) => {
+const propMapper = (prop: any) => {
   switch (typeof prop) {
     case 'object':
     case 'boolean':
@@ -15,22 +27,27 @@ const propMapper = (prop) => {
   }
 };
 
-const Passthrough = props => Object.entries(props).map(([key, value]) => (
-  <React.Fragment key={key}>
-    <div data-testid={key} />
-    <div data-testid={propMapper(value)} />
-  </React.Fragment>
-));
+const Passthrough: any =
+  (props: ComponentPropsType) =>
+    Object.entries(props).map(([key, value]: [string, any]) => (
+      <React.Fragment key={key}>
+        <div data-testid={key} />
+        <div data-testid={propMapper(value)} />
+      </React.Fragment>
+    ));
 
 const initialState = { key1: 'key1 value', key2: 'key2 value' };
 
-const setup = (context, ...args) => {
-  const Container = props => <Passthrough {...props} />;
-
-  const ChildComponent = connect(...args)(Container);
+const setup = (context: ContextType, ...args: any[]) => {
+  const Container = (props: ComponentPropsType) => <Passthrough {...props} />;
+  //@ts-ignore
+  const ChildComponent: ReactElement = connect(...args)(Container);
 
   return render(
-    <ContextProvider context={context} initialState={initialState}>
+    <ContextProvider
+      context={context}
+      initialState={initialState}
+      reducers={defaultReducer}>
       <ChildComponent />
     </ContextProvider>,
   );
@@ -43,7 +60,7 @@ describe('connect', () => {
     expect(child).toBeDefined();
   });
   it('Should mapStateToProps and render them', () => {
-    const mapStateToProps = ({ key1 }) => ({ key2: key1 });
+    const mapStateToProps: MapStateToPropsType = ({ key1 }) => ({ key2: key1 });
 
     const wrapper = setup(undefined, mapStateToProps);
     const child = wrapper.getByTestId('key2');
@@ -51,7 +68,8 @@ describe('connect', () => {
     expect(wrapper.getByTestId(initialState.key1)).toBeDefined();
   });
   it('Should mapDispatchToProps is an object', () => {
-    const mapDispatchToProps = dispatch => ({ someAction: dispatch(jest.fn()) });
+    //@ts-ignore
+    const mapDispatchToProps: MapDispatchToPropsType = dispatch => ({ someAction: () => dispatch(jest.fn()) });
 
     const wrapper = setup(undefined, undefined, mapDispatchToProps);
     const child = wrapper.getByTestId('someAction');
@@ -66,12 +84,13 @@ describe('connect', () => {
   });
   it('Should mergeProps', () => {
     const expected = 'This Should be overwritten';
-    const mapStateToProps = ({ key1 }) => ({ key2: key1, someAction: expected });
-    const mapDispatchToProps = { someAction: jest.fn() };
-    const mergeProps = (stateProps, dispatchProps, props) => ({
+    const mapStateToProps: MapStateToPropsType = ({ key1 }) => ({ key2: key1, someAction: expected });
+    //@ts-ignore
+    const mapDispatchToProps: MapDispatchToPropsType = { someAction: jest.fn() };
+    const mergeProps: MergePropsType = (stateProps, dispatchProps, props) => ({
       ...props,
       ...dispatchProps,
-      ...stateProps,
+      ...stateProps
     });
 
     const wrapper = setup(undefined, mapStateToProps, mapDispatchToProps, mergeProps);
@@ -80,9 +99,9 @@ describe('connect', () => {
   });
 
   it('Should handle a custom options context', () => {
-    const mapStateToProps = ({ key1 }) => ({ key2: key1 });
-    const context = React.createContext();
-    const isEqual = (prevProps, nextProps) => prevProps === nextProps;
+    const mapStateToProps: MapStateToPropsType = ({ key1 }) => ({ key2: key1 });
+    const context = React.createContext({});
+    const isEqual: EqualityFunctionType = (prevProps, nextProps) => prevProps === nextProps;
     const options = { context, pure: false, areMergedPropsEqual: isEqual };
 
     const wrapper = setup(context, mapStateToProps, undefined, undefined, options);
