@@ -1,6 +1,6 @@
 {
   "name": "resurrection",
-  "version": "1.0.60",
+  "version": "1.0.61",
   "description": "State management library that follows Flux / Redux / Thunk architecture but uses React&#x27;s latest useContext and useReducer hooks.",
   "author": "nathanhfoster",
   "license": "MIT",
