@@ -1,6 +1,6 @@
 {
   "name": "resurrection",
-  "version": "1.0.56",
+  "version": "1.0.57",
   "description": "State management library that follows Flux / Redux / Thunk architecture but uses React&#x27;s latest useContext and useReducer hooks.",
   "author": "nathanhfoster",
   "license": "MIT",
@@ -16,10 +16,6 @@
     "build": "microbundle-crl --no-compress --format modern,cjs",
     "start": "microbundle-crl watch --no-compress --format modern,cjs",
     "prepare": "run-s build",
-    "prepublishOnly": "npm run lint",
-    "preversion": "npm run lint",
-    "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags",
     "test": "run-s test:unit test:lint test:build",
     "test:build": "run-s build",
     "test:lint": "tslint -p tsconfig.json",
