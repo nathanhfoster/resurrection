@@ -15,7 +15,7 @@ const stateConnect: SetStateConnectType =
 
     return (ownProps) => {
       const state = useContext<ReducerStateType>(stateContext);
-      const setState = useContext<SetStateAction<any>>(setStateContext);
+      const setState = useContext<SetStateAction<ReducerStateType>>(setStateContext);
 
       const stateToProps: ComponentPropsType = isFunction(mapStateToProps) ? mapStateToProps(state, ownProps) : {};
 
