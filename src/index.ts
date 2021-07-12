@@ -1,5 +1,3 @@
-import * as Types from '@types';
-
 import { ContextConsumer, ContextProvider, MemoizedContextProvider, storeFactory } from '@provider';
 
 import connect from '@connect';
@@ -35,7 +33,6 @@ import {
 } from '@hooks';
 
 export {
-  Types,
   // provider
   ContextConsumer,
   ContextProvider,
