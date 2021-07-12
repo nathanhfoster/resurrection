@@ -1,5 +1,4 @@
-import isFunction from '@utils/isFunction';
-import { getRandomInt } from '@utils';
+import { getRandomInt, isFunction } from '@utils';
 import {
   StoreInterface,
   ContextType,
