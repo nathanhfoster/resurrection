@@ -7,6 +7,8 @@ import {
 
 import connect from './connect';
 
+import { stateConnect, StateProvider } from '@context';
+
 import {
   actionTypes,
   bindActionCreators,
@@ -15,9 +17,15 @@ import {
   getDerivedStateFromProps,
   getRandomInt,
   isFunction,
-  setStateReducer,
   shallowEquals
-} from './utils';
+} from '@utils';
+
+import {
+  setStateReducer,
+  setObjectStateReducer,
+  toggleBooleanReducer,
+  setNumberReducer
+} from '@reducers';
 
 import {
   useDispatch,
@@ -26,14 +34,20 @@ import {
   useReducerWithThunk,
   useSelector,
   useSetStateReducer
-} from './hooks';
+} from '@hooks';
 
 export {
+  // provider
   ContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
   storeFactory,
+  // connect
   connect,
+  // context
+  stateConnect,
+  StateProvider,
+  // utils
   actionTypes,
   bindActionCreators,
   combineReducers,
@@ -41,8 +55,13 @@ export {
   getDerivedStateFromProps,
   getRandomInt,
   isFunction,
-  setStateReducer,
   shallowEquals,
+  // reducer
+  setStateReducer,
+  setObjectStateReducer,
+  toggleBooleanReducer,
+  setNumberReducer,
+  // hooks
   useDispatch,
   useLazyMemo,
   usePreviousValue,

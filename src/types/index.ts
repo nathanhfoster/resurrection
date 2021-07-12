@@ -89,7 +89,7 @@ export interface ThunkActionDispatchMap {
 
 export type MapDispatchToPropsType = (
   dispatch: ThunkActionDispatchType | ThunkActionDispatchMap
-) =>  ActionType | ThunkActionDispatchType | ThunkActionDispatchMap;
+) => ActionType | ThunkActionDispatchType | ThunkActionDispatchMap;
 
 export type MergePropsType = (
   stateToProps: ComponentPropsType,
@@ -235,3 +235,32 @@ export type getDerivedStateFromPropsType = (
 export type getRandomIntType = (min: number, max: number) => number;
 
 export type isFunctionType = (obj: any) => boolean;
+
+export type SetStateReducerType = (state: any, action: any) => any;
+
+export type SetObjectStateReducerType = (state: ReducerStateType,
+  action: ReducerStateInitializerType | ReducerStateType) => ReducerStateType;
+
+export type BooleanReducerType = (state: boolean, action?: boolean) => boolean;
+
+export type NumberReducerType = (state: number,
+  action: number | ((state: ReducerStateType) => number)) => number;
+
+
+export type SetStateConnectType = (
+  stateContext: ContextType,
+  setStateContext: ContextType,
+  mapStateToProps: MapStateToPropsType,
+  isEqual: EqualityFunctionType
+) => (
+    Component: FunctionComponent<ReducerStateType>
+  ) => (ownProps: ComponentPropsType) => ChildrenType;
+
+export interface StatePropviderProps {
+  StateContext: ContextType;
+  reducer?: SetObjectStateReducerType;
+  initialState: ReducerStateType;
+  initializer?: ReducerStateInitializerType;
+  SetStateContext: ContextType;
+  children: ChildrenType;
+}

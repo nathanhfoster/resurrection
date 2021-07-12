@@ -9,5 +9,4 @@ export { default as getRandomInt } from './getRandomInt';
 export { default as getRandomString } from './getRandomString';
 export { default as getReducerDefaultState } from './getReducerDefaultState';
 export { default as isFunction } from './isFunction';
-export { default as setStateReducer } from './setStateReducer';
 export { default as shallowEquals } from './shallowEquals';

@@ -12,7 +12,7 @@ import {
   MutableRefObject,
   Dispatch
 } from 'react';
-import { setStateReducer } from '../utils';
+import { setObjectStateReducer } from '../reducers';
 
 const defaultCallback: CallbackType = () => { };
 
@@ -26,7 +26,7 @@ const useSetStateReducer: useSetStateReducerType = (
   // Temporarily holds the reference to a callback
   const callbackRef: MutableRefObject<CallbackType> = useRef(defaultCallback);
   const [state, dispatch]: [ReducerStateType, Dispatch<any>] =
-    useReducer(setStateReducer, initializerArg, initializer);
+    useReducer(setObjectStateReducer, initializerArg, initializer);
 
   /**
    * Augments the dispatch to accept a callback as a second parameter

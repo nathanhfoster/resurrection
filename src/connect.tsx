@@ -4,7 +4,7 @@ import {
   defaultMergeProps,
   bindActionCreators,
   shallowEquals
-} from './utils';
+} from '@utils';
 import { ContextConsumer } from './provider';
 import {
   ConnectType,
@@ -62,7 +62,12 @@ const connect: ConnectType =
         [ownProps, stateToProps, dispatchToProps]
       );
 
-      return <PureComponent {...mergedProps} dispatch={dispatch} />;
+      return (
+        <PureComponent
+          {...mergedProps}
+          dispatch={dispatch}
+        />
+      );
     };
   };
 

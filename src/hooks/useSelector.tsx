@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react';
 import usePreviousValue from './usePreviousValue';
-import { isFunction, shallowEquals } from '../utils';
+import { isFunction, shallowEquals } from '@utils';
 import { ContextConsumer } from '../provider';
 import { SelectorEqualityFunctionType, useSelectorType } from '@types';
 

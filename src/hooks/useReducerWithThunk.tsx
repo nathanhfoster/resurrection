@@ -3,7 +3,7 @@ import {
   isFunction,
   getDerivedStateFromProps,
   defaultInitializer
-} from '../utils';
+} from '@utils';
 import { useSetStateReducer, useLazyMemo } from '.';
 import {
   ActionType,

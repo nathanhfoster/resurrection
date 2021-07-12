@@ -10,19 +10,28 @@ import {
   combineReducers,
   shallowEquals,
   defaultInitializer,
-  setStateReducer,
   getRandomInt
-} from './utils';
+} from '@utils';
 import { Stores, Store } from './classes';
-import useLazyMemo from './hooks/useLazyMemo';
-import useReducerWithThunk from './hooks/useReducerWithThunk';
+import useLazyMemo from '@hooks/useLazyMemo';
+import useReducerWithThunk from '@hooks/useReducerWithThunk';
 import { ContextStoreProps } from '@types';
+import { setStateReducer } from '@reducers';
 
 // const inDevelopmentMode = process.env.NODE_ENV === 'development'
 
 const storeFactory = new Stores();
 
 const StateProvider = createContext(null);
+
+const defaultProps: Partial<ContextStoreProps> = {
+  name: getRandomInt(0, 1000),
+  context: StateProvider,
+  reducers: setStateReducer,
+  initializer: defaultInitializer,
+  initialState: undefined,
+  props: undefined
+};
 
 /**
  * Context Store Factory that simulates Redux's createStore API
@@ -133,14 +142,7 @@ ContextStore.propTypes = {
   ]).isRequired
 };
 
-ContextStore.defaultProps = {
-  name: getRandomInt(0, 1000),
-  context: StateProvider,
-  reducers: setStateReducer,
-  initializer: defaultInitializer,
-  initialState: undefined,
-  props: undefined
-};
+ContextStore.defaultProps = defaultProps;
 
 const MemoizedContextProvider = React.memo(ContextStore, shallowEquals);
 
