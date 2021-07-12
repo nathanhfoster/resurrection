@@ -18,7 +18,7 @@ const SetStateProvider: React.FC<StatePropviderProps> = ({
   SetStateContext,
   children
 }) => {
-  //@ts-ignore
+  // @ts-ignore
   const [state, setState] = useReducer(reducer, initialState, initializer);
 
   return (

@@ -5,7 +5,7 @@ import {
   ContextType,
   DispatchType,
   ReducerStateType,
-  ThunkType,
+  ThunkActionType,
   ContextStoreNameType
 } from '@types';
 
@@ -15,25 +15,26 @@ import {
 class Store implements StoreInterface {
   constructor(
     id?: ContextStoreNameType,
-    //@ts-ignore
+    // @ts-ignore
     context: ContextType,
-    dispatch: DispatchType | ThunkType,
-    state: ReducerStateType) {
-    //@ts-ignore
+    dispatch: DispatchType | ThunkActionType,
+    state: ReducerStateType
+  ) {
+    // @ts-ignore
     this.id = id || getRandomInt(0, 1000);
 
-    //@ts-ignore
+    // @ts-ignore
     this.context = context;
 
     if (isFunction(dispatch)) {
-      //@ts-ignore
+      // @ts-ignore
       this.dispatch = dispatch;
     }
 
     this.state = state;
 
     this.isReady = !!(id && dispatch && state);
-  };
+  }
 
   id = undefined;
 
@@ -65,14 +66,13 @@ class Store implements StoreInterface {
   };
 
   setDispatch = (dispatch: DispatchType) => {
-    //@ts-ignore
+    // @ts-ignore
     this.dispatch = dispatch;
   };
 
   dispatch = () => {
     throw Error('Store is NOT ready!');
   };
-
 }
 
 export default Store;

@@ -1,23 +1,19 @@
 import isFunction from './isFunction';
 import getReducerDefaultState from './getReducerDefaultState';
-import {
-  combineReducersType,
-  ReducerStateType,
-  ReducerType,
-  StringMap
-} from '@types';
+import { combineReducersType, ReducerStateType, ReducerType, StringMap } from '@types';
 
 /**
  * This function returns one reducer if it is a Function
  * otherwise, it combines an object of reducer functions
- **/
+ */
 // @ts-ignore
 const combineReducers: combineReducersType = (reducers, initialState) => {
   // If a single reducer return
   if (isFunction(reducers)) {
-    const state: ReducerStateType = initialState
-      //@ts-ignore
-      || getReducerDefaultState(reducers);
+    const state: ReducerStateType =
+      initialState ||
+      // @ts-ignore
+      getReducerDefaultState(reducers);
     return [state, reducers];
   }
 
@@ -39,14 +35,12 @@ const combineReducers: combineReducersType = (reducers, initialState) => {
       const reducerKey: string = reducerKeys[i];
       if (Object.prototype.hasOwnProperty.call(reducers, reducerKey)) {
         const currentStateByKey = state[reducerKey];
-        //@ts-ignore
+        // @ts-ignore
         const currentReducer: ReducerType = reducers[reducerKey];
 
-        const returnedStateByReducer: ReducerStateType =
-          currentReducer(currentStateByKey, action);
+        const returnedStateByReducer: ReducerStateType = currentReducer(currentStateByKey, action);
 
-        const areStateByKeyEqual: boolean =
-          returnedStateByReducer !== currentStateByKey;
+        const areStateByKeyEqual: boolean = returnedStateByReducer !== currentStateByKey;
 
         hasStateChanged = hasStateChanged || areStateByKeyEqual;
 
@@ -71,7 +65,7 @@ const combineReducers: combineReducersType = (reducers, initialState) => {
         }
         return acc;
       },
-      {},
+      {}
     );
     combinedStateAndReducers = [globalState, globalReducerFunction];
   }

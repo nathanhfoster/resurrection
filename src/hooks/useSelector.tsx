@@ -27,7 +27,7 @@ const defaultIsEqual: SelectorEqualityFunctionType = (
  * selector's returned value should be recomputed
  * @param {React.ContextConsumer=} contextConsumer - the context consumer
  * @returns {React.FunctionComponent} - a memoized component
- * */
+ */
 
 const useSelector: useSelectorType = (
   mapStateToSelector,

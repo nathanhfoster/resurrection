@@ -5,15 +5,13 @@ import { getDerivedStateFromPropsType } from '@types';
  * by an HOC by overwritting it with props
  */
 
-const getDerivedStateFromProps: getDerivedStateFromPropsType =
-  (state, props) =>
-    ({
-      ...(state && {
-        ...state
-      }),
-      ...(props && {
-        ...props
-      })
-    });
+const getDerivedStateFromProps: getDerivedStateFromPropsType = (state, props) => ({
+  ...(state && {
+    ...state
+  }),
+  ...(props && {
+    ...props
+  })
+});
 
 export default getDerivedStateFromProps;

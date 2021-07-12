@@ -1,0 +1,15 @@
+{
+    "extends": [
+        "tslint:latest",
+        "tslint-react",
+        "tslint-eslint-rules",
+        "tslint-config-prettier"
+    ],
+    "rules": {
+        "no-implicit-dependencies": [
+            false,
+            "dev"
+        ],
+        "prefer-for-of": false
+    }
+}

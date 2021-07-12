@@ -1,30 +1,22 @@
 import { isFunction, getDerivedStateFromProps } from '@utils';
-import {
-  SetStateReducerType,
-  SetObjectStateReducerType,
-  BooleanReducerType,
-  NumberReducerType
-} from '@types';
+import { SetStateReducerType, SetObjectStateReducerType, BooleanReducerType, NumberReducerType } from '@types';
 
 /**
  * A generic reducer that augments the useReducer hook
  * to return the state if the action is a callback
  */
-export const setStateReducer: SetStateReducerType = (state, action) =>
-  (isFunction(action) ? action(state) : action);
+export const setStateReducer: SetStateReducerType = (state, action) => (isFunction(action) ? action(state) : action);
 
 /**
  * Allows a functional component to have
  * a setState API that is similar to a class component's this.setState
  */
-export const setObjectStateReducer: SetObjectStateReducerType =
-  (state, action) => {
-    const nextStateToOverwrite = setStateReducer(state, action);
-    const nextState = getDerivedStateFromProps(state, nextStateToOverwrite);
+export const setObjectStateReducer: SetObjectStateReducerType = (state, action) => {
+  const nextStateToOverwrite = setStateReducer(state, action);
+  const nextState = getDerivedStateFromProps(state, nextStateToOverwrite);
 
-    return nextState;
-  };
-
+  return nextState;
+};
 
 /**
  * Toggles the boolean state if there is not an action passed in
@@ -45,5 +37,5 @@ export const toggleBooleanReducer: BooleanReducerType = (state, action) =>
  * @returns {Number} - The nextState of the reducer
  */
 export const setNumberReducer: NumberReducerType =
-  //@ts-ignore
-  (state, action) => isFunction(action) ? action(state) : state + action;
+  // @ts-ignore
+  (state, action) => (isFunction(action) ? action(state) : state + action);

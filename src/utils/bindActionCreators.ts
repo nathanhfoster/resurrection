@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } from '@types';
 
 /**
@@ -11,7 +10,6 @@ import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } f
  * and get a dispatch wrapped function in return.
  *
  * @param {Thunk} dispatch - the dispatch function available from the useReducerWithThunk hook
-
  * @returns {Action|ThunkActionDispatch} - An actionCreator object whose values are action
  * creator functions. One handy way to obtain it is to use ES6 `import * as`
  * syntax. You may also pass a single function.
@@ -24,31 +22,31 @@ import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } f
  * function as actionCreators, the return value will also be a single
  * function.
  */
-const bindActionCreator: bindActionCreatorsType = dispatch => actionCreator => (...args) => dispatch(
-  actionCreator?.apply?.(this, args) || actionCreator,
-);
+const bindActionCreator: bindActionCreatorsType =
+  (dispatch) =>
+  (actionCreator) =>
+  (...args) =>
+    dispatch(actionCreator?.apply?.(this, args) || actionCreator);
 
 /**
  * This augments actions to dispatch other actions and passes (dispatch, getState)
  * @param {Object} mapDispatchToProps - actions to be passed as props
  * @param {Thunk} dispatch - reducer dispatch API
  * @returns {Object.<String, Thunk>} object of augmented actions
- * */
+ */
 
 const BindActionCreators: BindActionCreatorsType = (mapDispatchToProps, dispatch) => {
   if (typeof mapDispatchToProps !== 'object' || mapDispatchToProps === null) {
     throw new Error(
-      `bindActionCreators expected an object or a function, instead received ${mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
-      }.`,
+      `bindActionCreators expected an object or a function, instead received ${
+        mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
+      }.`
     );
   }
-  const boundActionCreators: ThunkMap = Object.entries(mapDispatchToProps).reduce(
-    (acc: StringMap, [key, action]) => {
-      acc[key] = bindActionCreator(dispatch)(action);
-      return acc;
-    },
-    {},
-  );
+  const boundActionCreators: ThunkMap = Object.entries(mapDispatchToProps).reduce((acc: StringMap, [key, action]) => {
+    acc[key] = bindActionCreator(dispatch)(action);
+    return acc;
+  }, {});
 
   return boundActionCreators;
 };

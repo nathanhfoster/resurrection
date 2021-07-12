@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ContextProvider, connect } from '..';
@@ -40,7 +40,7 @@ const initialState = { key1: 'key1 value', key2: 'key2 value' };
 
 const setup = (context: ContextType, ...args: any[]) => {
   const Container = (props: ComponentPropsType) => <Passthrough {...props} />;
-  //@ts-ignore
+  // @ts-ignore
   const ChildComponent: ReactElement = connect(...args)(Container);
 
   return render(
@@ -68,7 +68,7 @@ describe('connect', () => {
     expect(wrapper.getByTestId(initialState.key1)).toBeDefined();
   });
   it('Should mapDispatchToProps is an object', () => {
-    //@ts-ignore
+    // @ts-ignore
     const mapDispatchToProps: MapDispatchToPropsType = dispatch => ({ someAction: () => dispatch(jest.fn()) });
 
     const wrapper = setup(undefined, undefined, mapDispatchToProps);
@@ -85,7 +85,7 @@ describe('connect', () => {
   it('Should mergeProps', () => {
     const expected = 'This Should be overwritten';
     const mapStateToProps: MapStateToPropsType = ({ key1 }) => ({ key2: key1, someAction: expected });
-    //@ts-ignore
+    // @ts-ignore
     const mapDispatchToProps: MapDispatchToPropsType = { someAction: jest.fn() };
     const mergeProps: MergePropsType = (stateProps, dispatchProps, props) => ({
       ...props,

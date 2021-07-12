@@ -14,7 +14,9 @@ import {
 } from 'react';
 import { setObjectStateReducer } from '../reducers';
 
-const defaultCallback: CallbackType = () => { };
+const defaultCallback: CallbackType = () => {
+  return;
+};
 
 /**
  * Mimics React.Component this.state and this.setState
@@ -30,7 +32,7 @@ const useSetStateReducer: useSetStateReducerType = (
 
   /**
    * Augments the dispatch to accept a callback as a second parameter
-   * */
+   */
   const setState: SetStateType = useCallback((updater, callback) => {
     callbackRef.current = callback || defaultCallback;
     dispatch(updater);

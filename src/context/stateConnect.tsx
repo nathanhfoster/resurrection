@@ -9,7 +9,7 @@ import { isFunction, shallowEquals } from '@utils';
 /**
  * This HOC connects a component to a context state object
  * and passes in props specified by the mapStateToProps callback
- * */
+ */
 
 const stateConnect: SetStateConnectType =
   (stateContext, setStateContext, mapStateToProps, isEqual = shallowEquals) =>

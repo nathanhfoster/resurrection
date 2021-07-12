@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 import { useLazyMemoType } from '@types';
 import { useRef } from 'react';
 
@@ -14,7 +14,7 @@ const DEFAULT_VALUE = null;
  * {@link https://reactjs.org/docs/hooks-faq.html#how-to-create-expensive-objects-lazily ReactDocs}
  * @param {function(): *} initializer - the callback function that will only be ran once
  * @returns {*} - a lazily loaded value
- * */
+ */
 export const useLazyMemo: useLazyMemoType = initializer => {
   const ref = useRef(DEFAULT_VALUE);
 

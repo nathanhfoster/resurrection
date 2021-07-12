@@ -3,14 +3,17 @@
 [State management library](https://github.com/strap8/resurrection) that follows Flux / Redux / Thunk architecture but uses React's latest useContext and useReducer hooks.
 
 ### Props
+
 ContextProvider props you may want to specify include:
-  - name: String
-  - context: Object
-  - reducers: Function | Object
-  - initialState: Object
-  - props: Object
-  - initializer: Function
-  - children: Node
+
+- name: String
+- context: Object
+- reducers: Function | Object
+- initialState: Object
+- props: Object
+- initializer: Function
+- children: Node
+
 ```js
 /**
  * @typedef {Object} ContexStoreProps
@@ -29,13 +32,15 @@ ContextProvider props you may want to specify include:
 ```
 
 connect arguments you may want to specify include:
-  - context: object
-  - pure: boolean
-  - areStatesEqual: function
-  - areOwnPropsEqual: function
-  - areStatePropsEqual: function
-  - areMergedPropsEqual: function
-  - forwardRef: function
+
+- context: object
+- pure: boolean
+- areStatesEqual: function
+- areOwnPropsEqual: function
+- areStatePropsEqual: function
+- areMergedPropsEqual: function
+- forwardRef: function
+
 ```js
 /**
  * Connects a Component to the ContextStore
@@ -73,7 +78,7 @@ connect arguments you may want to specify include:
  * @property {Function=} forwardRef - If {forwardRef : true} has been passed to connect,
  * adding a ref to the connected wrapper component will actually
  * return the instance of the wrapped component.
- * */
+ */
 
 /**
  * This function simulates Redux's connect API
@@ -84,8 +89,9 @@ connect arguments you may want to specify include:
  * @returns {React.memo|React.FunctionComponent} - a connected component
  **/
 
-export default (mapStateToProps, mapDispatchToProps, mergeProps, options)(SomeChildComponent)
+export default (mapStateToProps, mapDispatchToProps, mergeProps, options)(SomeChildComponent);
 ```
+
 See also react-redux's [connect](https://react-redux.js.org/api/connect#connect)
 
 Hooks

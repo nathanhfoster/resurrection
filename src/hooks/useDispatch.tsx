@@ -8,7 +8,7 @@ import { ContextStore, DispatchType } from '@types';
  * If you want memoization, use the connect API
  * @param {React.ContextConsumer=} contextConsumer - the context consumer
  * @returns {Thunk} - the context's dispatch API
- * */
+ */
 const useDispatch = (contextConsumer: any = ContextConsumer): DispatchType =>
   useContext<ContextStore>(contextConsumer).dispatch;
 

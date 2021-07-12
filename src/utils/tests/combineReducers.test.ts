@@ -1,10 +1,5 @@
-/* eslint-disable max-len */
 import { actionTypes, combineReducers, getReducerDefaultState } from '..';
-import {
-  DEFAULT_STATE,
-  testReducer1,
-  reducers
-} from '../../tests/provider.test';
+import { DEFAULT_STATE, testReducer1, reducers } from '../../tests/provider.test';
 
 describe('combineReducers', () => {
   it('Should return initial state and globabl reducer when initial state is defined', () => {
@@ -36,9 +31,7 @@ describe('combineReducers', () => {
 
   it('Should throw an error when a reducer is not a function', () => {
     const newReducers = { ...reducers, badReducer: 'badReducer' };
-    //@ts-ignore
-    expect(() => combineReducers(newReducers)).toThrowError(
-      'badReducer is not a function!'
-    );
+    // @ts-ignore
+    expect(() => combineReducers(newReducers)).toThrowError('badReducer is not a function!');
   });
 });

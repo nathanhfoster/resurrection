@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import React, {
   createContext,
   useCallback,
@@ -117,7 +116,7 @@ const ContextStore: React.FC<ContextStoreProps> = ({
 ContextStore.propTypes = {
   name: PropTypes.string,
   context: PropTypes.shape({}),
-  //@ts-ignore
+  // @ts-ignore
   reducers: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.objectOf(PropTypes.func)

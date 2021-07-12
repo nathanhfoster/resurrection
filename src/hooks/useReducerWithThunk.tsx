@@ -7,12 +7,12 @@ import {
 import { useSetStateReducer, useLazyMemo } from '.';
 import {
   ActionType,
+  DispatchType,
   GetReducerStateType,
   ReducerStateType,
-  ThunkActionDispatchType,
   ThunkActionType,
-  ThunkType,
-  useReducerWithThunkType
+  useReducerWithThunkType,
+  ReducerStateInitializerType
 } from '@types';
 
 /**
@@ -53,7 +53,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   );
 
   const setState = useCallback(
-    newState => {
+    (newState) => {
       const derivedState = getDerivedStateFromProps(newState, props);
       const nextState = initializer(derivedState);
       state.current = nextState;
@@ -70,19 +70,15 @@ const useReducerWithThunk: useReducerWithThunkType = (
   }, [props]);
 
   // Reducer
-  const reduce = useCallback(
-    action => reducer(getState(), action),
+  const reduce: ReducerStateInitializerType = useCallback(
+    (action) => reducer(getState(), action),
     [reducer, getState]
   );
 
-  /** Augmented dispatcher
-   * @param {Action|ThunkActionDispatch} action - action
-   * @returns {Thunk} - the new dispatch API
-   */
-  const dispatch: ThunkType = useCallback(
-    (action: ActionType | ThunkActionType | ThunkActionDispatchType) => {
+  // Augmented dispatcher
+  const dispatch: ActionType | DispatchType | ThunkActionType = useCallback(
+    (action: ActionType | ThunkActionType | DispatchType) => {
       if (isFunction(action)) {
-        //@ts-ignore
         return action(dispatch, getState);
       }
       return setState(reduce(action));

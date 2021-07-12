@@ -46,7 +46,6 @@ const getWrapper = (name: ContextStoreNameType, context: ContextType) => render(
 );
 
 describe('provider', () => {
-  beforeEach(() => { });
 
   describe('storeFactory', () => {
     it('Should get a store from a unique name', () => {
@@ -70,6 +69,7 @@ describe('provider', () => {
       const appStore = storeFactory.getStore(providerContext);
       expect(wrapper).toBeDefined();
       expect(stores).toBeDefined();
+      // @ts-ignore
       expect(stores.TEST1).toBeDefined();
       expect(appStore).toBeDefined();
       expect(appStore.getId()).toBe(providerName);

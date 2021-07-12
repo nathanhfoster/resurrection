@@ -7,7 +7,6 @@ import { getRandomIntType } from '@types';
  * @returns {Number} - random integer
  */
 
-const getRandomInt: getRandomIntType =
-    (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+const getRandomInt: getRandomIntType = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 export default getRandomInt;

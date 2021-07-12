@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 import { ContextType, MapStateToSelectorType, ReducerStateInitializerType, ReducerStateType, ReducerType } from '@types';
 import React, { createContext } from 'react';
 import { render } from '@testing-library/react';
@@ -19,7 +19,7 @@ const mockContext = createContext<ReducerStateType>(initialState);
 const mockReducer: ReducerType = (state, action) => initialState;
 
 const setup = (
-  hook: Function,
+  hook: any,
   contextConsumer: ContextType,
   ...args: any[]
 ): [any, any] => {
@@ -48,7 +48,7 @@ describe('hooks', () => {
       expect(dispatch).toBeDefined();
     });
     it('Should return the dispatch without a context as a parameter', () => {
-      //@ts-ignore
+      // @ts-ignore
       const [dispatch] = setup(useDispatch);
       expect(dispatch).toBeDefined();
     });

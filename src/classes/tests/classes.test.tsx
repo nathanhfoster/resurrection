@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+
 import { ReducerStateType } from '@types';
 import { createContext } from 'react';
 import { Stores, Store } from '..';
@@ -11,18 +11,18 @@ describe('classes', () => {
     });
     it('Should not setStore', () => {
       const stores = new Stores();
-      //@ts-ignore
+      // @ts-ignore
       stores.setStore(new Store('key'));
-      //@ts-ignore
+      // @ts-ignore
       const store = stores.getStore();
       expect(store).toBeUndefined();
     });
     it('Should not setStoreReady', () => {
       const state = { key1: 'key1' };
       const dispatch = jest.fn();
-      //@ts-ignore
+      // @ts-ignore
       const initialStores = { key1: new Store('key1') };
-      //@ts-ignore
+      // @ts-ignore
       const stores = new Stores(initialStores);
       stores.setStoreReady('key1', true);
       stores.setStoreState('key1', state);
@@ -39,7 +39,7 @@ describe('classes', () => {
 
   describe('Store', () => {
     it('Should create a new object with a random id and the dispatch and getState methods Should throw errors', () => {
-      //@ts-ignore
+      // @ts-ignore
       const store = new Store();
       expect(() => store.dispatch()).toThrowError('Store is NOT ready!');
       expect(() => store.getState()).toThrowError('Store is NOT ready!');

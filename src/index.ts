@@ -1,9 +1,4 @@
-import {
-  ContextConsumer,
-  ContextProvider,
-  MemoizedContextProvider,
-  storeFactory
-} from './provider';
+import { ContextConsumer, ContextProvider, MemoizedContextProvider, storeFactory } from './provider';
 
 import connect from './connect';
 
@@ -20,12 +15,7 @@ import {
   shallowEquals
 } from '@utils';
 
-import {
-  setStateReducer,
-  setObjectStateReducer,
-  toggleBooleanReducer,
-  setNumberReducer
-} from '@reducers';
+import { setStateReducer, setObjectStateReducer, toggleBooleanReducer, setNumberReducer } from '@reducers';
 
 import {
   useDispatch,
