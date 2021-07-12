@@ -1,4 +1,5 @@
 import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } from '@types';
+import { Dispatch } from 'react';
 
 /**
  * Turns an object whose values are action creators, into an object with the
@@ -23,8 +24,8 @@ import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } f
  * function.
  */
 const bindActionCreator: bindActionCreatorsType =
-  (dispatch) =>
-  (actionCreator: Function) =>
+  (dispatch: Dispatch<any>) =>
+  (actionCreator: (args: any[]) => any) =>
   (...args) =>
     // @ts-ignore
     dispatch(actionCreator?.apply?.(undefined, args) || actionCreator);

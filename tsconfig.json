@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "paths": {
-      "@*": ["*"]
-    } /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */,
     "target": "es5",
     "module": "esnext",
-    "lib": ["dom", "dom.iterable", "es2015"],
-    "jsx": "react",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "es2015"
+    ],
+    "jsx": "react-jsx",
     "declaration": true,
     "declarationMap": true,
     "downlevelIteration": true,
@@ -28,6 +29,14 @@
     "isolatedModules": true,
     "noEmit": true
   },
-  "include": ["src/**/*", "custom.d.ts"],
-  "exclude": ["chrome", "extension-packer", "node_modules", "**/*.spec.ts"]
+  "include": [
+    "src/**/*",
+    "custom.d.ts"
+  ],
+  "exclude": [
+    "chrome",
+    "extension-packer",
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

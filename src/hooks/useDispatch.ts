@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { ContextConsumer } from '../provider';
-import { ContextStore, DispatchType } from '@types';
+import { ContextStore, useDispatchType } from '@types';
 
 /**
  * This hook simulates Redux's useDispatch hook
@@ -9,7 +9,7 @@ import { ContextStore, DispatchType } from '@types';
  * @param {React.ContextConsumer=} contextConsumer - the context consumer
  * @returns {Thunk} - the context's dispatch API
  */
-const useDispatch = (contextConsumer: any = ContextConsumer): DispatchType =>
+const useDispatch: useDispatchType = (contextConsumer = ContextConsumer) =>
   useContext<ContextStore>(contextConsumer).dispatch;
 
 export default useDispatch;

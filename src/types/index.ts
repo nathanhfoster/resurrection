@@ -6,7 +6,9 @@ import {
   ReactElement,
   Reducer,
   Dispatch,
-  SetStateAction
+  SetStateAction,
+  RefObject,
+  ReducerState
 } from 'react';
 
 export interface StringMap {
@@ -139,9 +141,33 @@ export type ConnectType = (
   options: ConnectOptions
 ) => (Component: FunctionComponent<ReducerStateType>) => (ownProps: ComponentPropsType) => ChildrenType;
 
+export type useDispatchType = (contextConsumer: ContextType) => DispatchType;
+
 export type useLazyMemoType = (initializer: () => any) => any;
 
+export type useMountedType = (initialValue?: boolean) => boolean;
+
 export type usePreviousValueType = (value: any) => any;
+
+export type BooleanReducerType = Reducer<boolean | any, SetStateAction<boolean>>;
+
+export type NumberReducerType = Reducer<number | any, SetStateAction<number>>;
+
+export type useNumberRefType = (initializerArg?: number) => [number, (action: number) => void];
+
+export type ReducerInitializerType = (args: any) => ReducerState<any>;
+
+export type useBooleanReducerType = (
+  initializerArg?: boolean,
+  initializer?: ReducerInitializerType
+) => [boolean, BooleanReducerType];
+
+export type useSetRefStateType = (initializerArg?: any) => [any, SetStateAction<any>];
+
+export type useNumberReducerType = (
+  initializerArg?: number,
+  initializer?: ReducerInitializerType
+) => [number, NumberReducerType];
 
 export type useReducerWithThunkType = (
   reducer: ReducerType,
@@ -186,10 +212,6 @@ export type SetStateReducerType = Reducer<any, SetStateAction<any>>;
 
 export type SetObjectStateReducerType = Reducer<ReducerStateType, SetStateAction<ReducerStateType>>;
 
-export type BooleanReducerType = Reducer<boolean, boolean | undefined>;
-
-export type NumberReducerType = Reducer<number, SetStateAction<number>>;
-
 export type SetStateConnectType = (
   stateContext: ContextType,
   setStateContext: ContextType,
@@ -205,3 +227,5 @@ export interface StatePropviderProps {
   SetStateContext: ContextType;
   children: ChildrenType;
 }
+
+export type useOutterClickType = (ref: RefObject<any>, callback: CallbackType) => void;

@@ -20,11 +20,17 @@ import {
 import { setStateReducer, setObjectStateReducer, toggleBooleanReducer, setNumberReducer } from '@reducers';
 
 import {
+  useBooleanReducer,
   useDispatch,
   useLazyMemo,
+  useMounted,
+  useNumberReducer,
+  useNumberRef,
+  useOutterClick,
   usePreviousValue,
   useReducerWithThunk,
   useSelector,
+  useSetRefState,
   useSetStateReducer
 } from '@hooks';
 
@@ -55,10 +61,16 @@ export {
   toggleBooleanReducer,
   setNumberReducer,
   // hooks
+  useBooleanReducer,
   useDispatch,
   useLazyMemo,
+  useMounted,
+  useNumberReducer,
+  useNumberRef,
+  useOutterClick,
   usePreviousValue,
   useReducerWithThunk,
   useSelector,
+  useSetRefState,
   useSetStateReducer
 };
