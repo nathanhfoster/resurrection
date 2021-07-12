@@ -1,9 +1,5 @@
-import {
-  ComponentPropsType,
-  ReducerStateType,
-  SetStateConnectType
-} from '@types';
-import React, { memo, useContext } from 'react';
+import { ComponentPropsType, ReducerStateType, SetStateConnectType } from '@types';
+import React, { memo, SetStateAction, useContext } from 'react';
 import { isFunction, shallowEquals } from '@utils';
 
 /**
@@ -13,26 +9,18 @@ import { isFunction, shallowEquals } from '@utils';
 
 const stateConnect: SetStateConnectType =
   (stateContext, setStateContext, mapStateToProps, isEqual = shallowEquals) =>
-    Component => {
-      // Memoize Component
-      const PureComponent = memo(Component, isEqual);
+  (Component) => {
+    // Memoize Component
+    const PureComponent = memo(Component, isEqual);
 
-      return ownProps => {
-        const state = useContext<ReducerStateType>(stateContext);
-        const setState = useContext(setStateContext);
+    return (ownProps) => {
+      const state = useContext<ReducerStateType>(stateContext);
+      const setState = useContext<SetStateAction<any>>(setStateContext);
 
-        const stateToProps: ComponentPropsType =
-          isFunction(mapStateToProps) ?
-            mapStateToProps(state, ownProps) : {};
+      const stateToProps: ComponentPropsType = isFunction(mapStateToProps) ? mapStateToProps(state, ownProps) : {};
 
-        return (
-          <PureComponent
-            {...stateToProps}
-            {...ownProps}
-            setState={setState}
-          />
-        );
-      };
+      return <PureComponent {...stateToProps} {...ownProps} setState={setState} />;
     };
+  };
 
 export default stateConnect;
