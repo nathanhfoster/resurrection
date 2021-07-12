@@ -1,7 +1,6 @@
 import React from 'react';
 import { ContextProvider } from 'resurrection';
 import ChildComponent from './components';
-import 'resurrection/dist/index.css';
 
 export const DEFAULT_STATE = {
   someKeyFromMyStore: 'Hello World!'

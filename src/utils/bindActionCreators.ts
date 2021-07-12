@@ -24,9 +24,10 @@ import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } f
  */
 const bindActionCreator: bindActionCreatorsType =
   (dispatch) =>
-  (actionCreator) =>
+  (actionCreator: Function) =>
   (...args) =>
-    dispatch(actionCreator?.apply?.(this, args) || actionCreator);
+    // @ts-ignore
+    dispatch(actionCreator?.apply?.(undefined, args) || actionCreator);
 
 /**
  * This augments actions to dispatch other actions and passes (dispatch, getState)

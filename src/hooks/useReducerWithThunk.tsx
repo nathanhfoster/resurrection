@@ -79,6 +79,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   const dispatch: ActionType | DispatchType | ThunkActionType = useCallback(
     (action: ActionType | ThunkActionType | DispatchType) => {
       if (isFunction(action)) {
+        // @ts-ignore
         return action(dispatch, getState);
       }
       return setState(reduce(action));

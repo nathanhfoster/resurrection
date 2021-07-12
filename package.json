@@ -8,7 +8,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "module": "dist/index.modern.js",
-  "source": "src/index.js",
+  "source": "src/index.ts",
   "engines": {
     "node": ">=10"
   },
@@ -59,5 +59,32 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "keywords": [
+    "resurrection",
+    "redux",
+    "state",
+    "management",
+    "recoil",
+    "redux-thunk",
+    "react-redux",
+    "react",
+    "hooks",
+    "context",
+    "reducer",
+    "useReducer",
+    "useContext",
+    "useSelector",
+    "useDispatch",
+    "dispatch",
+    "flux",
+    "predictable",
+    "functional",
+    "immutable",
+    "elm"
+  ],
+  "bugs": {
+    "url": "https://github.com/nathanhfoster/resurrection/issues"
+  },
+  "homepage": "https://github.com/nathanhfoster/resurrection#readme"
 }
