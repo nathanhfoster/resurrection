@@ -1,6 +1,6 @@
 ## ContextStore
 
-[State management library](https://github.com/strap8/resurrection) that follows Flux / Redux / Thunk architecture but uses React's latest useContext and useReducer hooks.
+[State management library](https://github.com/nathanhfoster/resurrection) that follows Flux / Redux / Thunk architecture but uses React's latest useContext and useReducer hooks.
 
 ### Props
 
@@ -27,7 +27,7 @@ ContextProvider props you may want to specify include:
  * @property {Object.<String, *>=} props - passed from an HOC that controls the state of the store use this if you want prop changes to
  * overwrite the state
  * @property {Function=} initializer - sets the initial state of the reducer
- * @property {React.ReactElement} children - the child components that will consume the store
+ * @property {ReactNode} children - the child components that will consume the store
  */
 ```
 
@@ -100,4 +100,4 @@ Hooks
 
 ## License
 
-MIT © [strap8](https://github.com/strap8)
+MIT © [nathanhfoster](https://github.com/nathanhfoster)
