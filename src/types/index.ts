@@ -8,7 +8,8 @@ import {
   Dispatch,
   SetStateAction,
   RefObject,
-  ReducerState
+  ReducerState,
+  DependencyList
 } from 'react';
 
 export interface StringMap {
@@ -58,7 +59,7 @@ export interface ConnectOptions {
 
 export type ActionType = () => ReducerAction;
 
-export type ThunkActionDispatchType = (args: any[]) => ActionType | ThunkActionType;
+export type ThunkActionDispatchType = (...args: any[]) => ActionType | ThunkActionType;
 
 export type ReducerType = Reducer<ReducerStateType, ReducerAction | ReducerStateType>;
 
@@ -155,7 +156,7 @@ export type NumberReducerType = Reducer<number | any, SetStateAction<number>>;
 
 export type useNumberRefType = (initializerArg?: number) => [number, (action: number) => void];
 
-export type ReducerInitializerType = (args: any) => ReducerState<any>;
+export type ReducerInitializerType = (stateOrProps: any) => ReducerState<any>;
 
 export type useBooleanReducerType = (
   initializerArg?: boolean,
@@ -191,7 +192,7 @@ export type useSetStateReducerType = (
   initializer: ReducerStateInitializerType
 ) => [ReducerStateType, SetStateType];
 
-export type bindActionCreatorsType = (dispatch: DispatchType) => (actionCreator: any) => (args: any[]) => any;
+export type bindActionCreatorsType = (dispatch: DispatchType) => (actionCreator: any) => (...args: any[]) => any;
 
 export type BindActionCreatorsType = (mapDispatchToProps: MapDispatchToPropsType, dispatch: DispatchType) => ThunkMap;
 
@@ -228,4 +229,4 @@ export interface StatePropviderProps {
   children: ChildrenType;
 }
 
-export type useOutterClickType = (ref: RefObject<any>, callback: CallbackType) => void;
+export type useOutterClickType = (cb: (...args: any[]) => any, dep: DependencyList) => void;

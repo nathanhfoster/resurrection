@@ -1,29 +1,22 @@
 import { useOutterClickType } from '@types';
-import { useEffect } from 'react';
-/**
- * Detects if a click event occurs outside a parent
- * @param {React.Ref} ref - the ref of the parent node
- * @param {function(): any} callback - callback for when the click event occurs outside the ref
- * @returns {void}
- */
-const useOutterClick: useOutterClickType = (ref, callback) => {
+import { useCallback, useEffect, useRef } from 'react';
+
+export const useOutterClick: useOutterClickType = (cb, dep) => {
+  const ref = useRef<HTMLElement>(null);
+  const callback = useCallback(cb, dep);
+
   useEffect(() => {
-    /**
-     * Alert if clicked on outside of element
-     */
-    const handleClickOutside = (event: MouseEvent) => {
-      if (!ref.current?.contains(event.target)) {
-        callback(event);
+    const listener = (e: MouseEvent) => {
+      if (!ref.current?.contains(e.target as Node)) {
+        callback(e);
       }
     };
 
-    // Bind the event listener
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      // Unbind the event listener on clean up
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [ref]);
+    document.addEventListener('click', listener);
+    return () => document.removeEventListener('click', listener);
+  }, [ref, callback]);
+
+  return ref;
 };
 
 export default useOutterClick;

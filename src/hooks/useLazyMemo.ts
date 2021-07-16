@@ -1,4 +1,3 @@
-
 import { useLazyMemoType } from '@types';
 import { useRef } from 'react';
 
@@ -15,7 +14,7 @@ const DEFAULT_VALUE = null;
  * @param {function(): *} initializer - the callback function that will only be ran once
  * @returns {*} - a lazily loaded value
  */
-export const useLazyMemo: useLazyMemoType = initializer => {
+export const useLazyMemo: useLazyMemoType = (initializer) => {
   const ref = useRef(DEFAULT_VALUE);
 
   const getObservable = () => {

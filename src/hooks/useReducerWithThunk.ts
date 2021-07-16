@@ -1,9 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react';
-import {
-  isFunction,
-  getDerivedStateFromProps,
-  defaultInitializer
-} from '@utils';
+import { isFunction, getDerivedStateFromProps, defaultInitializer } from '@utils';
 import { useSetStateReducer, useLazyMemo } from '.';
 import {
   ActionType,
@@ -33,24 +29,15 @@ const useReducerWithThunk: useReducerWithThunkType = (
   props
 ) => {
   // Get initial hook state once
-  const getInitialHookState = useCallback(
-    () => getDerivedStateFromProps(initialState, props),
-    []
-  );
+  const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, props), []);
   const initialHookState = useLazyMemo(getInitialHookState);
 
-  const [hookState, setHookState] = useSetStateReducer(
-    initialHookState,
-    initializer
-  );
+  const [hookState, setHookState] = useSetStateReducer(initialHookState, initializer);
 
   // State management
   const state = useRef<ReducerStateType>(hookState);
 
-  const getState: GetReducerStateType = useCallback(
-    () => state.current,
-    [state]
-  );
+  const getState: GetReducerStateType = useCallback(() => state.current, [state]);
 
   const setState = useCallback(
     (newState) => {
@@ -70,10 +57,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   }, [props]);
 
   // Reducer
-  const reduce: ReducerStateInitializerType = useCallback(
-    (action) => reducer(getState(), action),
-    [reducer, getState]
-  );
+  const reduce: ReducerStateInitializerType = useCallback((action) => reducer(getState(), action), [reducer, getState]);
 
   // Augmented dispatcher
   const dispatch: ActionType | DispatchType | ThunkActionType = useCallback(

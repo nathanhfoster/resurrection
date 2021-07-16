@@ -24,10 +24,9 @@ import { Dispatch } from 'react';
  * function.
  */
 const bindActionCreator: bindActionCreatorsType =
-  (dispatch: Dispatch<any>) =>
-  (actionCreator: (args: any[]) => any) =>
+  (dispatch) =>
+  (actionCreator) =>
   (...args) =>
-    // @ts-ignore
     dispatch(actionCreator?.apply?.(undefined, args) || actionCreator);
 
 /**

@@ -10,13 +10,8 @@ import { SelectorEqualityFunctionType, useSelectorType } from '@types';
  * @param {*} previousSelector - the previous selected state
  * @returns {Boolean} - whether the two selected states are equal
  */
-const defaultIsEqual: SelectorEqualityFunctionType = (
-  currentSelector,
-  previousSelector
-) => shallowEquals(
-  previousSelector,
-  currentSelector,
-);
+const defaultIsEqual: SelectorEqualityFunctionType = (currentSelector, previousSelector) =>
+  shallowEquals(previousSelector, currentSelector);
 
 /**
  * This hook simulates Redux's useSelector hook
@@ -32,7 +27,7 @@ const defaultIsEqual: SelectorEqualityFunctionType = (
 const useSelector: useSelectorType = (
   mapStateToSelector,
   isEqual = defaultIsEqual,
-  contextConsumer = ContextConsumer,
+  contextConsumer = ContextConsumer
 ) => {
   if (!isFunction(mapStateToSelector)) {
     throw new Error('The first argument mapStateToSelector must be a function');
