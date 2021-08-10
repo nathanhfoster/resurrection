@@ -110,7 +110,7 @@ const ContextStore: React.FC<ContextStoreProps> = ({
   //   }
   // }, [contextStore])
 
-  return <Context.Provider value={contextStore}>{children}</Context.Provider>;
+  return <Context.Provider value={contextStore} displayName={name}>{children}</Context.Provider>;
 };
 
 ContextStore.propTypes = {

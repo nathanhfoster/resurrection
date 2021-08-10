@@ -221,6 +221,7 @@ export type SetStateConnectType = (
 ) => (Component: FunctionComponent<ReducerStateType>) => (ownProps: ComponentPropsType) => ChildrenType;
 
 export interface StatePropviderProps {
+  name?: string | number,
   StateContext: ContextType;
   reducer?: SetObjectStateReducerType;
   initialState: ReducerStateType;
