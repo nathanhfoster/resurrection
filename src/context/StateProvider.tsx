@@ -24,8 +24,8 @@ const SetStateProvider: React.FC<StatePropviderProps> = ({
   const [state, setState] = useReducer(reducer, initialState, initializer);
 
   return (
-    <SetStateContext.Provider value={setState} displayName={`SetStateContext-${name}`}>
-      <StateContext.Provider value={state} displayName={`StateContext-${name}`}>{children}</StateContext.Provider>
+    <SetStateContext.Provider value={setState} displayName={StateContext.displayName || `SetStateContext-${name}`}>
+      <StateContext.Provider value={state} displayName={SetStateContext.displayName || `StateContext-${name}`}>{children}</StateContext.Provider>
     </SetStateContext.Provider>
   );
 };
