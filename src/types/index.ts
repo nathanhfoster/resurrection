@@ -213,6 +213,24 @@ export type SetStateReducerType = Reducer<any, SetStateAction<any>>;
 
 export type SetObjectStateReducerType = Reducer<ReducerStateType, SetStateAction<ReducerStateType>>;
 
+export interface MultiStateConntect {
+  context: ContextType,
+  mapStateToProps: MapStateToPropsType,
+}
+
+export interface MultiConnectOptionsType {
+  mapStateToProps: MapStateToPropsType;
+  stateContext: ContextType | MultiStateConntect[];
+  dispatchContext: ContextType | [string, ContextType][];
+  pure?: boolean;
+  mergeProps?: MergePropsType;
+  areMergedPropsEqual?: EqualityFunctionType;
+}
+
+export type MultiConnectType = (
+ options: MultiConnectOptionsType
+) => (Component: FunctionComponent<ReducerStateType>) => (ownProps: ComponentPropsType) => ChildrenType;
+
 export type SetStateConnectType = (
   stateContext: ContextType,
   setStateContext: ContextType,
