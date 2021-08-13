@@ -1,21 +1,21 @@
-import { MultiConnectType, ReducerStateType } from '@types';
-import React, { memo, useMemo, SetStateAction, useContext } from 'react';
+import { ComponentPropsType, MultiConnectType, ReducerStateType, ContextType } from '@types';
+import React, { memo, useMemo, useContext } from 'react';
 import { isFunction, shallowEquals } from '@utils';
 
 /**
  * Connects a Component to one or more context stores
  * @typedef {object} ConnectOptions
  * @property {function(object.<string, *>, object.<string, *>): object.<string, *>=} mapStateToProps - A callback used when there is only one stateContext
- * @property {React.context|object=} stateContext - The context that holds an object stateContext
- * @property {React.context|object=} dispatchContext - The conext that holds a reducers dispatch API
+ * @property {React.conext|obect.<string, React.context>} mapDispatchToProps - The conext that holds a reducers dispatch API
  * @property {Boolean=} pure - when options.pure is true,
- * connect performs several equality checks that are used to avoid unnecessary calls to
+ * multiConnect performs several equality checks that are used to avoid unnecessary calls to
  * mapStateToProps,
  * mapDispatchToProps,
  * mergeProps,
  * and ultimately to render.
  * While the defaults are probably appropriate 99% of the time,
  * you may wish to override them with custom implementations for performance or other reasons.
+ * @property {function(stateToProps, dispatchToProps, ownProps) => object.<string, *>} mergeProps - The final merge of all props
  * @property {Function=} areMergedPropsEqual - when pure, compares the result of mergeProps
  * to its previous value.
  * areMergedPropsEqual: (next: Object, prev: Object) => boolean
@@ -32,69 +32,61 @@ import { isFunction, shallowEquals } from '@utils';
  * The Components ownProps recieved from an HOC parent
  */
 
-const multiConnect: MultiConnectType = ({
-  mapStateToProps,
-  stateContext,
-  dispatchContext,
-  pure = true,
-  mergeProps = (stateProps, dispatchProps, props) => ({
-    ...props,
-    ...stateProps,
-    ...dispatchProps,
-  }),
-  areMergedPropsEqual = shallowEquals,
-}) => (Component) => {
-  // Memoize Component
-  const PureComponent = pure ? memo(Component, areMergedPropsEqual) : Component;
+const multiConnect: MultiConnectType =
+  ({
+    mapStateToProps,
+    mapDispatchToProps,
+    pure = true,
+    mergeProps = (stateProps, dispatchProps, props) => ({
+      ...props,
+      ...stateProps,
+      ...dispatchProps
+    }),
+    areMergedPropsEqual = shallowEquals
+  }) =>
+  (Component) => {
+    // Memoize Component
+    const PureComponent = pure ? memo(Component, areMergedPropsEqual) : Component;
 
-  // Component props recieved from an HOC / parent
-  return (ownProps) => {
-    const stateToProps: ReducerStateType = useMemo(() => {
-      // If you want to combine multiple context states and pass it as props
-      if (Array.isArray(stateContext)) {
-        return stateContext.reduce((acc, item) => {
+    // Component props recieved from an HOC / parent
+    return (ownProps) => {
+      const stateToProps: ComponentPropsType = useMemo(() => {
+        if (!mapStateToProps) return {};
+        // Combine multiple context states and pass it as props
+
+        return mapStateToProps.reduce((acc, item) => {
           const { context, mapStateToProps: itemMapStateToProps } = item;
-          const contextState = useContext(context);
-          const props = isFunction(itemMapStateToProps) ? itemMapStateToProps(contextState, ownProps) : {};
+          const contextState: ReducerStateType = useContext(context);
+          const props: ComponentPropsType = isFunction(itemMapStateToProps)
+            ? itemMapStateToProps(contextState, ownProps)
+            : {};
           const newProps = { ...acc, ...props };
           return newProps;
         }, {});
-      }
+      }, [ownProps]);
 
-      // If you just want to one context state
-      if (isFunction(mapStateToProps)) {
-        const state = useContext(stateContext);
-        return mapStateToProps(state, ownProps);
-      }
+      const dispatchToProps: ComponentPropsType = useMemo(() => {
+        if (!mapDispatchToProps) return {};
 
-      return {};
-    }, [ownProps]);
+        // If you want to combine multiple dispatch APIS and pass it as props
+        return Object.entries(mapDispatchToProps).reduce(
+          (acc: ComponentPropsType, [propKey, context]: [string, ContextType]) => {
+            const dispatch = useContext(context);
+            acc[propKey] = dispatch;
+            return acc;
+          },
+          {}
+        );
+      }, []);
 
-    const dispatchToProps = useMemo(() => {
-      if (!dispatchContext) return {};
+      // The final merge of props
+      const mergedProps: ComponentPropsType = useMemo(
+        () => mergeProps(stateToProps, dispatchToProps, ownProps),
+        [ownProps, stateToProps, dispatchToProps]
+      );
 
-      // If you want to combine multiple dispatch APIS and pass it as props
-      if (typeof dispatchContext === 'object' && !dispatchContext.$$typeof) {
-        return Object.entries(dispatchContext).reduce((acc, [propKey, context]) => {
-          const dispatch = useContext(context);
-          acc[propKey] = dispatch;
-          return acc;
-        }, {});
-      }
-
-      // Default to one dispatch API being passed with the propKey 'dispatch'
-      return { dispatch: useContext(dispatchContext) };
-    }, []);
-
-    // The final merge of props
-    const mergedProps = useMemo(() => mergeProps(stateToProps, dispatchToProps, ownProps), [
-      ownProps,
-      stateToProps,
-      dispatchToProps,
-    ]);
-
-    return <PureComponent {...mergedProps} />;
+      return <PureComponent {...mergedProps} />;
+    };
   };
-};
 
 export default multiConnect;

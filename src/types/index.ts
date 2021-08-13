@@ -22,7 +22,7 @@ export type ReducerStateType = StringMap;
 
 export type CallbackType = (state: ReducerStateType) => any;
 
-export type ComponentPropsType = JSXElementConstructor<ReducerStateType> | StringMap;
+export type ComponentPropsType = StringMap;
 
 export interface ReducerAction {
   type: string;
@@ -214,13 +214,13 @@ export type SetStateReducerType = Reducer<any, SetStateAction<any>>;
 export type SetObjectStateReducerType = Reducer<ReducerStateType, SetStateAction<ReducerStateType>>;
 
 export interface MultiStateConntect {
-  context: ContextType,
-  mapStateToProps: MapStateToPropsType,
+  context: ContextType;
+  mapStateToProps: MapStateToPropsType;
 }
 
 export interface MultiConnectOptionsType {
-  mapStateToProps: MapStateToPropsType;
-  stateContext: ContextType | MultiStateConntect[];
+  mapStateToProps: MultiStateConntect[];
+  mapDispatchToProps: MapDispatchToPropsType;
   dispatchContext: ContextType | [string, ContextType][];
   pure?: boolean;
   mergeProps?: MergePropsType;
@@ -228,7 +228,7 @@ export interface MultiConnectOptionsType {
 }
 
 export type MultiConnectType = (
- options: MultiConnectOptionsType
+  options: MultiConnectOptionsType
 ) => (Component: FunctionComponent<ReducerStateType>) => (ownProps: ComponentPropsType) => ChildrenType;
 
 export type SetStateConnectType = (
@@ -239,7 +239,7 @@ export type SetStateConnectType = (
 ) => (Component: FunctionComponent<ReducerStateType>) => (ownProps: ComponentPropsType) => ChildrenType;
 
 export interface StatePropviderProps {
-  name?: string | number,
+  name?: string | number;
   StateContext: ContextType;
   reducer?: SetObjectStateReducerType;
   initialState: ReducerStateType;
