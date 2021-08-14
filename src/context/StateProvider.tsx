@@ -25,7 +25,9 @@ const SetStateProvider: React.FC<StatePropviderProps> = ({
 
   return (
     <SetStateContext.Provider value={setState} displayName={StateContext.displayName || `SetStateContext-${name}`}>
-      <StateContext.Provider value={state} displayName={SetStateContext.displayName || `StateContext-${name}`}>{children}</StateContext.Provider>
+      <StateContext.Provider value={state} displayName={SetStateContext.displayName || `StateContext-${name}`}>
+        {children}
+      </StateContext.Provider>
     </SetStateContext.Provider>
   );
 };

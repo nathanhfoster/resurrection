@@ -60,6 +60,7 @@ class Store implements StoreInterface {
   setIsReady = (ready: boolean) => {
     this.isReady = ready;
   };
+  
   setState = (state: ReducerStateType) => {
     this.state = state;
   };

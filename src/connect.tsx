@@ -1,7 +1,7 @@
 import React, { memo, useContext, useMemo } from 'react';
 import { isFunction, defaultMergeProps, bindActionCreators, shallowEquals } from '@utils';
 import { ContextConsumer } from './provider';
-import { ConnectType, ContextStore, ComponentPropsType, MergePropsType } from '@types';
+import { ConnectType, ContextStore, ComponentPropsType, MergePropsType, ThunkActionDispatchType } from '@types';
 
 /**
  * This function simulates Redux's connect API
@@ -37,8 +37,7 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
         return {};
       }
       if (isFunction(mapDispatchToProps)) {
-        // @ts-ignore
-        return mapDispatchToProps(dispatch);
+        return mapDispatchToProps(dispatch as ThunkActionDispatchType);
       }
       return bindActionCreators(mapDispatchToProps, dispatch);
     }, [dispatch]);
