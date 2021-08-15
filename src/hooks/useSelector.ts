@@ -1,7 +1,7 @@
 import { useContext, useMemo } from 'react';
 import usePreviousValue from './usePreviousValue';
 import { isFunction, shallowEquals } from '@utils';
-import { ContextConsumer } from '../provider';
+import { StateContextConsumer } from '../provider';
 import { SelectorEqualityFunctionType, useSelectorType } from '@types';
 
 /**
@@ -20,20 +20,20 @@ const defaultIsEqual: SelectorEqualityFunctionType = (currentSelector, previousS
  * @param {MapStateToSelector} mapStateToSelector - similar to mapStateProps
  * @param {SelectorEqualityFunction=} isEqual - determines if the
  * selector's returned value should be recomputed
- * @param {React.ContextConsumer=} contextConsumer - the context consumer
+ * @param {React.Context=} context -stateContextConsumer - the context consumer
  * @returns {React.FunctionComponent} - a memoized component
  */
 
 const useSelector: useSelectorType = (
   mapStateToSelector,
   isEqual = defaultIsEqual,
-  contextConsumer = ContextConsumer
+  stateContextConsumer = StateContextConsumer
 ) => {
   if (!isFunction(mapStateToSelector)) {
     throw new Error('The first argument mapStateToSelector must be a function');
   }
 
-  const { state } = useContext(contextConsumer);
+  const { state } = useContext(stateContextConsumer);
 
   const currentSelector = useMemo(() => mapStateToSelector(state), [state]);
 

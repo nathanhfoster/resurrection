@@ -33,11 +33,6 @@ export type DispatchType = Dispatch<ReducerAction>;
 
 export type GetReducerStateType = () => ReducerStateType;
 
-export interface ContextStore {
-  state: ReducerStateType;
-  dispatch: DispatchType;
-}
-
 export type ThunkActionType = (dispatch: DispatchType, getState: GetReducerStateType) => any;
 
 export interface ThunkMap {
@@ -49,7 +44,8 @@ export type ContextType = any | ReactContext<ReducerStateType>;
 export type EqualityFunctionType = (prevPropsOrState: any, nextPropsOrState: any) => boolean;
 
 export interface ConnectOptions {
-  context?: any | ContextType;
+  stateContext?: any | ContextType;
+  dispatchContext?: any | ContextType;
   pure?: boolean;
   areStatesEqual: EqualityFunctionType;
   areOwnPropsEqual: EqualityFunctionType;
@@ -102,7 +98,8 @@ export type StoreNameOrContextType = ContextStoreNameType | ContextType | undefi
 
 export interface ContextStoreProps {
   name?: ContextStoreNameType;
-  context?: ContextType;
+  stateContext?: ContextType;
+  dispatchContext?: ContextType;
   reducers: ReducerType | ReducerMap;
   initialState?: ReducerStateType;
   props?: ComponentPropsType;

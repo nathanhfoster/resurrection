@@ -1,16 +1,6 @@
-import React, {
-  createContext,
-  useCallback,
-  useLayoutEffect,
-  useMemo
-} from 'react';
+import React, { createContext, useCallback, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import {
-  combineReducers,
-  shallowEquals,
-  defaultInitializer,
-  getRandomInt
-} from '@utils';
+import { combineReducers, shallowEquals, defaultInitializer, getRandomInt } from '@utils';
 import { Stores, Store } from './classes';
 import useLazyMemo from '@hooks/useLazyMemo';
 import useReducerWithThunk from '@hooks/useReducerWithThunk';
@@ -21,11 +11,13 @@ import { setStateReducer } from '@reducers';
 
 const storeFactory = new Stores();
 
+const DispatchProvider = createContext(null);
 const StateProvider = createContext(null);
 
 const defaultProps: Partial<ContextStoreProps> = {
   name: getRandomInt(0, 1000),
-  context: StateProvider,
+  stateContext: StateProvider,
+  dispatchContext: DispatchProvider,
   reducers: setStateReducer,
   initializer: defaultInitializer,
   initialState: undefined,
@@ -37,7 +29,8 @@ const defaultProps: Partial<ContextStoreProps> = {
  */
 const ContextStore: React.FC<ContextStoreProps> = ({
   name,
-  context: Context,
+  stateContext: StateContext,
+  dispatchContext: DispatchContext,
   reducers,
   initialState,
   props,
@@ -45,24 +38,16 @@ const ContextStore: React.FC<ContextStoreProps> = ({
   children
 }) => {
   // call the function once to get initial state and global reducer
-  const getInitialMainState = useCallback(
-    () => combineReducers(reducers, initialState),
-    []
-  );
+  const getInitialMainState = useCallback(() => combineReducers(reducers, initialState), []);
   const [mainState, mainReducer] = useLazyMemo(getInitialMainState);
 
   // setup useReducer with the returned values of the combineReducers
-  const [state, dispatch] = useReducerWithThunk(
-    mainReducer,
-    mainState,
-    initializer,
-    props
-  );
+  const [state, dispatch] = useReducerWithThunk(mainReducer, mainState, initializer, props);
 
   // Update storeFactory object to access it outside of a component
   useLayoutEffect(() => {
     if (!storeFactory.isStoreReady(name)) {
-      const newStore = new Store(name, Context, dispatch, state);
+      const newStore = new Store(name, StateContext, dispatch, state);
       storeFactory.setStore(newStore);
     } else {
       storeFactory.setStoreState(name, state);
@@ -73,54 +58,21 @@ const ContextStore: React.FC<ContextStoreProps> = ({
     };
   }, [state, dispatch]);
 
-  // make the context object value
-  const contextStore = useMemo(
-    () => ({
-      state,
-      dispatch
-    }),
-    [state, dispatch]
+  return (
+    <DispatchContext.Provider value={dispatch} displayName={DispatchContext.displayName || `${name}-DispatchContext`}>
+      <StateContext.Provider value={state} displayName={StateContext.displayName || `${name}-StateContext`}>
+        {children}
+      </StateContext.Provider>
+    </DispatchContext.Provider>
   );
-
-  // TODO: Handle a way to add the window._REACT_CONTEXT_DEVTOOL
-  // const warnedAboutMissingDevToolRef = useRef(false)
-
-  // useLayoutEffect(() => {
-  //   if (
-  //     // eslint-disable-next-line
-  //     window?._REACT_CONTEXT_DEVTOOL &&
-  //     inDevelopmentMode
-  //   ) {
-  //     try {
-  //       window._REACT_CONTEXT_DEVTOOL({
-  //         id: name,
-  //         displayName: name,
-  //         values: contextStore,
-  //       })
-  //     } catch (e) {
-  //       console.error(e)
-  //     }
-  //   } else if (!warnedAboutMissingDevToolRef.current && inDevelopmentMode) {
-  //     warnedAboutMissingDevToolRef.current = true
-  //     // eslint-disable-next-line
-  //     console.info(
-  //       '%cConsider installing "React Context DevTool" in order to inspect the context state: https://www.npmjs.com/package/react-context-devtool',
-  //       'color:#1dbf73',
-  //     )
-  //   }
-  // }, [contextStore])
-
-  return <Context.Provider value={contextStore} displayName={Context.displayName || name}>{children}</Context.Provider>;
 };
 
 ContextStore.propTypes = {
   name: PropTypes.string,
-  context: PropTypes.shape({}),
+  stateContext: PropTypes.shape({}),
+  dispatchContext: PropTypes.shape({}),
   // @ts-ignore
-  reducers: PropTypes.oneOfType([
-    PropTypes.func,
-    PropTypes.objectOf(PropTypes.func)
-  ]),
+  reducers: PropTypes.oneOfType([PropTypes.func, PropTypes.objectOf(PropTypes.func)]),
   initialState: PropTypes.shape({}),
   props: PropTypes.shape({}),
   initializer: PropTypes.func,
@@ -146,7 +98,8 @@ ContextStore.defaultProps = defaultProps;
 const MemoizedContextProvider = React.memo(ContextStore, shallowEquals);
 
 export {
-  StateProvider as ContextConsumer,
+  StateProvider as StateContextConsumer,
+  DispatchProvider as DispatchContextConsumer,
   ContextStore as ContextProvider,
   MemoizedContextProvider,
   storeFactory

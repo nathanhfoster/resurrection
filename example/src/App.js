@@ -1,9 +1,9 @@
 import React from 'react';
 import { ContextProvider } from 'resurrection';
-import ChildComponent from './components';
+import { ChildComponent1, ChildComponent2 } from './components';
 
 export const DEFAULT_STATE = {
-  someKeyFromMyStore: 'Hello World!'
+  someKeyFromMyStore: 'Hello World'
 };
 
 const someReducer = (state = DEFAULT_STATE, action) => {
@@ -27,7 +27,8 @@ const App = () => {
   /* object of reducers example: const reducers = { someReducer, someOtherReducer} */
   return (
     <ContextProvider name='App' reducers={Reducers} initialState={InitialState}>
-      <ChildComponent />
+      <ChildComponent1 />
+      <ChildComponent2 />
     </ContextProvider>
   );
 };

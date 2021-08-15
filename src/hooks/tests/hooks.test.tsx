@@ -1,5 +1,10 @@
-
-import { ContextType, MapStateToSelectorType, ReducerStateInitializerType, ReducerStateType, ReducerType } from '@types';
+import {
+  ContextType,
+  MapStateToSelectorType,
+  ReducerStateInitializerType,
+  ReducerStateType,
+  ReducerType
+} from '@types';
 import React, { createContext } from 'react';
 import { render } from '@testing-library/react';
 import {
@@ -18,23 +23,14 @@ const mockContext = createContext<ReducerStateType>(initialState);
 
 const mockReducer: ReducerType = (state, action) => initialState;
 
-const setup = (
-  hook: any,
-  contextConsumer: ContextType,
-  ...args: any[]
-): [any, any] => {
+const setup = (hook: any, contextConsumer: ContextType, ...args: any[]): [any, any] => {
   let returnVal;
   const TestComponent = () => {
     returnVal = hook(...args);
     return <div />;
   };
   const wrapper = render(
-    <ContextProvider
-      name='ContextStore'
-      context={contextConsumer}
-      initialState={initialState}
-      reducers={mockReducer}
-    >
+    <ContextProvider name='ContextStore' context={contextConsumer} initialState={initialState} reducers={mockReducer}>
       <TestComponent />
     </ContextProvider>
   );
@@ -74,29 +70,18 @@ describe('hooks', () => {
 
   describe('useReducerWithThunk', () => {
     it('Should return a reducer with thunk with no initializer', () => {
-      const [reducer] = setup(
-        useReducerWithThunk,
-        undefined,
-        setStateReducer,
-        initialState,
-      );
+      const [reducer] = setup(useReducerWithThunk, undefined, setStateReducer, initialState);
       const [state, dispatch] = reducer;
       expect(state).toMatchObject(initialState);
       expect(dispatch).toBeDefined();
     });
 
     it('Should return a reducer with thunk with an initializer', () => {
-      const initializer: ReducerStateInitializerType = stateOrProps => ({
+      const initializer: ReducerStateInitializerType = (stateOrProps) => ({
         ...stateOrProps,
         key2: 'Test'
       });
-      const [reducer] = setup(
-        useReducerWithThunk,
-        undefined,
-        setStateReducer,
-        initialState,
-        initializer,
-      );
+      const [reducer] = setup(useReducerWithThunk, undefined, setStateReducer, initialState, initializer);
       const [state, dispatch] = reducer;
       expect(state).toMatchObject({
         ...initialState,
@@ -117,23 +102,12 @@ describe('hooks', () => {
     });
     it('Should return a selected state without a contextConsumer', () => {
       const isEqual = () => true;
-      const [selector] = setup(
-        useSelector,
-        undefined,
-        mapStateToSelector,
-        isEqual,
-      );
+      const [selector] = setup(useSelector, undefined, mapStateToSelector, isEqual);
       expect(selector).toMatchObject({ key2: initialState.key1 });
     });
     it('Should return a selected state', () => {
       const isEqual = () => false;
-      const [selector] = setup(
-        useSelector,
-        mockContext,
-        mapStateToSelector,
-        isEqual,
-        mockContext,
-      );
+      const [selector] = setup(useSelector, mockContext, mapStateToSelector, isEqual, mockContext);
       expect(selector).toMatchObject({ key2: initialState.key1 });
     });
   });

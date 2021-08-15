@@ -1,4 +1,10 @@
-import { ContextConsumer, ContextProvider, MemoizedContextProvider, storeFactory } from '@provider';
+import {
+  StateContextConsumer,
+  DispatchContextConsumer,
+  ContextProvider,
+  MemoizedContextProvider,
+  storeFactory
+} from '@provider';
 
 import connect from '@connect';
 
@@ -34,7 +40,8 @@ import {
 
 export {
   // provider
-  ContextConsumer,
+  StateContextConsumer,
+  DispatchContextConsumer,
   ContextProvider,
   MemoizedContextProvider,
   storeFactory,
