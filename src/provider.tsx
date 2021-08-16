@@ -15,7 +15,7 @@ const DispatchProvider = createContext(null);
 const StateProvider = createContext(null);
 
 const defaultProps: Partial<ContextStoreProps> = {
-  name: getRandomInt(0, 1000),
+  name: getRandomInt(1, 1000),
   stateContext: StateProvider,
   dispatchContext: DispatchProvider,
   reducers: setStateReducer,

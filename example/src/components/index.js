@@ -21,6 +21,7 @@ export const ChildComponent2 = memo(() => {
 
     setTimeout(() => {
       const store = storeFactory.getStore();
+      console.log('STORE: ', store);
       store?.dispatch({ type: 'SOME_ACTION_TYPE', payload: 'Hello World!!!' });
     }, 999);
   }, []);

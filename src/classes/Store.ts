@@ -20,7 +20,7 @@ class Store implements StoreInterface {
     dispatch: DispatchType | ThunkActionType,
   ) {
     // @ts-ignore
-    this.id = id || getRandomInt(0, 1000);
+    this.id = id || getRandomInt(1, 1000);
 
     // @ts-ignore
     this.stateContext = stateContext;
@@ -32,7 +32,7 @@ class Store implements StoreInterface {
       this.dispatch = dispatch;
     }
 
-    this.state = state;
+    this.#state = state;
 
     this.isReady = !!(id && state && dispatch);
   }
@@ -42,7 +42,8 @@ class Store implements StoreInterface {
   stateContext = undefined;
   dispatchContext = undefined;
 
-  state = {};
+  // @ts-ignore
+  #state = {};
 
   isReady = false;
 
@@ -52,13 +53,7 @@ class Store implements StoreInterface {
 
   getDispatchContext = () => this.dispatchContext;
 
-  getState = () => {
-    if (!this.isReady) {
-      return undefined;
-    }
-
-    return this.state;
-  };
+  getState = () => this.#state;
 
   getIsReady = () => this.isReady;
 
@@ -67,7 +62,7 @@ class Store implements StoreInterface {
   };
 
   setState = (state: ReducerStateType) => {
-    this.state = state;
+    this.#state = state;
   };
 
   setDispatch = (dispatch: DispatchType) => {

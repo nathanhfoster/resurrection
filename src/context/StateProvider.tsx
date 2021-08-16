@@ -5,7 +5,7 @@ import { StatePropviderProps } from '@types';
 import { defaultInitializer, getRandomInt } from '@utils';
 
 const defaultProps: Partial<StatePropviderProps> = {
-  name: getRandomInt(0, 1000),
+  name: getRandomInt(1, 1000),
   reducer: setObjectStateReducer,
   initialState: {},
   initializer: defaultInitializer
