@@ -1,4 +1,5 @@
 import Store from './Store';
+import { StateContextConsumer, DispatchContextConsumer, } from '@provider';
 import { DispatchType, ReducerStateType, StoreNameOrContextType, StoresInterface, ThunkActionType } from '@types';
 
 /**
@@ -20,7 +21,7 @@ class Stores implements StoresInterface {
   // @ts-ignore
   getStores = () => this.stores;
 
-  getStore = (nameOrContext: StoreNameOrContextType) => {
+  getStore = (nameOrContext: StoreNameOrContextType = StateContextConsumer) => {
     // @ts-ignore
     const storeFoundByName = this.stores[nameOrContext];
 
@@ -30,7 +31,7 @@ class Stores implements StoresInterface {
 
     const storeFoundByContext = Object.values(this.stores).find(
       // @ts-ignore
-      (store) => store.getContext() === nameOrContext
+      (store) => store.getStateContext() === nameOrContext
     );
 
     // @ts-ignore

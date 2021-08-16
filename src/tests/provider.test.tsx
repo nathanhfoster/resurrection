@@ -1,13 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ContextProvider, storeFactory } from '..';
-import {
-  ContextStoreNameType,
-  ReducerMap,
-  ReducerStateType,
-  ReducerType,
-  ContextType
-} from '@types';
+import { ContextStoreNameType, ReducerMap, ReducerStateType, ReducerType, ContextType } from '@types';
 
 export const DEFAULT_STATE: ReducerStateType = {
   someKeyFromMyStore: 'Hello World'
@@ -39,14 +33,14 @@ export const testReducer2: ReducerType = (state = DEFAULT_STATE, action) => {
 
 export const reducers: ReducerMap = { testReducer1, testReducer2 };
 
-const getWrapper = (name: ContextStoreNameType, context: ContextType) => render(
-  <ContextProvider name={name} context={context} reducers={reducers}>
-    <span>Test</span>
-  </ContextProvider>,
-);
+const getWrapper = (name: ContextStoreNameType, context: ContextType) =>
+  render(
+    <ContextProvider name={name} context={context} reducers={reducers}>
+      <span>Test</span>
+    </ContextProvider>
+  );
 
 describe('provider', () => {
-
   describe('storeFactory', () => {
     it('Should get a store from a unique name', () => {
       const providerName = 'TEST1';
@@ -58,7 +52,7 @@ describe('provider', () => {
       expect(stores).toBeDefined();
       expect(appStore).toBeDefined();
       expect(appStore.getId()).toBe(providerName);
-      expect(appStore.getContext()).toBe(providerContext);
+      expect(appStore.getStateContext()).toBe(providerContext);
     });
 
     it('Should have get a store from a context', () => {

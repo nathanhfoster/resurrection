@@ -1,5 +1,5 @@
 import React, { useEffect, memo } from 'react';
-import { connect, useDispatch } from 'resurrection';
+import { storeFactory, connect, useDispatch } from 'resurrection';
 
 export const mapStateToProps = ({ someReducer: { someKeyFromMyStore } }) => ({ someKeyFromMyStore });
 
@@ -20,7 +20,8 @@ export const ChildComponent2 = memo(() => {
     }, 666);
 
     setTimeout(() => {
-      dispatch({ type: 'SOME_ACTION_TYPE', payload: 'Hello World!!!' });
+      const store = storeFactory.getStore();
+      store?.dispatch({ type: 'SOME_ACTION_TYPE', payload: 'Hello World!!!' });
     }, 999);
   }, []);
 

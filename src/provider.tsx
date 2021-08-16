@@ -47,7 +47,7 @@ const ContextStore: React.FC<ContextStoreProps> = ({
   // Update storeFactory object to access it outside of a component
   useLayoutEffect(() => {
     if (!storeFactory.isStoreReady(name)) {
-      const newStore = new Store(name, StateContext, dispatch, state);
+      const newStore = new Store(name as string, StateContext, state, DispatchContext, dispatch);
       storeFactory.setStore(newStore);
     } else {
       storeFactory.setStoreState(name, state);

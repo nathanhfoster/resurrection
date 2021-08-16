@@ -13,17 +13,19 @@ import {
  */
 class Store implements StoreInterface {
   constructor(
-    id?: ContextStoreNameType,
-    // @ts-ignore
-    context: ContextType,
+    id: ContextStoreNameType,
+    stateContext: ContextType,
+    state: ReducerStateType,
+    dispatchContext: ContextType,
     dispatch: DispatchType | ThunkActionType,
-    state: ReducerStateType
   ) {
     // @ts-ignore
     this.id = id || getRandomInt(0, 1000);
 
     // @ts-ignore
-    this.context = context;
+    this.stateContext = stateContext;
+    // @ts-ignore
+    this.dispatchContext = dispatchContext;
 
     if (isFunction(dispatch)) {
       // @ts-ignore
@@ -32,12 +34,13 @@ class Store implements StoreInterface {
 
     this.state = state;
 
-    this.isReady = !!(id && dispatch && state);
+    this.isReady = !!(id && state && dispatch);
   }
 
   id = undefined;
 
-  context = undefined;
+  stateContext = undefined;
+  dispatchContext = undefined;
 
   state = {};
 
@@ -45,11 +48,13 @@ class Store implements StoreInterface {
 
   getId = () => this.id;
 
-  getContext = () => this.context;
+  getStateContext = () => this.stateContext;
+
+  getDispatchContext = () => this.dispatchContext;
 
   getState = () => {
     if (!this.isReady) {
-      throw Error('Store is NOT ready!');
+      return undefined;
     }
 
     return this.state;
@@ -60,7 +65,7 @@ class Store implements StoreInterface {
   setIsReady = (ready: boolean) => {
     this.isReady = ready;
   };
-  
+
   setState = (state: ReducerStateType) => {
     this.state = state;
   };
@@ -70,9 +75,7 @@ class Store implements StoreInterface {
     this.dispatch = dispatch;
   };
 
-  dispatch = () => {
-    throw Error('Store is NOT ready!');
-  };
+  dispatch = undefined;
 }
 
 export default Store;

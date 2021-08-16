@@ -109,16 +109,18 @@ export interface ContextStoreProps {
 
 export interface StoreInterface {
   id?: ContextStoreNameType;
-  context?: ContextType;
+  stateContext?: ContextType;
+  dispatchContext: ContextType;
   isReady: boolean;
   getId: () => ContextStoreNameType | undefined;
-  getContext: () => ContextType | undefined;
-  getState: () => ReducerStateType;
+  getStateContext: () => ContextType | undefined;
+  getDispatchContext: () => ContextType | undefined;
+  getState: () => ReducerStateType | undefined;
   getIsReady: () => boolean;
   setIsReady: (ready: boolean) => void;
   setState: (state: ReducerStateType) => void;
   setDispatch: (dispatch: DispatchType) => void;
-  dispatch: DispatchType;
+  dispatch: DispatchType | undefined;
 }
 
 export interface StoresInterface {
