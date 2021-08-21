@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect } from 'react';
 import { isFunction, getDerivedStateFromProps, defaultInitializer } from '@utils';
-import { useSetStateReducer, useLazyMemo } from '.';
+import { useSetStateReducer, useLazyMemo, useMounted } from '.';
 import {
   ActionType,
   DispatchType,
@@ -31,6 +31,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   // Get initial hook state once
   const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, props), []);
   const initialHookState = useLazyMemo(getInitialHookState);
+  const mounted = useMounted();
 
   const [hookState, setHookState] = useSetStateReducer(initialHookState, initializer);
 
@@ -49,9 +50,9 @@ const useReducerWithThunk: useReducerWithThunkType = (
     [props, setHookState]
   );
 
-  // make the state controlled from a HOC
+  // make the state controlled from an HOC
   useEffect(() => {
-    if (state.current) {
+    if (mounted) {
       setState(state.current);
     }
   }, [props]);
