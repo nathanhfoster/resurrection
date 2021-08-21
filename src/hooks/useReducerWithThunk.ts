@@ -41,7 +41,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   const getState: GetReducerStateType = useCallback(() => state.current, [state]);
 
   const setState = useCallback(
-    (newState, callback) => {
+    (newState, callback?: () => any) => {
       const derivedState = getDerivedStateFromProps(newState, props);
       const nextState = initializer(derivedState);
       state.current = nextState;
@@ -64,8 +64,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   const dispatch: ActionType | DispatchType | ThunkActionType = useCallback(
     (action: ActionType | ThunkActionType | DispatchType) => {
       if (isFunction(action)) {
-        // @ts-ignore
-        return action(dispatch, getState);
+        return action(dispatch as any, getState);
       }
       return setState(reduce(action));
     },
