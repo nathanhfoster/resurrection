@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react';
-import { isFunction, getDerivedStateFromProps, defaultInitializer } from '@utils';
+import { isFunction, getDerivedStateFromProps, defaultInitializer, getReducerDefaultState } from '@utils';
 import { useSetStateReducer, useLazyMemo, useMounted } from '.';
 import {
   ActionType,
@@ -24,7 +24,7 @@ import {
  */
 const useReducerWithThunk: useReducerWithThunkType = (
   reducer,
-  initialState,
+  initialState = getReducerDefaultState(reducer),
   initializer = defaultInitializer,
   props
 ) => {
