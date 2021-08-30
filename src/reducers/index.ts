@@ -25,8 +25,17 @@ export const setObjectStateReducer: SetObjectStateReducerType = (state, action) 
  * @param {boolean=} action - The dispatched action
  * @returns {boolean} - The nextState of the reducer
  */
-export const toggleBooleanReducer: BooleanReducerType = (state, action) =>
-  typeof action === 'boolean' ? action : !state;
+export const toggleBooleanReducer: BooleanReducerType = (state, action) => {
+  if (state === action) {
+    return state;
+  }
+
+  if (typeof action === 'boolean') {
+    return action;
+  }
+
+  return !state;
+};
 
 /**
  * Passes the state to the action if it is a callback
