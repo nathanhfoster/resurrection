@@ -51,6 +51,7 @@ const shallowEqual: EqualityFunctionType = (objA, objB) => {
   }
 
   return true;
+  
 };
 
 export default shallowEqual;
