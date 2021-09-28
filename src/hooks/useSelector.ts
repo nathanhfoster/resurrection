@@ -36,10 +36,6 @@ const useSelector: useSelectorType = (
 
   const state: ReducerStateType = useContext(stateContextConsumer);
 
-  console.log(state);
-
-  return mapStateToSelector(state as any);
-
   const currentSelector: ComponentPropsType = useMemo(() => mapStateToSelector(state as any), [state]);
 
   const previousSelector: ComponentPropsType = usePreviousValue(currentSelector);
