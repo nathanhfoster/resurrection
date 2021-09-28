@@ -1,6 +1,6 @@
 import { useRef, useCallback, MutableRefObject } from 'react';
-import { setNumberReducer } from '@reducers';
-import { useNumberRefType } from '@types';
+import { setNumberReducer } from 'reducers';
+import { useNumberRefType } from 'types';
 /**
  * Same as the useNumberReducer but is asynchronous and does not trigger rerenders on setState
  * @param {Number} initializerArg - initial state of the reducer

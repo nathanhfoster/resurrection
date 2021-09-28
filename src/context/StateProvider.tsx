@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 import PropTypes from 'prop-types';
 import { setObjectStateReducer } from '../reducers';
-import { StatePropviderProps } from '@types';
-import { defaultInitializer, getRandomInt } from '@utils';
+import { StatePropviderProps } from 'types';
+import { defaultInitializer, getRandomInt } from 'utils';
 
 const defaultProps: Partial<StatePropviderProps> = {
   name: getRandomInt(1, 1000),

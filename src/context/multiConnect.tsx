@@ -1,6 +1,6 @@
-import { ComponentPropsType, MultiConnectType, ReducerStateType, ContextType } from '@types';
+import { ComponentPropsType, MultiConnectType, ReducerStateType, ContextType } from 'types';
 import React, { memo, useMemo, useContext } from 'react';
-import { isFunction, shallowEquals } from '@utils';
+import { isFunction, shallowEquals } from 'utils';
 
 /**
  * Connects a Component to one or more context stores

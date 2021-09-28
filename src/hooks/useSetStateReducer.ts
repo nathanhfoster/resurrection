@@ -1,4 +1,4 @@
-import { CallbackType, ReducerStateType, SetStateType, useSetStateReducerType } from '@types';
+import { CallbackType, ReducerStateType, SetStateType, useSetStateReducerType } from 'types';
 import { useRef, useReducer, useCallback, useEffect, MutableRefObject, Dispatch } from 'react';
 import { setObjectStateReducer } from '../reducers';
 

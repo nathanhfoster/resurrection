@@ -6,7 +6,7 @@ describe('combineReducers', () => {
     const initialState = { key1: 'value1', key2: 'value2' };
     const [state, reducer] = combineReducers(reducers, initialState);
     const action = { type: actionTypes.PROBE_UNKNOWN_ACTION() };
-    reducer(undefined, action);
+    reducer(initialState, action);
 
     expect(state).toMatchObject(initialState);
     expect(reducer).toBeDefined();

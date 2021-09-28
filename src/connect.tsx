@@ -1,5 +1,5 @@
-import React, { memo, useContext, useMemo } from 'react';
-import { isFunction, defaultMergeProps, bindActionCreators, shallowEquals } from '@utils';
+import { memo, useContext, useMemo } from 'react';
+import { isFunction, defaultMergeProps, bindActionCreators, shallowEquals } from 'utils';
 import { StateContextConsumer, DispatchContextConsumer } from './provider';
 import {
   ConnectType,
@@ -8,7 +8,7 @@ import {
   ThunkActionDispatchType,
   DispatchType,
   ReducerStateType
-} from '@types';
+} from 'types';
 
 /**
  * This function simulates Redux's connect API

@@ -1,4 +1,4 @@
-import { useOutterClickType } from '@types';
+import { useOutterClickType } from 'types';
 import { useCallback, useEffect, useRef } from 'react';
 
 export const useOutterClick: useOutterClickType = (cb, dep) => {

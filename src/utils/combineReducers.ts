@@ -1,6 +1,6 @@
 import isFunction from './isFunction';
 import getReducerDefaultState from './getReducerDefaultState';
-import { combineReducersType, ReducerMap, ReducerStateType, ReducerType, StringMap } from '@types';
+import { combineReducersType, ReducerMap, ReducerStateType, ReducerType, StringMap } from 'types';
 
 /**
  * This function returns one reducer if it is a Function
@@ -58,7 +58,7 @@ const combineReducers: combineReducersType = (reducers, initialState) => {
         if (isFunction(reducer)) {
           acc[key] = getReducerDefaultState(reducer);
         } else {
-          throw new Error(`${reducer.name} is not a function!`);
+          throw new Error(`${reducer} is not a function!`);
         }
         return acc;
       },

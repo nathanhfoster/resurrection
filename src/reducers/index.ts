@@ -1,5 +1,5 @@
-import { isFunction, getDerivedStateFromProps } from '@utils';
-import { SetStateReducerType, SetObjectStateReducerType, BooleanReducerType, NumberReducerType } from '@types';
+import { isFunction, getDerivedStateFromProps } from 'utils';
+import { SetStateReducerType, SetObjectStateReducerType, BooleanReducerType, NumberReducerType } from 'types';
 
 /**
  * A generic reducer that augments the useReducer hook

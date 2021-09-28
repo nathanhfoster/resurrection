@@ -1,4 +1,4 @@
-import {
+import React, {
   JSXElementConstructor,
   ReactNode,
   Context as ReactContext,
@@ -9,6 +9,7 @@ import {
   SetStateAction,
   RefObject,
   ReducerState,
+  ReducerAction as ReactReducerAction,
   DependencyList
 } from 'react';
 
@@ -16,7 +17,7 @@ export interface StringMap {
   [index: string]: any;
 }
 
-export type ChildrenType = ReactNode | ReactElement | JSX.Element;
+export type ChildrenType = ReactNode | ReactElement | JSX.Element | React.FC<any>;
 
 export type ReducerStateType = StringMap;
 
@@ -29,7 +30,7 @@ export interface ReducerAction {
   payload?: any;
 }
 
-export type DispatchType = Dispatch<ReducerAction>;
+export type DispatchType = Dispatch<ReducerAction> | Dispatch<ReactReducerAction<any>>;
 
 export type GetReducerStateType = () => ReducerStateType;
 
@@ -139,7 +140,7 @@ export type ConnectType = (
   mapDispatchToProps: MapDispatchToPropsType,
   mergeProps: MergePropsType,
   options: ConnectOptions
-) => (Component: FunctionComponent<ReducerStateType>) => (ownProps: ComponentPropsType) => ChildrenType;
+) => (Component: React.FC<ComponentPropsType>) => (ownProps: ComponentPropsType) => ChildrenType;
 
 export type useDispatchType = (contextConsumer: ContextType) => DispatchType;
 

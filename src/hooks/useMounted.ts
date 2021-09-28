@@ -1,4 +1,4 @@
-import { useMountedType } from '@types';
+import { useMountedType } from 'types';
 import { useRef, useEffect } from 'react';
 
 const useMounted: useMountedType = (initialValue = false) => {

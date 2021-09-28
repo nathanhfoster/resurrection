@@ -1,6 +1,6 @@
-import { ComponentPropsType, ReducerStateType, SetStateConnectType } from '@types';
+import { ComponentPropsType, ReducerStateType, SetStateConnectType } from 'types';
 import React, { memo, SetStateAction, useContext } from 'react';
-import { isFunction, shallowEquals } from '@utils';
+import { isFunction, shallowEquals } from 'utils';
 
 /**
  * This HOC connects a component to a context state object

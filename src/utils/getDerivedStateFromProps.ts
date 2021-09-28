@@ -1,4 +1,4 @@
-import { getDerivedStateFromPropsType } from '@types';
+import { getDerivedStateFromPropsType } from 'types';
 
 /**
  * This function allows the state to be controlled

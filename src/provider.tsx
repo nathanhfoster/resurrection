@@ -1,18 +1,18 @@
 import React, { createContext, useCallback, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import { combineReducers, shallowEquals, defaultInitializer, getRandomInt } from '@utils';
+import { combineReducers, shallowEquals, defaultInitializer, getRandomInt } from 'utils';
 import { Stores, Store } from './classes';
-import useLazyMemo from '@hooks/useLazyMemo';
-import useReducerWithThunk from '@hooks/useReducerWithThunk';
-import { ContextStoreProps } from '@types';
-import { setStateReducer } from '@reducers';
+import useLazyMemo from 'hooks/useLazyMemo';
+import useReducerWithThunk from 'hooks/useReducerWithThunk';
+import { ContextStoreProps } from 'types';
+import { setStateReducer } from 'reducers';
 
 // const inDevelopmentMode = process.env.NODE_ENV === 'development'
 
 const storeFactory = new Stores();
 
-const DispatchProvider = createContext(null);
 const StateProvider = createContext(null);
+const DispatchProvider = createContext(null);
 
 const defaultProps: Partial<ContextStoreProps> = {
   name: getRandomInt(1, 1000),
@@ -32,7 +32,7 @@ const ContextStore: React.FC<ContextStoreProps> = ({
   stateContext: StateContext,
   dispatchContext: DispatchContext,
   reducers,
-  initialState,
+  initialState = StateContext?._currentValue,
   props,
   initializer,
   children

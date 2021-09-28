@@ -1,6 +1,6 @@
-import { useBooleanReducerType } from '@types';
+import { useBooleanReducerType } from 'types';
 import { useReducer } from 'react';
-import { toggleBooleanReducer } from '@reducers';
+import { toggleBooleanReducer } from 'reducers';
 
 /**
  * Boolean reducer that toggles it's state by default or is overwritten by a passed value

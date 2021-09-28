@@ -1,4 +1,4 @@
-import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } from '@types';
+import { BindActionCreatorsType, bindActionCreatorsType, StringMap, ThunkMap } from 'types';
 import { Dispatch } from 'react';
 
 /**
@@ -25,9 +25,9 @@ import { Dispatch } from 'react';
  */
 const bindActionCreator: bindActionCreatorsType =
   (dispatch) =>
-  (actionCreator) =>
-  (...args) =>
-    dispatch(actionCreator?.apply?.(undefined, args) || actionCreator);
+    (actionCreator) =>
+      (...args) =>
+        dispatch(actionCreator?.apply?.(undefined, args) || actionCreator);
 
 /**
  * This augments actions to dispatch other actions and passes (dispatch, getState)
@@ -39,8 +39,7 @@ const bindActionCreator: bindActionCreatorsType =
 const BindActionCreators: BindActionCreatorsType = (mapDispatchToProps, dispatch) => {
   if (typeof mapDispatchToProps !== 'object' || mapDispatchToProps === null) {
     throw new Error(
-      `bindActionCreators expected an object or a function, instead received ${
-        mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
+      `bindActionCreators expected an object or a function, instead received ${mapDispatchToProps === null ? 'null' : typeof mapDispatchToProps
       }.`
     );
   }

@@ -1,4 +1,4 @@
-import { usePreviousValueType } from '@types';
+import { usePreviousValueType } from 'types';
 import { useEffect, useRef } from 'react';
 
 /**

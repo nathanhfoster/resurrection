@@ -1,4 +1,4 @@
-import { DispatchType, MapDispatchToPropsType, ThunkActionDispatchType, ReducerAction } from '@types';
+import { DispatchType, MapDispatchToPropsType, ThunkActionDispatchType, ReducerAction } from 'types';
 import bindActionCreators from '../bindActionCreators';
 
 let dispatch: DispatchType;

@@ -1,4 +1,4 @@
-import { useLazyMemoType } from '@types';
+import { useLazyMemoType } from 'types';
 import { useRef } from 'react';
 
 const DEFAULT_VALUE = null;

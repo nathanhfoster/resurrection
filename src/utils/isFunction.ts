@@ -1,4 +1,4 @@
-import { isFunctionType } from '@types';
+import { isFunctionType } from 'types';
 /**
  * This evaluates wheter an object is a function or not
  * @param {*} object - any object

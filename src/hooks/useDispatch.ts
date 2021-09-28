@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { DispatchContextConsumer } from '../provider';
-import { DispatchType, useDispatchType } from '@types';
+import { DispatchType, useDispatchType } from 'types';
 
 /**
  * This hook simulates Redux's useDispatch hook

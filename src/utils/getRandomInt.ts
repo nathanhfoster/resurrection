@@ -1,4 +1,4 @@
-import { getRandomIntType } from '@types';
+import { getRandomIntType } from 'types';
 
 /**
  * This functions returns a random integer within a specified range

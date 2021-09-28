@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ContextProvider, connect } from '..';
@@ -10,10 +9,9 @@ import {
   MapStateToPropsType,
   MergePropsType,
   ReducerType
-} from '@types';
+} from 'types';
 
 const defaultReducer: ReducerType = (state, action) => ({});
-
 
 const propMapper = (prop: any) => {
   switch (typeof prop) {
@@ -27,14 +25,13 @@ const propMapper = (prop: any) => {
   }
 };
 
-const Passthrough: any =
-  (props: ComponentPropsType) =>
-    Object.entries(props).map(([key, value]: [string, any]) => (
-      <React.Fragment key={key}>
-        <div data-testid={key} />
-        <div data-testid={propMapper(value)} />
-      </React.Fragment>
-    ));
+const Passthrough: any = (props: ComponentPropsType) =>
+  Object.entries(props).map(([key, value]: [string, any]) => (
+    <React.Fragment key={key}>
+      <div data-testid={key} />
+      <div data-testid={propMapper(value)} />
+    </React.Fragment>
+  ));
 
 const initialState = { key1: 'key1 value', key2: 'key2 value' };
 
@@ -44,12 +41,9 @@ const setup = (context: ContextType, ...args: any[]) => {
   const ChildComponent: ReactElement = connect(...args)(Container);
 
   return render(
-    <ContextProvider
-      context={context}
-      initialState={initialState}
-      reducers={defaultReducer}>
+    <ContextProvider stateContext={context} initialState={initialState} reducers={defaultReducer}>
       <ChildComponent />
-    </ContextProvider>,
+    </ContextProvider>
   );
 };
 
@@ -69,7 +63,7 @@ describe('connect', () => {
   });
   it('Should mapDispatchToProps is an object', () => {
     // @ts-ignore
-    const mapDispatchToProps: MapDispatchToPropsType = dispatch => ({ someAction: () => dispatch(jest.fn()) });
+    const mapDispatchToProps: MapDispatchToPropsType = (dispatch) => ({ someAction: () => dispatch(jest.fn()) });
 
     const wrapper = setup(undefined, undefined, mapDispatchToProps);
     const child = wrapper.getByTestId('someAction');
@@ -100,7 +94,7 @@ describe('connect', () => {
 
   it('Should handle a custom options context', () => {
     const mapStateToProps: MapStateToPropsType = ({ key1 }) => ({ key2: key1 });
-    const context = React.createContext({});
+    const context = React.createContext({ key1: 'key1' });
     const isEqual: EqualityFunctionType = (prevProps, nextProps) => prevProps === nextProps;
     const options = { context, pure: false, areMergedPropsEqual: isEqual };
 

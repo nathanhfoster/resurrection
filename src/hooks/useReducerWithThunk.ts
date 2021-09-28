@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react';
-import { isFunction, getDerivedStateFromProps, defaultInitializer, getReducerDefaultState } from '@utils';
+import { isFunction, getDerivedStateFromProps, defaultInitializer, getReducerDefaultState } from 'utils';
 import { useSetStateReducer, useLazyMemo, useMounted } from '.';
 import {
   ActionType,
@@ -9,7 +9,7 @@ import {
   ThunkActionType,
   useReducerWithThunkType,
   ReducerStateInitializerType
-} from '@types';
+} from 'types';
 
 /**
  * Mimics React.Component this.setState

@@ -1,4 +1,4 @@
-import { EqualityFunctionType } from '@types';
+import { EqualityFunctionType } from 'types';
 
 /**
  * This function checks if a value is a comparable object

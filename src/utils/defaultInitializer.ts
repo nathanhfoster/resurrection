@@ -1,4 +1,4 @@
-import { ReducerStateType, ReducerStateInitializerType } from '@types';
+import { ReducerStateType, ReducerStateInitializerType } from 'types';
 
 /**
  * Default initializer for a reducer

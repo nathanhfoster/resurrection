@@ -1,5 +1,5 @@
 import React, { useEffect, memo } from 'react';
-import { storeFactory, connect, useDispatch } from 'resurrection';
+import { storeFactory, connect, useDispatch, useSelector } from 'resurrection';
 
 export const mapStateToProps = ({ someReducer: { someKeyFromMyStore } }) => ({ someKeyFromMyStore });
 
@@ -29,3 +29,8 @@ export const ChildComponent2 = memo(() => {
   console.log('useDispatch() caused a rerender');
   return <div>useDispatch()</div>;
 });
+
+export const ChildComponent3 = () => {
+  const { someKeyFromMyStore } = useSelector(mapStateToProps);
+  return <div>{someKeyFromMyStore}</div>;
+};

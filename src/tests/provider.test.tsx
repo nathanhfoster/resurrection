@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ContextProvider, storeFactory } from '..';
-import { ContextStoreNameType, ReducerMap, ReducerStateType, ReducerType, ContextType } from '@types';
+import { ContextStoreNameType, ReducerMap, ReducerStateType, ReducerType, ContextType } from 'types';
 
 export const DEFAULT_STATE: ReducerStateType = {
   someKeyFromMyStore: 'Hello World'
@@ -35,7 +35,7 @@ export const reducers: ReducerMap = { testReducer1, testReducer2 };
 
 const getWrapper = (name: ContextStoreNameType, context: ContextType) =>
   render(
-    <ContextProvider name={name} context={context} reducers={reducers}>
+    <ContextProvider name={name} stateContext={context} reducers={reducers}>
       <span>Test</span>
     </ContextProvider>
   );

@@ -1,4 +1,4 @@
-import { MergePropsType } from '@types';
+import { MergePropsType } from 'types';
 
 const defaultMergeProps: MergePropsType = (stateProps, dispatchProps, props) => ({
   ...props,

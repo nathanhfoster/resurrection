@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContextProvider } from 'resurrection';
-import { ChildComponent1, ChildComponent2 } from './components';
+import { ChildComponent1, ChildComponent2, ChildComponent3 } from './components';
 
 export const DEFAULT_STATE = {
   someKeyFromMyStore: 'Hello World'
@@ -30,6 +30,7 @@ const App = () => {
     <ContextProvider name='App' reducers={Reducers} initialState={InitialState}>
       <ChildComponent1 />
       <ChildComponent2 />
+      <ChildComponent3 />
     </ContextProvider>
   );
 };

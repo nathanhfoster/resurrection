@@ -1,5 +1,4 @@
-
-import { ReducerStateType } from '@types';
+import { ReducerStateType } from 'types';
 import { createContext } from 'react';
 import { Stores, Store } from '..';
 

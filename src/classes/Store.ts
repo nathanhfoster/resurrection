@@ -1,4 +1,4 @@
-import { getRandomInt, isFunction } from '@utils';
+import { getRandomInt, isFunction } from 'utils';
 import {
   StoreInterface,
   ContextType,
@@ -6,7 +6,7 @@ import {
   ReducerStateType,
   ThunkActionType,
   ContextStoreNameType
-} from '@types';
+} from 'types';
 
 /**
  * Holds the properties of a store object

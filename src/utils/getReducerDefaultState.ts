@@ -1,4 +1,4 @@
-import { getReducerDefaultStateType } from '@types';
+import { getReducerDefaultStateType } from 'types';
 import ActionTypes from './actionTypes';
 
 /**

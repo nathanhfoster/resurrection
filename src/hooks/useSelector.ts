@@ -1,8 +1,8 @@
 import { useContext, useMemo } from 'react';
 import usePreviousValue from './usePreviousValue';
-import { isFunction, shallowEquals } from '@utils';
+import { isFunction, shallowEquals } from 'utils';
 import { StateContextConsumer } from '../provider';
-import { SelectorEqualityFunctionType, useSelectorType } from '@types';
+import { SelectorEqualityFunctionType, useSelectorType, ReducerStateType, ComponentPropsType, } from 'types';
 
 /**
  * Shallow equality function
@@ -29,15 +29,20 @@ const useSelector: useSelectorType = (
   isEqual = defaultIsEqual,
   stateContextConsumer = StateContextConsumer
 ) => {
+
   if (!isFunction(mapStateToSelector)) {
     throw new Error('The first argument mapStateToSelector must be a function');
   }
 
-  const { state } = useContext(stateContextConsumer);
+  const state: ReducerStateType = useContext(stateContextConsumer);
 
-  const currentSelector = useMemo(() => mapStateToSelector(state), [state]);
+  console.log(state);
 
-  const previousSelector = usePreviousValue(currentSelector);
+  return mapStateToSelector(state as any);
+
+  const currentSelector: ComponentPropsType = useMemo(() => mapStateToSelector(state as any), [state]);
+
+  const previousSelector: ComponentPropsType = usePreviousValue(currentSelector);
 
   if (previousSelector) {
     const shouldUpdate = !isEqual(currentSelector, previousSelector);

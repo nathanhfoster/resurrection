@@ -1,6 +1,6 @@
 import { useReducer } from 'react';
-import { setNumberReducer } from '@reducers';
-import { useNumberReducerType } from '@types';
+import { setNumberReducer } from 'reducers';
+import { useNumberReducerType } from 'types';
 /**
  * Number reducer that increments/decrements the current state value or passes the state to the action if its a callback function
  * @param {Number} initializerArg - initial state of the reducer
