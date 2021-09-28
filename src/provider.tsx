@@ -14,16 +14,6 @@ const storeFactory = new Stores();
 const StateProvider = createContext(null);
 const DispatchProvider = createContext(null);
 
-const defaultProps: Partial<ContextStoreProps> = {
-  name: getRandomInt(1, 1000),
-  stateContext: StateProvider,
-  dispatchContext: DispatchProvider,
-  reducers: setStateReducer,
-  initializer: defaultInitializer,
-  initialState: undefined,
-  props: undefined
-};
-
 /**
  * Context Store Factory that simulates Redux's createStore API
  */
@@ -93,7 +83,15 @@ ContextStore.propTypes = {
   ]).isRequired
 };
 
-ContextStore.defaultProps = defaultProps;
+ContextStore.defaultProps = {
+  name: getRandomInt(1, 1000),
+  stateContext: StateProvider,
+  dispatchContext: DispatchProvider,
+  reducers: setStateReducer,
+  initializer: defaultInitializer,
+  initialState: undefined,
+  props: undefined
+};
 
 const MemoizedContextProvider = React.memo(ContextStore, shallowEquals);
 
