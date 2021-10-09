@@ -44,7 +44,7 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
 
     const dispatchToProps: ComponentPropsType = useMemo(() => {
       if (!mapDispatchToProps) {
-        return {};
+        return { dispatch };
       }
       if (isFunction(mapDispatchToProps)) {
         return mapDispatchToProps(dispatch as ThunkActionDispatchType);

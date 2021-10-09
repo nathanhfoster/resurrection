@@ -1,5 +1,4 @@
 import React, { createContext, useCallback, useLayoutEffect } from 'react';
-import PropTypes from 'prop-types';
 import { combineReducers, shallowEquals, defaultInitializer, getRandomInt } from 'utils';
 import { Stores, Store } from './classes';
 import useLazyMemo from 'hooks/useLazyMemo';
@@ -55,32 +54,6 @@ const ContextStore: React.FC<ContextStoreProps> = ({
       </StateContext.Provider>
     </DispatchContext.Provider>
   );
-};
-
-ContextStore.propTypes = {
-  name: PropTypes.string,
-  stateContext: PropTypes.shape({}),
-  dispatchContext: PropTypes.shape({}),
-  // @ts-ignore
-  reducers: PropTypes.oneOfType([PropTypes.func, PropTypes.objectOf(PropTypes.func)]),
-  initialState: PropTypes.shape({}),
-  props: PropTypes.shape({}),
-  initializer: PropTypes.func,
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.node,
-    PropTypes.func,
-    PropTypes.symbol,
-    PropTypes.object,
-    PropTypes.elementType,
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.arrayOf(PropTypes.element),
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.arrayOf(PropTypes.func),
-    PropTypes.arrayOf(PropTypes.symbol),
-    PropTypes.arrayOf(PropTypes.object),
-    PropTypes.arrayOf(PropTypes.elementType)
-  ]).isRequired
 };
 
 ContextStore.defaultProps = {
