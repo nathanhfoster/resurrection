@@ -13,7 +13,7 @@ const isNotAComparableObject = (obj: any): boolean => typeof obj !== 'object' ||
  * @param {Object} objB - second object to compare
  * @returns {Boolean} - whether the two objects are equal or not
  */
-const shallowEqual: EqualityFunctionType = (objA, objB) => {
+const shallowEquals: EqualityFunctionType = (objA, objB) => {
   if (Object.is(objA, objB)) {
     return true;
   }
@@ -39,4 +39,4 @@ const shallowEqual: EqualityFunctionType = (objA, objB) => {
 
 };
 
-export default shallowEqual;
+export default shallowEquals;
