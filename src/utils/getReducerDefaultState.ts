@@ -6,7 +6,6 @@ import ActionTypes from './actionTypes';
  */
 
 const getReducerDefaultState: getReducerDefaultStateType = (reducer) =>
-  // @ts-ignore
   reducer(undefined, {
     type: ActionTypes.INIT
   });
