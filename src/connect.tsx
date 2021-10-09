@@ -57,7 +57,7 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
       [ownProps, stateToProps, dispatchToProps]
     );
 
-    return <PureComponent {...mergedProps} dispatch={dispatch} />;
+    return <PureComponent {...mergedProps} />;
   };
 };
 

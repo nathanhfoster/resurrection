@@ -46,7 +46,7 @@ const BindActionCreators: BindActionCreatorsType = (mapDispatchToProps, dispatch
   const boundActionCreators: ThunkMap = Object.entries(mapDispatchToProps).reduce((acc: StringMap, [key, action]) => {
     acc[key] = bindActionCreator(dispatch)(action);
     return acc;
-  }, {});
+  }, { dispatch });
 
   return boundActionCreators;
 };

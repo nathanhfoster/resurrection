@@ -3,7 +3,8 @@ import { storeFactory, connect, useDispatch, useSelector } from 'resurrection';
 
 export const mapStateToProps = ({ someReducer: { someKeyFromMyStore } }) => ({ someKeyFromMyStore });
 
-export const ChildComponent1 = connect(mapStateToProps)(({ someKeyFromMyStore }) => {
+export const ChildComponent1 = connect(mapStateToProps)(({ someKeyFromMyStore, dispatch }) => {
+  console.log(dispatch);
   return <div>{someKeyFromMyStore}</div>;
 });
 
