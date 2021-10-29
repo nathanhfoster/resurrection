@@ -2,7 +2,7 @@ export { default as useBooleanReducer } from './useBooleanReducer';
 export { default as useDispatch } from './useDispatch';
 export { default as useLazyMemo } from './useLazyMemo';
 export { default as useMounted } from './useMounted';
-export { default as useMountedEffect } from './useMountedEffect';
+export { default as useEffectAfterMount } from './useEffectAfterMount';
 export { default as useNumberReducer } from './useNumberReducer';
 export { default as useNumberRef } from './useNumberRef';
 export { default as useOutterClick } from './useOutterClick';

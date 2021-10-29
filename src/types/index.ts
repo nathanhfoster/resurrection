@@ -149,7 +149,7 @@ export type useLazyMemoType = (initializer: () => any) => any;
 
 export type useMountedType = (initialValue?: boolean) => boolean;
 
-export type useMountedEffectType = (callback: EffectCallback, dependencies: DependencyList) => void;
+export type useEffectAfterMountType = (callback: EffectCallback, dependencies: DependencyList) => void;
 
 export type usePreviousValueType = (value: any) => any;
 

@@ -1,6 +1,6 @@
 import { useRef, useCallback, } from 'react';
 import { isFunction, getDerivedStateFromProps, defaultInitializer, getReducerDefaultState } from 'utils';
-import { useSetStateReducer, useLazyMemo, useMountedEffect } from '.';
+import { useSetStateReducer, useLazyMemo, useEffectAfterMount } from '.';
 import {
   ActionType,
   DispatchType,
@@ -50,7 +50,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   );
 
   // make the state controlled from an HOC
-  useMountedEffect(() => {
+  useEffectAfterMount(() => {
     setState(state.current);
   }, [props]);
 

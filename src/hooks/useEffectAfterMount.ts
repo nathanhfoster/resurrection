@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import useMounted from './useMounted';
-import { useMountedEffectType } from 'types';
+import { useEffectAfterMountType } from 'types';
 
-const useMountedEffect: useMountedEffectType = (callback, dependencies) => {
+const useEffectAfterMount: useEffectAfterMountType = (callback, dependencies) => {
   const mounted = useMounted();
 
   useEffect(() => (mounted ? callback() : undefined), dependencies);
 };
 
-export default useMountedEffect;
+export default useEffectAfterMount;
