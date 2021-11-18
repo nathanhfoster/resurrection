@@ -1,5 +1,5 @@
 import { useLazyMemoType } from 'types';
-import { useRef } from 'react';
+import { useRef, useCallback } from 'react';
 
 const DEFAULT_VALUE = null;
 
@@ -17,7 +17,7 @@ const DEFAULT_VALUE = null;
 const useLazyMemo: useLazyMemoType = (initializer) => {
   const ref = useRef(DEFAULT_VALUE);
 
-  const getObservable = () => {
+  const getObservable = useCallback(() => {
     const observer = ref.current;
     if (observer !== DEFAULT_VALUE) {
       return observer;
@@ -26,7 +26,7 @@ const useLazyMemo: useLazyMemoType = (initializer) => {
     const newObserver = initializer();
     ref.current = newObserver;
     return newObserver;
-  };
+  }, []);
 
   return getObservable();
 };
