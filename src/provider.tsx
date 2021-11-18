@@ -22,7 +22,7 @@ const ContextStore: React.FC<ContextStoreProps> = ({
   dispatchContext: DispatchContext,
   reducers,
   initialState = StateContext?._currentValue,
-  props,
+  derivedStateFromProps,
   initializer,
   children
 }) => {
@@ -31,7 +31,7 @@ const ContextStore: React.FC<ContextStoreProps> = ({
   const [mainState, mainReducer] = useLazyMemo(getInitialMainState);
 
   // setup useReducer with the returned values of the combineReducers
-  const [state, dispatch] = useReducerWithThunk(mainReducer, mainState, initializer, props);
+  const [state, dispatch] = useReducerWithThunk(mainReducer, mainState, initializer, derivedStateFromProps);
 
   // Update storeFactory object to access it outside of a component
   useLayoutEffect(() => {
@@ -63,7 +63,7 @@ ContextStore.defaultProps = {
   reducers: setStateReducer,
   initializer: defaultInitializer,
   initialState: undefined,
-  props: undefined
+  derivedStateFromProps: undefined
 };
 
 const MemoizedContextProvider = React.memo(ContextStore, shallowEquals);

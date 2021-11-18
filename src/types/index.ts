@@ -104,7 +104,7 @@ export interface ContextStoreProps {
   dispatchContext?: ContextType;
   reducers: ReducerType | ReducerMap;
   initialState?: ReducerStateType;
-  props?: ComponentPropsType;
+  derivedStateFromProps?: ComponentPropsType;
   initializer?: ReducerStateInitializerType;
   children: ChildrenType;
 }
@@ -177,7 +177,7 @@ export type useReducerWithThunkType = (
   reducer: ReducerType,
   initialState?: ReducerStateType,
   initializer?: ReducerStateInitializerType,
-  props?: ComponentPropsType
+  derivedStateFromProps?: ComponentPropsType
 ) => [ReducerStateType, ThunkActionType];
 
 export type reduceType = (newState: ReducerStateType) => ReducerStateType;

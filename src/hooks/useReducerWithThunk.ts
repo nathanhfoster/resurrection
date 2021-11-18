@@ -26,10 +26,10 @@ const useReducerWithThunk: useReducerWithThunkType = (
   reducer,
   initialState = getReducerDefaultState(reducer),
   initializer = defaultInitializer,
-  props
+  derivedStateFromProps,
 ) => {
   // Get initial hook state once
-  const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, props), []);
+  const getInitialHookState = useCallback(() => getDerivedStateFromProps(initialState, derivedStateFromProps), []);
   const initialHookState = useLazyMemo(getInitialHookState);
 
   const [hookState, setHookState] = useSetStateReducer(initialHookState, initializer);
@@ -41,18 +41,18 @@ const useReducerWithThunk: useReducerWithThunkType = (
 
   const setState = useCallback(
     (newState, callback?: () => any) => {
-      const derivedState = getDerivedStateFromProps(newState, props);
+      const derivedState = getDerivedStateFromProps(newState, derivedStateFromProps);
       const nextState = initializer(derivedState);
       state.current = nextState;
       setHookState(nextState, callback);
     },
-    [props, setHookState]
+    [derivedStateFromProps, setHookState]
   );
 
   // make the state controlled from an HOC
   useEffectAfterMount(() => {
     setState(state.current);
-  }, [props]);
+  }, [derivedStateFromProps]);
 
   // Reducer
   const reduce: ReducerStateInitializerType = useCallback((action) => reducer(getState(), action), [reducer, getState]);
