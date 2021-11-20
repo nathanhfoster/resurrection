@@ -29,7 +29,6 @@ const useSelector: useSelectorType = (
   isEqual = defaultIsEqual,
   stateContextConsumer = StateContextConsumer
 ) => {
-
   if (!isFunction(mapStateToSelector)) {
     throw new Error('The first argument mapStateToSelector must be a function');
   }
@@ -47,7 +46,7 @@ const useSelector: useSelectorType = (
     }
   }
 
-  return previousSelector;
+  return previousSelector ?? currentSelector;
 };
 
 export default useSelector;

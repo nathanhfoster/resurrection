@@ -7,6 +7,7 @@ import {
 } from 'types';
 import { createContext } from 'react';
 import { render } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 import {
   useDispatch,
   useLazyMemo,
@@ -59,18 +60,22 @@ describe('hooks', () => {
   describe('useLazyMemo', () => {
     it('Should return a lazy value', () => {
       const initializer = () => true;
-      const [result, wrapper] = setup(useLazyMemo, initializer);
-      wrapper.rerender();
-      expect(result).toBe(true);
+      const { rerender, result } = renderHook(() => useLazyMemo(initializer));
+
+      expect(result.current).toEqual(initializer());
+      rerender(() => useLazyMemo(() => false));
+      expect(result.current).toEqual(initializer());
     });
   });
 
   describe('usePreviousValue', () => {
-    it('Should return a previous value', () => {
-      const value = 1;
-      const [result, wrapper] = setup(usePreviousValue, value);
-      wrapper.rerender();
-      expect(result).toBe(1);
+    it('should return the previous value', () => {
+      const MOCK_VALUE = 'MOCK_VALUE';
+      const { rerender, result } = renderHook(() => usePreviousValue(MOCK_VALUE));
+
+      expect(result.current).toBeUndefined();
+      rerender();
+      expect(result.current).toEqual(MOCK_VALUE);
     });
   });
 
@@ -103,8 +108,9 @@ describe('hooks', () => {
     it('Should throw an error when a selector is not passed', () => {
       expect(() => setup(useSelector)[0]).toThrowError();
     });
+
     it('Should return a selected state without a equality function and contextConsumer', () => {
-      const [selector] = setup(useSelector, mapStateToSelector, mockStateContext);
+      const [selector] = setup(useSelector, mapStateToSelector, undefined, mockStateContext);
       expect(selector).toMatchObject({ key2: initialState.key1 });
     });
     it('Should return a selected state without a contextConsumer', () => {

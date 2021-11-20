@@ -40,11 +40,13 @@ describe('classes', () => {
     it('Should create a new object with a random id and the dispatch and getState methods Should throw errors', () => {
       // @ts-ignore
       const store = new Store();
+      // @ts-ignore
       expect(() => store.dispatch()).toThrowError('Store is NOT ready!');
       expect(() => store.getState()).toThrowError('Store is NOT ready!');
     });
     it('Should getState', () => {
       const initialState: ReducerStateType = { key1: 'key1' };
+      // @ts-ignore
       const store = new Store(1, createContext(initialState), jest.fn(), initialState);
       const state = store.getState();
       expect(state).toMatchObject(initialState);

@@ -25,20 +25,20 @@ describe('bindActionCreators', () => {
   });
 
   it('Should throw an error when mapDispatchToProps is not an object', () => {
-    const someAction: ReducerAction = { type: 'SOME_ACTION_TYPE' };
-    const anotherAction: ThunkActionDispatchType = (payload) => (dispatchThunk) => {
-      dispatchThunk({ type: 'SOME_OTHER_TYPE', payload });
+    const actionThatReturnsAnObject: ReducerAction = { type: 'SOME_ACTION_TYPE' };
+    const actionThatCallsAnotherDispatchedAction: ThunkActionDispatchType = () => (dispatchThunk) => {
+      dispatchThunk({ type: 'SOME_OTHER_TYPE', });
     };
 
     const mapDispatchToProps: MapDispatchToPropsType = {
       // @ts-ignore
-      someAction,
-      anotherAction
+      actionThatReturnsAnObject,
+      actionThatCallsAnotherDispatchedAction
     };
     const result = bindActionCreators(mapDispatchToProps, dispatch);
     // @ts-ignore
     Object.values(result).forEach((action) => action());
     expect(result).toBeDefined();
-    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenCalledTimes(3);
   });
 });

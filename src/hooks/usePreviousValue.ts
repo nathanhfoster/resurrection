@@ -7,7 +7,7 @@ import { useEffect, useRef } from 'react';
  * @returns {*} any previous value
  */
 const usePreviousValue: usePreviousValueType = (value) => {
-  const prevValue = useRef(value);
+  const prevValue = useRef();
 
   useEffect(() => {
     prevValue.current = value;
