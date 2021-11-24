@@ -14,9 +14,7 @@ import React, {
   EffectCallback
 } from 'react';
 
-export interface StringMap {
-  [index: string]: any;
-}
+export type StringMap = Record<string, any>;
 
 export type ChildrenType = ReactNode | ReactElement | JSX.Element | React.FC<any>;
 
