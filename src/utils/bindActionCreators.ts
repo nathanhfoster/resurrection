@@ -3,7 +3,7 @@ import { Dispatch } from 'react';
 
 /**
  * Turns an object whose values are action creators, into an object with the
- * same keys, but with every function wrapped into a `dispatch` call so they
+ * same keys, but with every function curried into a new function that is wrapped with the `dispatch` API so they
  * may be invoked directly. This is just a convenience method, as you can call
  * `store.dispatch(MyActionCreators.doSomething())` yourself just fine.
  *
