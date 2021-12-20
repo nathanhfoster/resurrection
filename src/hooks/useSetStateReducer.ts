@@ -26,7 +26,7 @@ const useSetStateReducer: useSetStateReducerType = (initializerArg, initializer)
     dispatch(updater);
   }, []);
 
-  // Call the callback after every state change
+  // Synchronously call the callback after every state change
   useEffect(() => {
     callbackRef.current(state);
     callbackRef.current = defaultCallback;
