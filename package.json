@@ -32,6 +32,7 @@
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^13.0.10",
@@ -87,8 +88,5 @@
   "bugs": {
     "url": "https://github.com/nathanhfoster/resurrection/issues"
   },
-  "homepage": "https://github.com/nathanhfoster/resurrection#readme",
-  "dependencies": {
-    "@testing-library/react-hooks": "^7.0.2"
-  }
+  "homepage": "https://github.com/nathanhfoster/resurrection#readme"
 }
