@@ -15,6 +15,10 @@ export const ChildComponent2 = memo(() => {
 
   useEffect(() => {
     setTimeout(() => {
+      dispatch({ type: 'SOME_OTHER_ACTION', payload: 'This should not cause a rerender!!!' });
+    }, 100);
+
+    setTimeout(() => {
       dispatch({ type: 'SOME_ACTION_TYPE', payload: 'Hello World!' });
     }, 333);
 
@@ -30,7 +34,7 @@ export const ChildComponent2 = memo(() => {
   }, [dispatch]);
 
   useEffectAfterMount(() => {
-    console.log('useDispatch() caused a rerender');
+    console.log('useDispatch() or SOME_OTHER_ACTION caused a rerender');
   }, [dispatch]);
 
   return <div>useDispatch()</div>;

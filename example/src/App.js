@@ -3,7 +3,8 @@ import { ContextProvider } from 'resurrection';
 import { ChildComponent1, ChildComponent2, ChildComponent3 } from './components';
 
 export const DEFAULT_STATE = {
-  someKeyFromMyStore: 'Hello World'
+  someKeyFromMyStore: 'Hello World',
+  someOtherKeyFromMyStore: 'This should not cause a rerender'
 };
 
 const someReducer = (state = DEFAULT_STATE, action) => {
@@ -12,6 +13,9 @@ const someReducer = (state = DEFAULT_STATE, action) => {
   switch (type) {
     case 'SOME_ACTION_TYPE':
       return { ...state, someKeyFromMyStore: payload };
+
+    case 'SOME_OTHER_ACTION':
+      return { ...state, someOtherKeyFromMyStore: payload };
 
     default:
       return state;
