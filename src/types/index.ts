@@ -145,6 +145,8 @@ export type useDispatchType = (contextConsumer: ContextType) => DispatchType;
 
 export type useLazyMemoType = (initializer: () => any) => any;
 
+export type useMemoComponentType = (Component: ReactElement, props: ComponentPropsType, isEqual: EqualityFunctionType) => ReactElement;
+
 export type useMountedType = (initialValue?: boolean) => boolean;
 
 export type useEffectAfterMountType = (callback: EffectCallback, dependencies: DependencyList) => void;

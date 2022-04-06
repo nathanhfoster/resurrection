@@ -1,6 +1,7 @@
 import { memo, useContext, useMemo } from 'react';
 import { isFunction, defaultMergeProps, bindActionCreators, shallowEquals } from 'utils';
 import { StateContextConsumer, DispatchContextConsumer } from './provider';
+import { useMemoComponent } from 'hooks';
 import {
   ConnectType,
   ComponentPropsType,
@@ -53,15 +54,22 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
         return bindActionCreators(mapDispatchToProps, dispatch);
       }, [dispatch]);
 
+      const mergedProps = useMemo(
+        () => mergeProps(stateToProps, dispatchToProps, ownProps),
+        [dispatchToProps, ownProps, stateToProps],
+      );
 
       const renderedWrappedComponent = useMemo(() => {
-        const mergedProps = handleMergeProps(stateToProps, dispatchToProps, ownProps);
-        const PureComponent = pure ? memo(WrappedComponent, areMergedPropsEqual) : WrappedComponent;
+        return <WrappedComponent {...mergedProps} ref={forwardedRef} />;
+      }, [mergedProps, forwardedRef]);
 
-        return <PureComponent {...mergedProps} ref={forwardedRef} />;
-      }, [forwardedRef, ownProps, stateToProps, dispatchToProps]);
+      const ConnectedComponent = useMemoComponent(
+        renderedWrappedComponent,
+        mergedProps,
+        pure ? areMergedPropsEqual : null,
+      );
 
-      return renderedWrappedComponent;
+      return ConnectedComponent;
     };
 
     const Connect = pure ? memo(ConnectFunction, areOwnPropsEqual) : ConnectFunction;
