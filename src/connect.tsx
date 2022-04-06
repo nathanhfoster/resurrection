@@ -8,7 +8,8 @@ import {
   ThunkActionDispatchType,
   DispatchType,
   ReducerStateType,
-  MergePropsType
+  MergePropsType,
+  ChildrenType
 } from 'types';
 
 /**
@@ -28,14 +29,13 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
     forwardRef = false
   } = options || {};
 
-  const wrapWithConnect = (WrappedComponent: FunctionComponent) => {
+  const wrapWithConnect: ChildrenType = (WrappedComponent: FunctionComponent) => {
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 
-    // @ts-ignore
-    const ConnectFunction = ({ forwardedRef, ...ownProps }) => {
-      const state: ReducerStateType = useContext<ReducerStateType>(stateContext);
-      const dispatch: DispatchType = useContext<DispatchType>(dispatchContext);
+    const ConnectFunction: React.FC<{ forwardedRef: any }> = ({ forwardedRef, ...ownProps }) => {
+      const state = useContext<ReducerStateType>(stateContext);
+      const dispatch = useContext<DispatchType>(dispatchContext);
 
       const stateToProps: ComponentPropsType = useMemo(() => {
         if (isFunction(mapStateToProps)) {
@@ -80,7 +80,6 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
     if (forwardRef) {
       const ForwaredComponent = reactForwardRef((props, ref) => <Connect {...props} forwardedRef={ref} />);
 
-      // @ts-ignore
       ForwaredComponent.displayName = displayName;
       // @ts-ignore
       ForwaredComponent.WrappedComponent = WrappedComponent;

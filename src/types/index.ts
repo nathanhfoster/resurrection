@@ -231,7 +231,9 @@ export interface MultiConnectOptionsType {
   dispatchContext: ContextType | [string, ContextType][];
   pure?: boolean;
   mergeProps?: MergePropsType;
+  areOwnPropsEqual?: EqualityFunctionType;
   areMergedPropsEqual?: EqualityFunctionType;
+  forwardRef?: boolean;
 }
 
 export type MultiConnectType = (

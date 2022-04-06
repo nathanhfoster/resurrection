@@ -23,7 +23,7 @@ import { Dispatch } from 'react';
  * function as actionCreators, the return value will also be a single
  * function.
  */
-const bindActionCreator: bindActionCreatorsType =
+export const bindActionCreator: bindActionCreatorsType =
   (dispatch) =>
     (actionCreator) =>
       (...args) =>
