@@ -61,16 +61,12 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
         [stateToProps, dispatchToProps, ownProps]
       );
 
-      const renderedWrappedComponent = useMemo(() => {
-        // @ts-ignore
-        return <WrappedComponent {...mergedProps} ref={forwardedRef} />;
-      }, [mergedProps, forwardedRef]);
-
-      const ConnectedComponent = useMemoComponent(
-        renderedWrappedComponent,
-        mergedProps,
-        pure ? areMergedPropsEqual : undefined
-      );
+      const ConnectedComponent = useMemoComponent({
+        Component: WrappedComponent as any,
+        ref: forwardedRef,
+        props: mergedProps,
+        isEqual: pure ? areMergedPropsEqual : undefined
+      });
 
       return ConnectedComponent;
     };

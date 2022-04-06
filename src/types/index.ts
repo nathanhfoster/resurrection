@@ -145,7 +145,11 @@ export type useDispatchType = (contextConsumer: ContextType) => DispatchType;
 
 export type useLazyMemoType = (initializer: () => any) => any;
 
-export type useMemoComponentType = (Component: ReactElement, props: ComponentPropsType, isEqual?: EqualityFunctionType) => ReactElement;
+export interface useMemoComponentOptionsType {
+  Component: ReactElement, ref?: RefObject<any>, props: ComponentPropsType, isEqual?: EqualityFunctionType;
+}
+
+export type useMemoComponentType = (options: useMemoComponentOptionsType) => ReactElement;
 
 export type useMountedType = (initialValue?: boolean) => boolean;
 
