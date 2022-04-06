@@ -21,7 +21,7 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
       pure = true,
       // TODO:
       // areStatesEqual = shallowEquals,
-      // areOwnPropsEqual = shallowEquals,
+      areOwnPropsEqual = shallowEquals,
       // areStatePropsEqual = shallowEquals,
       areMergedPropsEqual = shallowEquals,
       forwardRef = false,
@@ -53,21 +53,18 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
         return bindActionCreators(mapDispatchToProps, dispatch);
       }, [dispatch]);
 
-      const mergedProps: ComponentPropsType = useMemo(
-        () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
-        [ownProps, stateToProps, dispatchToProps]
-      );
 
       const renderedWrappedComponent = useMemo(() => {
+        const mergedProps = handleMergeProps(stateToProps, dispatchToProps, ownProps);
         const PureComponent = pure ? memo(WrappedComponent, areMergedPropsEqual) : WrappedComponent;
 
         return <PureComponent {...mergedProps} ref={forwardedRef} />;
-      }, [forwardedRef, mergedProps]);
+      }, [forwardedRef, ownProps, stateToProps, dispatchToProps]);
 
       return renderedWrappedComponent;
     };
 
-    const Connect = pure ? memo(ConnectFunction, areMergedPropsEqual) : ConnectFunction;
+    const Connect = pure ? memo(ConnectFunction, areOwnPropsEqual) : ConnectFunction;
 
     Connect.WrappedComponent = WrappedComponent;
     Connect.displayName = ConnectFunction.displayName = displayName;
