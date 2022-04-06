@@ -1,6 +1,11 @@
 import React from 'react';
 import { ContextProvider } from 'resurrection';
 import { ChildComponent1, ChildComponent2, ChildComponent3 } from './components';
+import {
+  CustomContextComponentDispatchContext,
+  CustomContextComponentStateContext,
+  CustomContextComponent
+} from './components/CustomContextComponent';
 
 export const DEFAULT_STATE = {
   someKeyFromMyStore: 'Hello World',
@@ -35,6 +40,13 @@ const App = () => {
       <ChildComponent1 />
       <ChildComponent2 />
       <ChildComponent3 />
+      <ContextProvider
+        name='CustomContextComponent'
+        stateContext={CustomContextComponentStateContext}
+        dispatchContext={CustomContextComponentDispatchContext}
+      >
+        <CustomContextComponent />
+      </ContextProvider>
     </ContextProvider>
   );
 };

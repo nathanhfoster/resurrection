@@ -16,18 +16,19 @@ import {
  */
 // @ts-ignore
 const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, options) => {
+  const {
+    stateContext = StateContextConsumer,
+    dispatchContext = DispatchContextConsumer,
+    pure = true,
+    // TODO:
+    // areStatesEqual = shallowEquals,
+    areOwnPropsEqual = shallowEquals,
+    // areStatePropsEqual = shallowEquals,
+    areMergedPropsEqual = shallowEquals,
+    forwardRef = false
+  } = options || {};
+
   const wrapWithConnect = (WrappedComponent: FunctionComponent) => {
-    const {
-      stateContext = StateContextConsumer,
-      dispatchContext = DispatchContextConsumer,
-      pure = true,
-      // TODO:
-      // areStatesEqual = shallowEquals,
-      areOwnPropsEqual = shallowEquals,
-      // areStatePropsEqual = shallowEquals,
-      areMergedPropsEqual = shallowEquals,
-      forwardRef = false
-    } = options || {};
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 
@@ -56,8 +57,8 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
       const handleMergeProps: MergePropsType = isFunction(mergeProps) ? mergeProps : defaultMergeProps;
 
       const mergedProps: ComponentPropsType = useMemo(
-        () => handleMergeProps(stateContext, dispatchToProps, ownProps),
-        [dispatchToProps, ownProps, stateToProps]
+        () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
+        [stateToProps, dispatchToProps, ownProps]
       );
 
       const renderedWrappedComponent = useMemo(() => {
