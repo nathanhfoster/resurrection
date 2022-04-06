@@ -11,10 +11,6 @@ const usePreviousValue: usePreviousValueType = (value) => {
 
   useEffect(() => {
     prevValue.current = value;
-
-    return () => {
-      prevValue.current = undefined;
-    };
   });
 
   return prevValue.current;

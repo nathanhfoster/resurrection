@@ -39,14 +39,13 @@ const useSelector: useSelectorType = (
 
   const previousSelector: ComponentPropsType = usePreviousValue(currentSelector);
 
-  if (previousSelector) {
-    const shouldUpdate = !isEqual(currentSelector, previousSelector);
-    if (shouldUpdate) {
-      return currentSelector;
-    }
+  const shouldUpdate = !isEqual(currentSelector, previousSelector);
+
+  if (shouldUpdate) {
+    return currentSelector;
   }
 
-  return previousSelector ?? currentSelector;
+  return previousSelector;
 };
 
 export default useSelector;
