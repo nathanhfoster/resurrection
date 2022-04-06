@@ -11,8 +11,8 @@ import { isFunction } from 'utils';
  * @returns {JSX.Element}
  */
 const useMemoComponent: useLazyMemoType = (Component, props, isEqual) => {
-    const previousProps = usePreviousValue(props);
     const ComponentRef = useRef(Component);
+    const previousProps = usePreviousValue(props);
 
     useEffect(() => {
         const shouldUpdate = isFunction(isEqual) ? !isEqual(previousProps, props) : true;
