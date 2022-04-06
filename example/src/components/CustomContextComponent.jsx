@@ -9,11 +9,10 @@ export const CustomContextComponentDispatchContext = createContext(null);
 CustomContextComponentDispatchContext.displayName = 'CustomContextComponentDispatchContext';
 
 // we implement areMergedPropsEqual to only mount the input fields once to the DOM
-export const FormWithUseContextAndReducerOptions = {
+export const CustomContextComponentOptions = {
   stateContext: CustomContextComponentStateContext,
   dispatchContext: CustomContextComponentDispatchContext,
   areMergedPropsEqual: (prevState, nextState) => {
-    console.log({ prevState, nextState });
     const areEqual = prevState.renderInputs.length === nextState.renderInputs.length;
     return areEqual;
   }
@@ -25,7 +24,7 @@ export const CustomContextComponent = connect(
   mapStateToProps,
   undefined,
   undefined,
-  FormWithUseContextAndReducerOptions
+  CustomContextComponentOptions
 )(({ renderInputs, dispatch }) => {
   console.log('CustomContextComponent', renderInputs);
   useEffect(() => {

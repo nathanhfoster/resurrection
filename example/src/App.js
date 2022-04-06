@@ -1,6 +1,6 @@
 import React from 'react';
 import { ContextProvider } from 'resurrection';
-import { ChildComponent1, ChildComponent2, ChildComponent3 } from './components';
+import { ChildComponent1, ChildComponent2, ChildComponent3, ChildComponent4 } from './components';
 import {
   CustomContextComponentDispatchContext,
   CustomContextComponentStateContext,
@@ -40,6 +40,7 @@ const App = () => {
       <ChildComponent1 />
       <ChildComponent2 />
       <ChildComponent3 />
+      <ChildComponent4 />
       <ContextProvider
         name='CustomContextComponent'
         stateContext={CustomContextComponentStateContext}
