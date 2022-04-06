@@ -29,11 +29,17 @@ const useMemoComponent: useMemoComponentType = ({ Component, ref, props, isEqual
   });
 
   const renderComponent = useMemo(() => {
-    const FinalComponent = arePropsEqual ? componentRef.current : Component;
-    const finalProps = arePropsEqual ? componentPropsRef.current : props;
+    let FinalComponent = Component;
+    let finalProps = props;
+
+    if (arePropsEqual) {
+      FinalComponent = componentRef.current;
+      finalProps = componentPropsRef.current;
+    }
+
     // @ts-ignore
     return <FinalComponent {...finalProps} ref={ref} />;
-  }, [Component, props, arePropsEqual, ref]);
+  }, [arePropsEqual, Component, props, ref]);
 
   return renderComponent;
 };
