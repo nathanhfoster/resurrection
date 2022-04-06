@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { useMemoComponentType } from 'types';
 import usePreviousValue from './usePreviousValue';
 import { isFunction } from 'utils';
@@ -14,10 +14,10 @@ const useMemoComponent: useMemoComponentType = (Component, props, isEqual) => {
     const ComponentRef = useRef(Component);
     const previousProps = usePreviousValue(props);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         // @ts-ignore
-        const shouldUpdate = isFunction(isEqual) ? !isEqual(previousProps, props) : true;
-        if (shouldUpdate) {
+        const arePropsEqual = isFunction(isEqual) ? isEqual(previousProps, props) : false;
+        if (!arePropsEqual) {
             ComponentRef.current = Component;
         }
     });
