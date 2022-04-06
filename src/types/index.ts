@@ -16,7 +16,7 @@ import React, {
 
 export type StringMap = Record<string, any>;
 
-export type ChildrenType = ReactNode | ReactElement | JSX.Element | React.FC<any>;
+export type ChildrenType = ReactNode | ReactElement | JSX.Element | React.FC<any> | React.ForwardRefRenderFunction<any>;
 
 export type ReducerStateType = StringMap;
 
@@ -145,7 +145,7 @@ export type useDispatchType = (contextConsumer: ContextType) => DispatchType;
 
 export type useLazyMemoType = (initializer: () => any) => any;
 
-export type useMemoComponentType = (Component: ReactElement, props: ComponentPropsType, isEqual: EqualityFunctionType) => ReactElement;
+export type useMemoComponentType = (Component: ReactElement, props: ComponentPropsType, isEqual?: EqualityFunctionType) => ReactElement;
 
 export type useMountedType = (initialValue?: boolean) => boolean;
 

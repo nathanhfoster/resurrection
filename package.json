@@ -32,9 +32,9 @@
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
+    "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.0.10",
     "@types/events": "^3.0.0",
     "@types/fontfaceobserver": "^0.0.6",
