@@ -72,13 +72,22 @@ describe('hooks', () => {
   });
 
   describe('usePreviousValue', () => {
-    it('should return the previous value', () => {
-      const MOCK_VALUE = 'MOCK_VALUE';
-      const { rerender, result } = renderHook(() => usePreviousValue(MOCK_VALUE));
+    const MOCK_VALUE = 'MOCK_VALUE';
+    const MOCK_NEXT_VALUE = 'MOCK_NEXT_VALUE';
 
-      expect(result.current).toBeUndefined();
-      rerender();
+    it('should return the previous value', () => {
+      const { result, rerender, unmount, waitFor, waitForValueToChange, waitForNextUpdate } = renderHook(
+        (value) => usePreviousValue(value),
+        { initialProps: MOCK_VALUE }
+      );
+
       expect(result.current).toEqual(MOCK_VALUE);
+
+      rerender(MOCK_NEXT_VALUE);
+      expect(result.current).toEqual(MOCK_VALUE);
+
+      rerender(MOCK_NEXT_VALUE);
+      expect(result.current).toEqual(MOCK_NEXT_VALUE);
     });
   });
 
@@ -145,6 +154,7 @@ describe('useMemoComponent', () => {
       props: componentProps,
       isEqual: shouldRerenderIsEqual
     };
+
     const { result, rerender: rerenderHook } = renderHook(
       (options: useMemoComponentOptionsType) => useMemoComponent(options),
       {
