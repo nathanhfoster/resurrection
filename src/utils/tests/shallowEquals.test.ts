@@ -15,7 +15,7 @@ describe('shallowEquals', () => {
     expect(result).toBe(false);
   });
 
-  it('Should return true when an compared object keys are NaN', () => {
+  it('Should return true when the compared objects key are NaN', () => {
     const a = { key1: NaN };
     const b = { key1: NaN };
     const result = shallowEquals(a, b);
