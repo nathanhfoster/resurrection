@@ -3,14 +3,17 @@ import {
   ReducerStateInitializerType,
   ReducerStateType,
   DispatchType,
-  ReducerType
+  ReducerType,
+  useMemoComponentOptionsType,
+  EqualityFunctionType
 } from 'types';
 import { createContext } from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import {
   useDispatch,
   useLazyMemo,
+  useMemoComponent,
   usePreviousValue,
   useReducerWithThunk,
   useSelector,
@@ -69,13 +72,22 @@ describe('hooks', () => {
   });
 
   describe('usePreviousValue', () => {
-    it('should return the previous value', () => {
-      const MOCK_VALUE = 'MOCK_VALUE';
-      const { rerender, result } = renderHook(() => usePreviousValue(MOCK_VALUE));
+    const MOCK_VALUE = 'MOCK_VALUE';
+    const MOCK_NEXT_VALUE = 'MOCK_NEXT_VALUE';
 
-      expect(result.current).toBeUndefined();
-      rerender();
+    it('should return the previous value', () => {
+      const { result, rerender, unmount, waitFor, waitForValueToChange, waitForNextUpdate } = renderHook(
+        (value) => usePreviousValue(value),
+        { initialProps: MOCK_VALUE }
+      );
+
       expect(result.current).toEqual(MOCK_VALUE);
+
+      rerender(MOCK_NEXT_VALUE);
+      expect(result.current).toEqual(MOCK_VALUE);
+
+      rerender(MOCK_NEXT_VALUE);
+      expect(result.current).toEqual(MOCK_NEXT_VALUE);
     });
   });
 
@@ -123,5 +135,63 @@ describe('hooks', () => {
       const [selector] = setup(useSelector, mapStateToSelector, isEqual, mockStateContext);
       expect(selector).toMatchObject({ key2: initialState.key1 });
     });
+  });
+});
+
+const DATA_TEST_ID = 'MockComponent';
+const MOCK_VALUE = 'MOCK_VALUE';
+const NEXT_MOCK_VALUE = 'NEXT_MOCK_VALUE';
+
+const MockComponent: React.FC<any> = ({ value }) => <div data-testid={DATA_TEST_ID}>{value}</div>;
+const shouldRerenderIsEqual: EqualityFunctionType = (prevProps, nextProps) => prevProps.value === nextProps.value;
+const shouldNotRerenderIsEqual = () => true;
+
+describe('useMemoComponent', () => {
+  it('should return the latest instance of the component', () => {
+    const componentProps = { value: MOCK_VALUE };
+    const hookOptions: useMemoComponentOptionsType = {
+      Component: MockComponent,
+      props: componentProps,
+      isEqual: shouldRerenderIsEqual
+    };
+
+    const { result, rerender: rerenderHook } = renderHook(
+      (options: useMemoComponentOptionsType) => useMemoComponent(options),
+      {
+        initialProps: hookOptions
+      }
+    );
+
+    const { getByTestId, rerender: rerenderComponent } = render(result.current);
+
+    expect(getByTestId(DATA_TEST_ID)).toBeInTheDocument();
+    expect(screen.getByText(componentProps.value)).toBeInTheDocument();
+
+    const newComponentProps = { ...componentProps, value: NEXT_MOCK_VALUE };
+    const newHookOptions = { ...hookOptions, props: newComponentProps };
+    rerenderHook(newHookOptions);
+    rerenderComponent(result.current);
+
+    expect(screen.queryByText(newComponentProps.value)).toBeInTheDocument();
+  });
+
+  it('should not return the latest instance of the component when the props are the same', () => {
+    const componentProps = { value: MOCK_VALUE };
+    const hookOptions = { Component: MockComponent, props: componentProps, isEqual: shouldNotRerenderIsEqual };
+    const { result, rerender: rerenderHook } = renderHook((options) => useMemoComponent(options), {
+      initialProps: hookOptions
+    });
+
+    const { getByTestId, rerender: rerenderComponent } = render(result.current);
+
+    expect(getByTestId(DATA_TEST_ID)).toBeInTheDocument();
+    expect(screen.getByText(componentProps.value)).toBeInTheDocument();
+
+    const newComponentProps = { ...componentProps, value: NEXT_MOCK_VALUE };
+    const newHookOptions = { ...hookOptions, props: newComponentProps };
+    rerenderHook(newHookOptions);
+    rerenderComponent(result.current);
+
+    expect(screen.queryByText(newComponentProps.value)).not.toBeInTheDocument();
   });
 });

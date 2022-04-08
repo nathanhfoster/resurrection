@@ -1,6 +1,16 @@
-import { ComponentPropsType, MultiConnectType, ReducerStateType, ContextType } from 'types';
-import React, { memo, useMemo, useContext } from 'react';
-import { isFunction, shallowEquals } from 'utils';
+import {
+  ComponentPropsType,
+  MultiConnectType,
+  ReducerStateType,
+  DispatchType,
+  ThunkActionDispatchMap,
+  ThunkActionDispatchType,
+  ChildrenType
+} from 'types';
+import { memo, useMemo, useContext, forwardRef as reactForwardRef, FunctionComponent } from 'react';
+import { defaultMergeProps, isFunction, isValidContext, shallowEquals } from 'utils';
+import { bindActionCreator } from 'utils/bindActionCreators';
+import { useMemoComponent } from 'hooks';
 
 /**
  * Connects a Component to one or more context stores
@@ -32,61 +42,80 @@ import { isFunction, shallowEquals } from 'utils';
  * The Components ownProps recieved from an HOC parent
  */
 
-const multiConnect: MultiConnectType =
-  ({
-    mapStateToProps,
-    mapDispatchToProps,
-    pure = true,
-    mergeProps = (stateProps, dispatchProps, props) => ({
-      ...props,
-      ...stateProps,
-      ...dispatchProps
-    }),
-    areMergedPropsEqual = shallowEquals
-  }) =>
-  (Component) => {
-    // Memoize Component
-    const PureComponent = pure ? memo(Component, areMergedPropsEqual) : Component;
+// @ts-ignore
+const multiConnect: MultiConnectType = ({
+  mapStateToProps,
+  mapDispatchToProps,
+  pure = true,
+  mergeProps = defaultMergeProps,
+  areOwnPropsEqual = shallowEquals,
+  areMergedPropsEqual = shallowEquals,
+  forwardRef = false
+}) => {
+  const wrapWithConnect: ChildrenType = (WrappedComponent: FunctionComponent) => {
+    const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
+    const displayName = `Connect(${wrappedComponentName})`;
 
-    // Component props recieved from an HOC / parent
-    return (ownProps) => {
-      const stateToProps: ComponentPropsType = useMemo(() => {
-        if (!mapStateToProps) return {};
-        // Combine multiple context states and pass it as props
+    const ConnectFunction: React.FC<{ forwardedRef: any }> = ({ forwardedRef, ...ownProps }) => {
+      const stateToProps = mapStateToProps.reduce((acc, item) => {
+        const { context, mapStateToProps: itemMapStateToProps } = item;
+        const contextState = useContext<ReducerStateType>(context);
+        const props: ComponentPropsType = isFunction(itemMapStateToProps)
+          ? itemMapStateToProps(contextState, ownProps)
+          : {};
+        const newProps = { ...acc, ...props };
+        return newProps;
+      }, {});
 
-        return mapStateToProps.reduce((acc, item) => {
-          const { context, mapStateToProps: itemMapStateToProps } = item;
-          const contextState: ReducerStateType = useContext(context);
-          const props: ComponentPropsType = isFunction(itemMapStateToProps)
-            ? itemMapStateToProps(contextState, ownProps)
-            : {};
-          const newProps = { ...acc, ...props };
-          return newProps;
-        }, {});
-      }, [ownProps]);
-
-      const dispatchToProps: ComponentPropsType = useMemo(() => {
-        if (!mapDispatchToProps) return {};
-
-        // If you want to combine multiple dispatch APIS and pass it as props
-        return Object.entries(mapDispatchToProps).reduce(
-          (acc: ComponentPropsType, [propKey, context]: [string, ContextType]) => {
-            const dispatch = useContext(context);
-            acc[propKey] = dispatch;
+      const dispatchToProps = Array.isArray(mapDispatchToProps)
+        ? mapDispatchToProps.reduce((acc, curr) => {
+            const dispatch = useContext<DispatchType>(curr.context);
+            Object.entries(curr.mapDispatchToProps).forEach(([key, value]) => {
+              acc[key] = bindActionCreator(dispatch)(value);
+            });
             return acc;
-          },
-          {}
-        );
-      }, []);
+          }, {})
+        : Object.entries(mapDispatchToProps).reduce((acc: ThunkActionDispatchMap, [key, value]) => {
+            if (isValidContext(value)) {
+              const dispatch = useContext<ThunkActionDispatchType>(value);
+              acc[key] = dispatch;
+            }
+            return acc;
+          }, {});
 
-      // The final merge of props
-      const mergedProps: ComponentPropsType = useMemo(
+      const mergedProps = useMemo(
         () => mergeProps(stateToProps, dispatchToProps, ownProps),
-        [ownProps, stateToProps, dispatchToProps]
+        [dispatchToProps, ownProps, stateToProps]
       );
 
-      return <PureComponent {...mergedProps} />;
+      const ConnectedComponent = useMemoComponent({
+        Component: WrappedComponent,
+        ref: forwardedRef,
+        props: mergedProps,
+        isEqual: pure ? areMergedPropsEqual : undefined
+      });
+
+      return ConnectedComponent;
     };
+
+    const Connect = pure ? memo(ConnectFunction, areOwnPropsEqual) : ConnectFunction;
+    // @ts-ignore
+    Connect.WrappedComponent = WrappedComponent;
+    Connect.displayName = ConnectFunction.displayName = displayName;
+
+    if (forwardRef) {
+      const ForwaredComponent = reactForwardRef((props, ref) => <Connect {...props} forwardedRef={ref} />);
+
+      ForwaredComponent.displayName = displayName;
+      // @ts-ignore
+      ForwaredComponent.WrappedComponent = WrappedComponent;
+      return ForwaredComponent;
+    }
+
+    return Connect;
   };
+
+  return wrapWithConnect;
+};
 
 export default multiConnect;

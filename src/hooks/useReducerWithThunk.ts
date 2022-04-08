@@ -42,9 +42,8 @@ const useReducerWithThunk: useReducerWithThunkType = (
   const setState = useCallback(
     (newState, callback?: () => any) => {
       const derivedState = getDerivedStateFromProps(newState, derivedStateFromProps);
-      const nextState = initializer(derivedState);
-      state.current = nextState;
-      setHookState(nextState, callback);
+      state.current = derivedState;
+      setHookState(derivedState, callback);
     },
     [derivedStateFromProps, setHookState]
   );

@@ -1,6 +1,6 @@
 {
   "name": "resurrection",
-  "version": "1.2.4",
+  "version": "1.2.12",
   "description": "State management library that follows Flux / Redux / Thunk architecture but uses React&#x27;s latest useContext and useReducer hooks.",
   "author": "nathanhfoster",
   "license": "MIT",
@@ -34,6 +34,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
+    "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.0.10",
     "@types/events": "^3.0.0",
     "@types/fontfaceobserver": "^0.0.6",
@@ -87,8 +88,5 @@
   "bugs": {
     "url": "https://github.com/nathanhfoster/resurrection/issues"
   },
-  "homepage": "https://github.com/nathanhfoster/resurrection#readme",
-  "dependencies": {
-    "@testing-library/react-hooks": "^7.0.2"
-  }
+  "homepage": "https://github.com/nathanhfoster/resurrection#readme"
 }

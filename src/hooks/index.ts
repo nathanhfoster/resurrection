@@ -1,6 +1,7 @@
 export { default as useBooleanReducer } from './useBooleanReducer';
 export { default as useDispatch } from './useDispatch';
 export { default as useLazyMemo } from './useLazyMemo';
+export { default as useMemoComponent } from './useMemoComponent';
 export { default as useMounted } from './useMounted';
 export { default as useEffectAfterMount } from './useEffectAfterMount';
 export { default as useNumberReducer } from './useNumberReducer';

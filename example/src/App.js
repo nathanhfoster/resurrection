@@ -1,9 +1,15 @@
 import React from 'react';
 import { ContextProvider } from 'resurrection';
-import { ChildComponent1, ChildComponent2, ChildComponent3 } from './components';
+import { ChildComponent1, ChildComponent2, ChildComponent3, ChildComponent4 } from './components';
+import {
+  CustomContextComponentDispatchContext,
+  CustomContextComponentStateContext,
+  CustomContextComponent
+} from './components/CustomContextComponent';
 
 export const DEFAULT_STATE = {
-  someKeyFromMyStore: 'Hello World'
+  someKeyFromMyStore: 'Hello World',
+  someOtherKeyFromMyStore: 'This should not cause a rerender'
 };
 
 const someReducer = (state = DEFAULT_STATE, action) => {
@@ -12,6 +18,9 @@ const someReducer = (state = DEFAULT_STATE, action) => {
   switch (type) {
     case 'SOME_ACTION_TYPE':
       return { ...state, someKeyFromMyStore: payload };
+
+    case 'SOME_OTHER_ACTION':
+      return { ...state, someOtherKeyFromMyStore: payload };
 
     default:
       return state;
@@ -31,6 +40,14 @@ const App = () => {
       <ChildComponent1 />
       <ChildComponent2 />
       <ChildComponent3 />
+      <ChildComponent4 />
+      <ContextProvider
+        name='CustomContextComponent'
+        stateContext={CustomContextComponentStateContext}
+        dispatchContext={CustomContextComponentDispatchContext}
+      >
+        <CustomContextComponent />
+      </ContextProvider>
     </ContextProvider>
   );
 };

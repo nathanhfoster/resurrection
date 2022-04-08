@@ -14,11 +14,9 @@ import React, {
   EffectCallback
 } from 'react';
 
-export interface StringMap {
-  [index: string]: any;
-}
+export type StringMap = Record<string, any>;
 
-export type ChildrenType = ReactNode | ReactElement | JSX.Element | React.FC<any>;
+export type ChildrenType = ReactNode | ReactElement | JSX.Element | React.FC<any> | React.ForwardRefRenderFunction<any>;
 
 export type ReducerStateType = StringMap;
 
@@ -147,6 +145,12 @@ export type useDispatchType = (contextConsumer: ContextType) => DispatchType;
 
 export type useLazyMemoType = (initializer: () => any) => any;
 
+export interface useMemoComponentOptionsType {
+  Component: FunctionComponent | ReactElement, ref?: RefObject<any>, props: ComponentPropsType, isEqual?: EqualityFunctionType;
+}
+
+export type useMemoComponentType = (options: useMemoComponentOptionsType) => ReactElement;
+
 export type useMountedType = (initialValue?: boolean) => boolean;
 
 export type useEffectAfterMountType = (callback: EffectCallback, dependencies: DependencyList) => void;
@@ -227,7 +231,9 @@ export interface MultiConnectOptionsType {
   dispatchContext: ContextType | [string, ContextType][];
   pure?: boolean;
   mergeProps?: MergePropsType;
+  areOwnPropsEqual?: EqualityFunctionType;
   areMergedPropsEqual?: EqualityFunctionType;
+  forwardRef?: boolean;
 }
 
 export type MultiConnectType = (
