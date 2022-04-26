@@ -1,42 +1,29 @@
 import { EqualityFunctionType } from 'types';
-
-/**
- * This function checks if a value is a comparable object
- * @param {*} obj - first object to compare
- * @returns {Boolean} - whether the value is a comparable object or not
- */
-const isNotAComparableObject = (obj: any): boolean => typeof obj !== 'object' || obj === null;
-
+import isObjectLike from './isObjectLike';
 /**
  * This function does a shallow comparison on two objects
- * @param {Object} objA - first object to compare
- * @param {Object} objB - second object to compare
- * @returns {Boolean} - whether the two objects are equal or not
+ * @param {object} a - first object to compare
+ * @param {object} b - second object to compare
+ * @returns {boolean} - whether the two objects are equal
  */
-const shallowEquals: EqualityFunctionType = (objA, objB) => {
-  if (Object.is(objA, objB)) {
+const shallowEquals: EqualityFunctionType = (a, b) => {
+  if (Object.is(a, b)) {
     return true;
   }
 
-  if (isNotAComparableObject(objA) || isNotAComparableObject(objB)) {
+  if (!isObjectLike(a) || !isObjectLike(b)) {
     return false;
   }
 
-  const keysA = Object.keys(objA);
-  const keysB = Object.keys(objB);
+  const keys = Object.keys(a);
 
-  if (keysA.length !== keysB.length) {
-    return false;
-  }
-
-  for (let i = 0; i < keysA.length; i++) {
-    if (!Object.prototype.hasOwnProperty.call(objB, keysA[i]) || !Object.is(objA[keysA[i]], objB[keysA[i]])) {
+  for (let i = 0; i < keys.length; i++) {
+    if (!Object.prototype.hasOwnProperty.call(b, keys[i]) || !Object.is(a[keys[i]], b[keys[i]])) {
       return false;
     }
   }
 
-  return true;
-
+  return keys.length === Object.keys(b).length;
 };
 
 export default shallowEquals;
