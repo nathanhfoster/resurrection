@@ -83,15 +83,10 @@ const multiConnect: MultiConnectType = ({
             return acc;
           }, {});
 
-      const mergedProps = useMemo(
-        () => mergeProps(stateToProps, dispatchToProps, ownProps),
-        [dispatchToProps, ownProps, stateToProps]
-      );
-
       const ConnectedComponent = useMemoComponent({
         Component: WrappedComponent,
+        props: mergeProps(stateToProps, dispatchToProps, ownProps),
         ref: forwardedRef,
-        props: mergedProps,
         isEqual: pure ? areMergedPropsEqual : undefined
       });
 

@@ -56,15 +56,10 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
 
       const handleMergeProps: MergePropsType = isFunction(mergeProps) ? mergeProps : defaultMergeProps;
 
-      const mergedProps: ComponentPropsType = useMemo(
-        () => handleMergeProps(stateToProps, dispatchToProps, ownProps),
-        [stateToProps, dispatchToProps, ownProps]
-      );
-
       const ConnectedComponent = useMemoComponent({
         Component: WrappedComponent as any,
         ref: forwardedRef,
-        props: mergedProps,
+        props: handleMergeProps(stateToProps, dispatchToProps, ownProps),
         isEqual: pure ? areMergedPropsEqual : undefined
       });
 
