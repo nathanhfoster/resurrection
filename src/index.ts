@@ -5,5 +5,6 @@ export * from 'context';
 export * from 'utils';
 export * from 'reducers';
 export * from 'hooks';
+export * from 'types';
 
 export default connect;
