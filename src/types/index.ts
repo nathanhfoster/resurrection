@@ -5,7 +5,9 @@ import React, {
   FunctionComponent,
   ReactElement,
   Reducer,
+  ReducerWithoutAction,
   Dispatch,
+  DispatchWithoutAction,
   SetStateAction,
   RefObject,
   ReducerState,
@@ -157,7 +159,7 @@ export type useEffectAfterMountType = (callback: EffectCallback, dependencies: D
 
 export type usePreviousValueType = (value: any) => any;
 
-export type BooleanReducerType = Reducer<boolean | any, SetStateAction<boolean>>;
+export type BooleanReducerType = Reducer<boolean, boolean>;
 
 export type NumberReducerType = Reducer<number | any, SetStateAction<number>>;
 
@@ -167,8 +169,8 @@ export type ReducerInitializerType = (stateOrProps: any) => ReducerState<any>;
 
 export type useBooleanReducerType = (
   initializerArg?: boolean,
-  initializer?: ReducerInitializerType
-) => [boolean, BooleanReducerType];
+  initializer?: ReducerWithoutAction<boolean>
+) => [boolean, DispatchWithoutAction | Dispatch<boolean>];
 
 export type useSetRefStateType = (initializerArg?: any) => [any, SetStateAction<any>];
 
