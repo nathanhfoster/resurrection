@@ -3,7 +3,7 @@ import { combineReducers, shallowEquals, defaultInitializer, getRandomInt } from
 import { Stores, Store } from './classes';
 import useLazyMemo from 'hooks/useLazyMemo';
 import useReducerWithThunk from 'hooks/useReducerWithThunk';
-import { ContextStoreProps } from 'types';
+import type { ContextStoreProps } from 'types';
 import { setStateReducer } from 'reducers';
 
 // const inDevelopmentMode = process.env.NODE_ENV === 'development'

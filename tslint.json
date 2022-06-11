@@ -10,6 +10,9 @@
             false,
             "dev"
         ],
+        "no-submodule-imports": [
+            false
+        ],
         "prefer-for-of": false
     }
 }

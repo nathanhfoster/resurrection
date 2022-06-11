@@ -1,6 +1,6 @@
 import Store from './Store';
 import { StateContextConsumer, DispatchContextConsumer, } from 'provider';
-import { DispatchType, ReducerStateType, StoreNameOrContextType, StoresInterface, ThunkActionType } from 'types';
+import type { DispatchType, ReducerStateType, StoreNameOrContextType, StoresInterface, ThunkActionType } from 'types';
 
 /**
  * Holds multiple store objects

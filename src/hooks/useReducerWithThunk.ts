@@ -1,7 +1,7 @@
 import { useRef, useCallback, } from 'react';
 import { isFunction, getDerivedStateFromProps, defaultInitializer, getReducerDefaultState } from 'utils';
 import { useSetStateReducer, useLazyMemo, useEffectAfterMount } from '.';
-import {
+import type {
   ActionType,
   DispatchType,
   GetReducerStateType,
@@ -40,7 +40,7 @@ const useReducerWithThunk: useReducerWithThunkType = (
   const getState: GetReducerStateType = useCallback(() => state.current, [state]);
 
   const setState = useCallback(
-    (newState, callback?: () => any) => {
+    (newState: ReducerStateType, callback?: (nextState?: ReducerStateType) => void) => {
       const derivedState = getDerivedStateFromProps(newState, derivedStateFromProps);
       state.current = derivedState;
       setHookState(derivedState, callback);

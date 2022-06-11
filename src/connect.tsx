@@ -1,8 +1,8 @@
-import { FunctionComponent, memo, useContext, useMemo, forwardRef as reactForwardRef } from 'react';
+import { FunctionComponent, memo, useContext, useMemo, forwardRef as reactForwardRef, PropsWithChildren } from 'react';
 import { isFunction, defaultMergeProps, bindActionCreators, shallowEquals } from 'utils';
 import { StateContextConsumer, DispatchContextConsumer } from './provider';
 import { useMemoComponent } from 'hooks';
-import {
+import type {
   ConnectType,
   ComponentPropsType,
   ThunkActionDispatchType,
@@ -29,7 +29,7 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
     forwardRef = false
   } = options || {};
 
-  const wrapWithConnect: ChildrenType = (WrappedComponent: FunctionComponent) => {
+  const wrapWithConnect = (WrappedComponent: PropsWithChildren<any>) => {
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 

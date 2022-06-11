@@ -4,10 +4,9 @@ import {
   ReducerStateType,
   DispatchType,
   ThunkActionDispatchMap,
-  ThunkActionDispatchType,
-  ChildrenType
+  ThunkActionDispatchType
 } from 'types';
-import { memo, useMemo, useContext, forwardRef as reactForwardRef, FunctionComponent } from 'react';
+import { memo, useContext, forwardRef as reactForwardRef, FunctionComponent } from 'react';
 import { defaultMergeProps, isFunction, isValidContext, shallowEquals } from 'utils';
 import { bindActionCreator } from 'utils/bindActionCreators';
 import { useMemoComponent } from 'hooks';
@@ -52,7 +51,7 @@ const multiConnect: MultiConnectType = ({
   areMergedPropsEqual = shallowEquals,
   forwardRef = false
 }) => {
-  const wrapWithConnect: ChildrenType = (WrappedComponent: FunctionComponent) => {
+  const wrapWithConnect = (WrappedComponent: FunctionComponent) => {
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 
