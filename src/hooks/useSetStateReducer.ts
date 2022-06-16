@@ -1,6 +1,7 @@
 import { CallbackType, ReducerStateType, SetStateType, useSetStateReducerType } from 'types';
-import { useRef, useReducer, useCallback, useEffect, MutableRefObject, Dispatch } from 'react';
+import { useRef, useReducer, useCallback, MutableRefObject, Dispatch } from 'react';
 import { setObjectStateReducer } from '../reducers';
+import useEffectAfterMount from './useEffectAfterMount';
 
 const defaultCallback: CallbackType = () => {
   return;
@@ -27,7 +28,7 @@ const useSetStateReducer: useSetStateReducerType = (initializerArg, initializer)
   }, []);
 
   // Synchronously call the callback after every state change
-  useEffect(() => {
+  useEffectAfterMount(() => {
     callbackRef.current(state);
     callbackRef.current = defaultCallback;
   }, [state]);
