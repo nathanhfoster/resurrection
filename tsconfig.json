@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": "./src",
-    "target": "es5",
+    "target": "esnext",
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "es2015"],
     "jsx": "react-jsx",

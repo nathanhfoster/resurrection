@@ -1,5 +1,5 @@
 import { createContext, useEffect } from 'react';
-import { connect } from 'resurrection';
+import connect from 'resurrection';
 
 export const DEFAULT_STATE = { inputs: [1, 2, 3] };
 
