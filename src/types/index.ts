@@ -172,6 +172,8 @@ export type useBooleanReducerType = (
   initializer?: ReducerWithoutAction<boolean>
 ) => [boolean, DispatchWithoutAction | Dispatch<boolean>];
 
+export type useDebounceCallbackType = (callback: () => any, delay?: number) => () => void;
+
 export type useSetRefStateType = (initializerArg?: any) => [any, SetStateAction<any>];
 
 export type useNumberReducerType = (
