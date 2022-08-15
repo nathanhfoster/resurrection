@@ -1,5 +1,4 @@
 import React, {
-  JSXElementConstructor,
   ReactNode,
   Context as ReactContext,
   FunctionComponent,
@@ -13,7 +12,8 @@ import React, {
   ReducerState,
   ReducerAction as ReactReducerAction,
   DependencyList,
-  EffectCallback
+  EffectCallback,
+  ComponentType,
 } from 'react';
 
 export type StringMap = Record<string, any>;
@@ -147,11 +147,14 @@ export type useDispatchType = (contextConsumer: ContextType) => DispatchType;
 
 export type useLazyMemoType = (initializer: () => any) => any;
 
-export interface useMemoComponentOptionsType {
-  Component: FunctionComponent | ReactElement, ref?: RefObject<any>, props: ComponentPropsType, isEqual?: EqualityFunctionType;
+export interface UseMemoComponentOptionsType<T> {
+  Component: ComponentType<T>,
+  props: ComponentPropsType;
+  ref?: RefObject<any>;
+  isEqual?: EqualityFunctionType;
 }
 
-export type useMemoComponentType = (options: useMemoComponentOptionsType) => ReactElement;
+export type useMemoComponentType<T = any> = (options: UseMemoComponentOptionsType<T>) => ReactElement;
 
 export type useMountedType = (initialValue?: boolean) => boolean;
 

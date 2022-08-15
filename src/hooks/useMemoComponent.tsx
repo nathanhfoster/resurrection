@@ -11,14 +11,14 @@ import usePreviousValue from './usePreviousValue';
  * @param {function} isEqual
  * @returns {JSX.Element}
  */
- const useMemoComponent: useMemoComponentType = ({ Component, props, ref, isEqual }) => {
+const useMemoComponent: useMemoComponentType = ({ Component, props, ref, isEqual }) => {
   const previousProps = usePreviousValue(props);
 
   // Component ref instance
   const ComponentRef = useRef(<Component {...props} ref={ref} />);
 
   const PureComponent = useMemo(() => {
-    // Check if props have stayed the same
+    // @ts-ignore Check if props have stayed the same
     const arePropsEqual = isFunction(isEqual) ? isEqual(previousProps, props) : false;
 
     // If the props differ update the reference of the component instance

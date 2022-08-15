@@ -1,4 +1,4 @@
-import { FunctionComponent, memo, useContext, useMemo, forwardRef as reactForwardRef, PropsWithChildren } from 'react';
+import { memo, useContext, useMemo, forwardRef as reactForwardRef, PropsWithChildren } from 'react';
 import { isFunction, defaultMergeProps, bindActionCreators, shallowEquals } from 'utils';
 import { StateContextConsumer, DispatchContextConsumer } from './provider';
 import { useMemoComponent } from 'hooks';
@@ -8,8 +8,7 @@ import type {
   ThunkActionDispatchType,
   DispatchType,
   ReducerStateType,
-  MergePropsType,
-  ChildrenType
+  MergePropsType
 } from 'types';
 
 /**
@@ -33,7 +32,7 @@ const connect: ConnectType = (mapStateToProps, mapDispatchToProps, mergeProps, o
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 
-    const ConnectFunction: React.FC<{ forwardedRef: any }> = ({ forwardedRef, ...ownProps }) => {
+    const ConnectFunction: React.FC<{ forwardedRef?: any }> = ({ forwardedRef, ...ownProps }) => {
       const state = useContext<ReducerStateType>(stateContext);
       const dispatch = useContext<DispatchType>(dispatchContext);
 
