@@ -51,11 +51,13 @@ const multiConnect: MultiConnectType = ({
   areMergedPropsEqual = shallowEquals,
   forwardRef = false
 }) => {
+  let shouldMemoizeWrappedComponent = pure;
   const wrapWithConnect = (WrappedComponent: FunctionComponent) => {
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 
     const ConnectFunction: React.FC<{ forwardedRef: any }> = ({ forwardedRef, ...ownProps }) => {
+      const shouldMemoizeWrappedComponent = Boolean(shouldMemoizeWrappedComponent && ownProps.children)
       const stateToProps = mapStateToProps.reduce((acc, item) => {
         const { context, mapStateToProps: itemMapStateToProps } = item;
         const contextState = useContext<ReducerStateType>(context);
@@ -86,13 +88,13 @@ const multiConnect: MultiConnectType = ({
         Component: WrappedComponent,
         props: mergeProps(stateToProps, dispatchToProps, ownProps),
         ref: forwardedRef,
-        isEqual: pure ? areMergedPropsEqual : undefined
+        isEqual: shouldMemoizeWrappedComponent ? areMergedPropsEqual : undefined
       });
 
       return ConnectedComponent;
     };
 
-    const Connect = pure ? memo(ConnectFunction, areOwnPropsEqual) : ConnectFunction;
+    const Connect = shouldMemoizeWrappedComponent ? memo(ConnectFunction, areOwnPropsEqual) : ConnectFunction;
     // @ts-ignore
     Connect.WrappedComponent = WrappedComponent;
     Connect.displayName = ConnectFunction.displayName = displayName;
