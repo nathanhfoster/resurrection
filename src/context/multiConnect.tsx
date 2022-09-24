@@ -6,7 +6,7 @@ import {
   ThunkActionDispatchMap,
   ThunkActionDispatchType
 } from 'types';
-import { memo, useContext, forwardRef as reactForwardRef, FunctionComponent } from 'react';
+import { memo, useContext, forwardRef as reactForwardRef, FunctionComponent, useRef } from 'react';
 import { defaultMergeProps, isFunction, isValidContext, shallowEquals } from 'utils';
 import { bindActionCreator } from 'utils/bindActionCreators';
 import { useMemoComponent } from 'hooks';
@@ -51,13 +51,13 @@ const multiConnect: MultiConnectType = ({
   areMergedPropsEqual = shallowEquals,
   forwardRef = false
 }) => {
-  let shouldMemoizeWrappedComponent = pure;
+  const shouldMemoizeWrappedComponent = useRef(pure)
   const wrapWithConnect = (WrappedComponent: FunctionComponent) => {
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 
     const ConnectFunction: React.FC<{ forwardedRef: any }> = ({ forwardedRef, ...ownProps }) => {
-      const shouldMemoizeWrappedComponent = Boolean(shouldMemoizeWrappedComponent && ownProps.children)
+      shouldMemoizeWrappedComponent.current = Boolean(shouldMemoizeWrappedComponent && ownProps.children)
       const stateToProps = mapStateToProps.reduce((acc, item) => {
         const { context, mapStateToProps: itemMapStateToProps } = item;
         const contextState = useContext<ReducerStateType>(context);
@@ -88,16 +88,11 @@ const multiConnect: MultiConnectType = ({
         Component: WrappedComponent,
         props: mergeProps(stateToProps, dispatchToProps, ownProps),
         ref: forwardedRef,
-        isEqual: shouldMemoizeWrappedComponent ? areMergedPropsEqual : undefined
+        isEqual: shouldMemoizeWrappedComponent.current ? areMergedPropsEqual : undefined
       });
 
       return ConnectedComponent;
     };
-
-    const Connect = shouldMemoizeWrappedComponent ? memo(ConnectFunction, areOwnPropsEqual) : ConnectFunction;
-    // @ts-ignore
-    Connect.WrappedComponent = WrappedComponent;
-    Connect.displayName = ConnectFunction.displayName = displayName;
 
     if (forwardRef) {
       const ForwaredComponent = reactForwardRef((props, ref) => <Connect {...props} forwardedRef={ref} />);
@@ -107,6 +102,11 @@ const multiConnect: MultiConnectType = ({
       ForwaredComponent.WrappedComponent = WrappedComponent;
       return ForwaredComponent;
     }
+
+    const Connect = shouldMemoizeWrappedComponent.current ? memo(ConnectFunction, areOwnPropsEqual) : ConnectFunction;
+    // @ts-ignore
+    Connect.WrappedComponent = WrappedComponent;
+    Connect.displayName = ConnectFunction.displayName = displayName;
 
     return Connect;
   };
