@@ -56,7 +56,7 @@ const multiConnect: MultiConnectType = ({
     const wrappedComponentName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
     const displayName = `Connect(${wrappedComponentName})`;
 
-    const ConnectFunction: React.FC<{ forwardedRef: any }> = ({ forwardedRef, ...ownProps }) => {
+    const ConnectFunction: React.FC<any> = ({ forwardedRef, ...ownProps }) => {
       shouldMemoizeWrappedComponent.current = Boolean(shouldMemoizeWrappedComponent && ownProps.children)
       const stateToProps = mapStateToProps.reduce((acc, item) => {
         const { context, mapStateToProps: itemMapStateToProps } = item;
